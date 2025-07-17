@@ -46,6 +46,12 @@ Route::get('/admin', function () {
 })->name('admin.dashboard');
 
 
-Route::prefix('admin')->name('admin')->group(function(){
-    Route::get('/industry',[FrontController::class,'industry'])->name('.industry');
+Route::prefix('admin')->name('admin.')->group(function(){
+    Route::prefix('industry')->name('industry.')->group(function(){
+        Route::get('/', [FrontController::class, 'industry'])->name('index');
+        Route::match(['get', 'post'], '/add', [FrontController::class, 'industryAdd'])->name('.add');
+        // To get the industry index route name:
+        // 'admin.industry.index'
+    });
 });
+    

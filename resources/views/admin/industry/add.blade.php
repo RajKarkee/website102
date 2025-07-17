@@ -21,7 +21,7 @@
      
         </style>
 
-        <form id="industryForm" method="POST" action="#" enctype="multipart/form-data">
+        <form id="industryForm" method="POST" action="{{ route('industry.add') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="icon">Icon</label>

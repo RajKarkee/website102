@@ -54,7 +54,7 @@
             </div>
 
             <div class="nav-item">
-                <a href="{{ route('admin.industry') }}" class="nav-link">
+                <a href="{{ route('admin.industry.index') }}" class="nav-link">
                     <i class="fas fa-industry"></i>
                     <span>Industry</span>
                 </a>
