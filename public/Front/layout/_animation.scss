@@ -1,0 +1,75 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+// Animation classes
+.fade-in {
+    animation: fadeIn $transition-slow ease-out;
+}
+
+.slide-in-left {
+    animation: slideInLeft $transition-slow ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight $transition-slow ease-out;
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+// Staggered animations
+.stagger-animation {
+    > * {
+        opacity: 0;
+        animation: fadeIn $transition-slow ease-out forwards;
+        
+        @for $i from 1 through 10 {
+            &:nth-child(#{$i}) {
+                animation-delay: #{$i * 0.1}s;
+            }
+        }
+    }
+}

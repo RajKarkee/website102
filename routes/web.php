@@ -9,6 +9,7 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FrontController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,13 @@ Route::get('/testimonials', [TestimonialController::class, 'index'])->name('test
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+
+Route::get('/admin', function () {
+    return view('admin.layout.dashboard');
+})->name('admin.dashboard');
+
+
+Route::prefix('admin')->name('admin')->group(function(){
+    Route::get('/industry',[FrontController::class,'industry'])->name('.industry');
+});

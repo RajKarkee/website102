@@ -1,0 +1,85 @@
+.sidebar {
+    position: fixed;
+    top: $header-height;
+    left: 0;
+    width: $sidebar-width;
+    height: calc(100vh - #{$header-height});
+    @include gradient-bg($primary-color, $hover-color);
+    color: $text-light;
+    overflow-y: auto;
+    transition: transform $transition-base;
+    z-index: $z-sidebar;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    
+    @include scrollbar-style;
+    
+    @include mobile-only {
+        transform: translateX(-100%);
+        
+        &.show {
+            transform: translateX(0);
+        }
+    }
+}
+
+.sidebar-nav {
+    padding: $base-padding 0;
+}
+
+.nav-item {
+    margin-bottom: 5px;
+}
+
+.nav-link {
+    @include flex-start;
+    padding: $small-padding $base-padding;
+    color: $text-light;
+    transition: all $transition-base;
+    border-left: 3px solid transparent;
+    
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-left-color: $secondary-color;
+        color: $text-light;
+    }
+    
+    &.active {
+        background-color: $secondary-color;
+        border-left-color: $white;
+    }
+    
+    i {
+        width: 20px;
+        margin-right: $small-padding;
+        text-align: center;
+    }
+    
+    .arrow {
+        margin-left: auto;
+        transition: transform $transition-base;
+        
+        &.rotated {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+.submenu {
+    background-color: rgba(0, 0, 0, 0.2);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height $transition-base;
+    
+    &.show {
+        max-height: 300px;
+    }
+    
+    .nav-link {
+        padding-left: 50px;
+        border-left: none;
+        
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+}

@@ -1,0 +1,64 @@
+.user-menu {
+    position: relative;
+}
+
+.user-btn {
+    @include button-reset;
+    @include flex-start;
+    color: $text-light;
+    gap: 8px;
+    padding: 8px $small-padding;
+    border-radius: $border-radius-sm;
+    transition: background-color $transition-base;
+    
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: $white;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow-lg;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all $transition-base;
+    z-index: $z-dropdown;
+    
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    a {
+        display: block;
+        padding: $small-padding 16px;
+        color: #333;
+        transition: background-color $transition-base;
+        
+        &:hover {
+            background-color: $background-color;
+        }
+        
+        &:first-child {
+            border-top-left-radius: $border-radius;
+            border-top-right-radius: $border-radius;
+        }
+        
+        &:last-child {
+            border-bottom-left-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
+        }
+        
+        i {
+            margin-right: 8px;
+            width: 16px;
+        }
+    }
+}

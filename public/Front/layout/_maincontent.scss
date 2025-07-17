@@ -1,0 +1,110 @@
+.main-content {
+    margin-left: $sidebar-width;
+    margin-top: $header-height;
+    padding: $base-padding;
+    transition: margin-left $transition-base;
+    min-height: calc(100vh - #{$header-height});
+    
+    @include mobile-only {
+        margin-left: 0;
+    }
+}
+
+.content-header {
+    background: $white;
+    border-radius: $border-radius;
+    padding: $base-padding;
+    margin-bottom: $base-padding;
+    @include card-shadow;
+    
+    h1 {
+        color: $primary-color;
+        font-size: $font-size-3xl;
+        margin: 0;
+        font-weight: 600;
+    }
+}
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+    margin-top: 10px;
+    
+    &-item {
+        a {
+            color: $secondary-color;
+            
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        
+        &.active {
+            color: #6c757d;
+        }
+    }
+}
+
+// ===================================
+// File: resources/scss/admin/components/_stats-cards.scss
+// Statistics cards component styles
+
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $base-padding;
+    margin-bottom: $large-padding;
+    
+    @include mobile-only {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stat-card {
+    background: $white;
+    border-radius: $border-radius;
+    padding: $base-padding;
+    @include card-shadow;
+    @include hover-lift;
+    
+    &.primary .stat-icon {
+        @include gradient-bg(#3498db, #2980b9);
+        color: $white;
+    }
+    
+    &.success .stat-icon {
+        @include gradient-bg(#27ae60, #229954);
+        color: $white;
+    }
+    
+    &.warning .stat-icon {
+        @include gradient-bg(#f39c12, #e67e22);
+        color: $white;
+    }
+    
+    &.danger .stat-icon {
+        @include gradient-bg(#e74c3c, #c0392b);
+        color: $white;
+    }
+}
+
+.stat-icon {
+    @include flex-center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: $font-size-2xl;
+    margin-bottom: 15px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: $font-size-sm;
+}
