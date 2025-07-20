@@ -99,7 +99,7 @@
                 .then(data => {
                     document.getElementById('modalServiceTitle').textContent = data.title;
                     document.getElementById('modalLongDescription').textContent = data.long_description || 'No long description available';
-                    
+
                     // Display service points
                     const pointsList = document.getElementById('modalServicePoints');
                     pointsList.innerHTML = '';
@@ -112,7 +112,7 @@
                     } else {
                         pointsList.innerHTML = '<li>No service points available</li>';
                     }
-                    
+
                     // Display point descriptions
                     const descriptionsList = document.getElementById('modalPointDescriptions');
                     descriptionsList.innerHTML = '';
@@ -125,7 +125,7 @@
                     } else {
                         descriptionsList.innerHTML = '<li>No point descriptions available</li>';
                     }
-                    
+
                     // Display icon titles
                     const iconTitlesList = document.getElementById('modalIconTitles');
                     iconTitlesList.innerHTML = '';
@@ -138,7 +138,7 @@
                     } else {
                         iconTitlesList.innerHTML = '<li>No icon titles available</li>';
                     }
-                    
+
                     // Display icon descriptions
                     const iconDescList = document.getElementById('modalIconDescriptions');
                     iconDescList.innerHTML = '';
@@ -151,7 +151,7 @@
                     } else {
                         iconDescList.innerHTML = '<li>No icon descriptions available</li>';
                     }
-                    
+
                     // Show the modal
                     const modal = new bootstrap.Modal(document.getElementById('serviceDetailsModal'));
                     modal.show();
@@ -162,7 +162,7 @@
                 });
         }
     </script>
-    
+
     <!-- Service Details Modal -->
     <div class="modal fade service-details-modal" id="serviceDetailsModal" tabindex="-1" aria-labelledby="serviceDetailsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -173,12 +173,12 @@
                 </div>
                 <div class="modal-body">
                     <h6 id="modalServiceTitle" class="text-primary mb-3"></h6>
-                    
+
                     <div class="detail-section">
                         <strong>Long Description:</strong>
                         <p id="modalLongDescription" class="mt-2"></p>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="detail-section">
@@ -193,7 +193,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="detail-section">

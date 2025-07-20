@@ -217,7 +217,7 @@ document.addEventListener('click', function(e) {
 function previewIcon(input) {
     const preview = document.getElementById('icon-preview');
     const previewImg = document.getElementById('preview-img');
-    
+
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
