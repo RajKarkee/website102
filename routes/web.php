@@ -49,9 +49,17 @@ Route::get('/admin', function () {
 Route::prefix('admin')->name('admin.')->group(function(){
     Route::prefix('industry')->name('industry.')->group(function(){
         Route::get('/', [FrontController::class, 'industry'])->name('index');
-        Route::match(['get', 'post'], '/add', [FrontController::class, 'industryAdd'])->name('.add');
+        Route::match(['get', 'post'], '/add', [FrontController::class, 'industryAdd'])->name('add');
+        Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'industryEdit'])->name('edit');
+        Route::delete('/delete/{id}', [FrontController::class, 'industryDelete'])->name('delete');  
         // To get the industry index route name:
         // 'admin.industry.index'
     });
+    Route::prefix('service')->name('service.')->group(function(){
+        Route::get('/', [FrontController::class, 'service'])->name('index');
+        Route::match(['get', 'post'], '/add', [FrontController::class, 'serviceAdd'])->name('add');
+        Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'serviceEdit'])->name('edit');
+        Route::delete('/delete/{id}', [FrontController::class, 'serviceDelete'])->name('delete');  
+    }); 
 });
     

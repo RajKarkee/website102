@@ -59,6 +59,12 @@
                     <span>Industry</span>
                 </a>
             </div>
+              <div class="nav-item">
+                <a href="{{ route('admin.service.index') }}" class="nav-link">
+                    <i class="fas fa-wrench"></i>
+                    <span>Services</span>
+                </a>
+            </div>
 
             <div class="nav-item">
                 <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#reportSubmenu">

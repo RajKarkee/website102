@@ -6,7 +6,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@yield('page-title', 'Industry')</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.industry.index') }}">Industry</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@yield('page-title', 'Add Industry')</li>
             </ol>
         </nav>
     </div>
@@ -21,7 +22,7 @@
      
         </style>
 
-        <form id="industryForm" method="POST" action="{{ route('industry.add') }}" enctype="multipart/form-data">
+        <form id="industryForm" method="POST" action="{{ route('admin.industry.add') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="icon">Icon</label>
