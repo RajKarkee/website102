@@ -134,25 +134,95 @@ public function jumbotronIndex(){
 public function jumbotronAdd(Request $request)
 {
     if($request->isMethod('post')){
-        $validated =$request->validate([
-            'page' => 'required|string|unique|jumbotrons,page',
-            'title'=> 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'icon' => 'nullable|string|max:255',
-            'badge' => 'nullable|string|max:255',   
-        ]);
+        // $validated =$request->validate([
+        //     'page' => 'required|string|unique|jumbotrons,page',
+        //     'title'=> 'required|string|max:255',
+        //     'subtitle' => 'nullable|string|max:255',
+        //     'description' => 'nullable|string',
+        //     'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        //     'icon' => 'nullable|string|max:255',
+        //     'badge' => 'nullable|string|max:255',   
+        // ]);
         if($request->hasFile('background_image')){
             $path = $request->file('background_image')->store('jumbotrons', 'public');
-            $validated['background_image'] = $path;
+            // $validated['background_image'] = $path;
 
         }
-        Jumbotron::create($validated);
+        if($request->hasFile('icon')){
+            $iconPath = $request->file('icon')->store('jumbotron_icons', 'public');
+            // $validated['icon'] = $iconPath;
+        }
+
+        $jumbotron = new Jumbotron();
+        $jumbotron->page = $request->input('page');
+        $jumbotron->title = $request->input('title');
+        $jumbotron->subtitle = $request->input('subtitle');
+        $jumbotron->description = $request->input('description');
+        $jumbotron->background_image = $path ?? null;
+        $jumbotron->icon = $iconPath ?? null;
+        $jumbotron->badge = $request->input('badge');
+        $jumbotron->is_active = true; // Default to active
+        $jumbotron->save();
         return redirect()->route('admin.jumbotron.index')
             ->with('success', 'Jumbotron created successfully.');
     }
     return view('admin.jumbotron.add');
 }
+public function jumbotronEdit($id, Request $request)
+{
+    $jumbotron = Jumbotron::findOrFail($id);
+    if ($request->isMethod('post')) {
+        if ($request->hasFile('background_image')) {
+            if ($jumbotron->background_image) {
+                Storage::disk('public')->delete($jumbotron->background_image);
+            }
+            $path = $request->file('background_image')->store('jumbotrons', 'public');
+            $jumbotron->background_image = $path;
+        }
+        if ($request->hasFile('icon')) {
+            if ($jumbotron->icon) {
+                Storage::disk('public')->delete($jumbotron->icon);
+            }
+            $iconPath = $request->file('icon')->store('jumbotron_icons', 'public');
+            $jumbotron->icon = $iconPath;
+        }
 
+        $jumbotron->page = $request->input('page');
+        $jumbotron->title = $request->input('title');
+        $jumbotron->subtitle = $request->input('subtitle');
+        $jumbotron->description = $request->input('description');
+        $jumbotron->badge = $request->input('badge');
+        $jumbotron->is_active = true; // Default to active
+        $jumbotron->save();
+        
+        return redirect()->route('admin.jumbotron.index')
+            ->with('success', 'Jumbotron updated successfully.');
+    }
+
+    return view('admin.jumbotron.edit', compact('jumbotron'));
+}
+public function jumbotronDelete($id)
+{
+    $jumbotron = Jumbotron::findOrFail($id);
+    if ($jumbotron->background_image) {
+        Storage::disk('public')->delete($jumbotron->background_image);
+    }
+    if ($jumbotron->icon) {
+        Storage::disk('public')->delete($jumbotron->icon);
+    }
+    $jumbotron->delete();
+    
+    return redirect()->route('admin.jumbotron.index')
+        ->with('success', 'Jumbotron deleted successfully.');
+
+}
+public function statusChange($id, Request $request)
+{
+    $jumbotron = Jumbotron::findOrFail($id);
+    $jumbotron->is_active = !$jumbotron->is_active; // Toggle the status
+    $jumbotron->save();
+
+    return redirect()->route('admin.jumbotron.index')
+        ->with('success', 'Jumbotron status updated successfully.');
+}
 }

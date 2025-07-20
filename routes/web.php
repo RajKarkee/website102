@@ -67,5 +67,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::match(['get', 'post'], '/add', [FrontController::class, 'jumbotronAdd'])->name('add');
         Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'jumbotronEdit'])->name('edit');
         Route::delete('/delete/{id}', [FrontController::class, 'jumbotronDelete'])->name('delete');
+        Route::post('/change/{id}',[FrontController::class, 'StatusChange'])->name('change');
     });
 });

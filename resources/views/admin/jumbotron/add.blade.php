@@ -11,41 +11,52 @@
             </ol>
         </nav>
     </div>
-<h1>Add New Jumbotron</h1>
 
-    <div class="container-jumbotron">
-        <form id="jumbotronForm" method="POST" action="{{ route('admin.jumbotron.add') }}" enctype="multipart/form-data">
+
+    <div class="jumbotron">
+        <form id="jumbotronForm" method="POST" action="{{ route('admin.jumbotron.add') }}" enctype="multipart/form-data" ">
             @csrf
             <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" id="title" name="title" class="form-control" required maxlength="255">
+                <label for="page-title" class="title">Page Title</label>
+                <select id="page-title" name="page" class="form-control" required>
+                <option value="Home">Home</option>
+                <option value="About">About</option>
+                <option value="Industry">Industry</option>
+                <option value="Services">Services</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label for="subtitle">Subtitle</label>
-                <input type="text" id="subtitle" name="subtitle" class="form-control" required maxlength="255">
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" class="form-control" rows="3" required maxlength="1000"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="background_image">Background Image</label>
-                <input type="file" id="background_image" name="background_image" class="dropify" 
-                    data-allowed-file-extensions="png jpg jpeg"
-                    data-max-file-size="2M"
-                    data-height="200"
-                    data-show-remove="true"
-                    data-show-loader="true"
-                    data-show-errors="true"
-                    data-errors-position="outside"
-                    required>
-            </div>
-            <div class="form-group">
-            </div>
-                 
-        </form>
-           
+            <div class="form-group ">
             
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" name="title" class="form-control" required maxlength="255" placeholder="Enter title">
+            </div>
+            <div class="form-group ">
+            <label for="subtitle" class="form-label">Subtitle</label>
+            <input type="text" id="subtitle" name="subtitle" class="form-control" required maxlength="255" placeholder="Enter subtitle">
+            </div>
+            <div class="form-group ">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="description" class="form-control" rows="3" required maxlength="1000" placeholder="Enter description"></textarea>
+            </div>
+            <div class="form-group ">
+            <label for="background_image" class="form-label">Background Image</label>
+            <input type="file" id="background_image" name="background_image" class="form-control" accept="image/png, image/jpeg" required>
+            </div>
+            <div class="form-">
+                <label for="icon" class="form-label">Icon</label>
+                <input type="file" id="icon" name="icon" class="form-control" accept="image/png, image/jpeg, image/svg+xml" required>
 
+            </div>
+            <div class="form-group ">
+            <label for="badge" class="form-label">Badge</label>
+            <input type="text" id="badge" name="badge" class="form-control" required maxlength="255" placeholder="Enter badge text">
+            </div>
+            <br>
+            <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Add Jumbotron</button>
+            </div>
+        </form>
+            
+    </div>
 </main>
 @endsection
