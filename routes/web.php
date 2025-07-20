@@ -59,7 +59,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/', [FrontController::class, 'service'])->name('index');
         Route::match(['get', 'post'], '/add', [FrontController::class, 'serviceAdd'])->name('add');
         Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'serviceEdit'])->name('edit');
-        Route::delete('/delete/{id}', [FrontController::class, 'serviceDelete'])->name('delete');  
+        Route::delete('/delete/{id}', [FrontController::class, 'serviceDelete'])->name('delete');
+        Route::get('/details/{id}', [FrontController::class, 'serviceDetails'])->name('details');
     }); 
 });
     
