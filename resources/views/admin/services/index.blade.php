@@ -2,7 +2,8 @@
 @section('content')
 <main class="main-content">
     <div class="content-header fade-in">
-        <h1>@yield('page-title', 'Services')</h1>
+        <h1>@yield('page-title', 'Services Management')</h1>
+          <p class="text-muted">Welcome to the services page. Here you can manage your services.</p>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -11,81 +12,166 @@
         </nav>
     </div>
     <div class="service">
-        <h1>Services Management</h1>
-        <p>Welcome to the services page. Here you can manage your services.</p>
-        <a href='{{ route('admin.service.add') }}' class="btn btn-primary mb-3">Add New Service</a>
+      
+        
 
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         @endif
 
-        <table id="service-table" class="table table-striped table-bordered service-table">
-            <thead>
-                <tr>
-                    <th>SID</th>
-                    <th>Icon</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Details</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($services as $service)
-                <tr>
-                    <td>{{ $service->id }}</td>
-                    <td class="service-icon">
-                        @if($service->icon)
-                            <img src="{{ asset('storage/' . $service->icon) }}" alt="Icon">
-                        @else
-                            <span class="text-muted">No Icon</span>
-                        @endif
-                    </td>
-                    <td>{{ $service->title }}</td>
-                    <td class="service-description">{{ Str::limit($service->description, 100) }}</td>
-                    <td>
-                        <button class="btn btn-sm btn-info" onclick="showServiceDetails({{ $service->id }})">
-                            <i class="fas fa-info-circle"></i> Details
-                        </button>
-                    </td>
-                    <td class="service-actions">
-                        <a href="{{ route('admin.service.edit', $service->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                        <button class="btn btn-sm btn-danger delete-btn" data-id="{{ $service->id }}">Delete</button>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="5" class="text-center">No services found. <a href="{{ route('admin.service.add') }}">Add your first service</a></td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+{{-- @extends('layouts.admin') --}}
 
+@section('content')
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>Services List</h3>
+                <a href="{{ route('admin.service.add') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add Service
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="servicesTable" class="table table-striped nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Icon</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Details</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($services as $service)
+                            <tr>
+                                <td>{{ $service->id }}</td>
+                                <td class="service-icon">
+                                    @if($service->icon)
+                                        <img src="{{ asset('storage/' . $service->icon) }}" alt="Service Icon" class="img-fluid">
+                                    @else
+                                        <span class="text-muted">No Icon</span>
+                                    @endif
+                                </td>
+                                <td>{{ $service->title }}</td>
+                                <td>{{ Str::limit($service->description, 100) }}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm" onclick="showServiceDetails({{ $service->id }})">
+                                        <i class="fas fa-info-circle"></i> Details
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="{{ route('admin.service.edit', $service->id) }}" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('admin.service.delete', $service->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm delete-btn" onclick="return confirm('Are you sure you want to delete this service?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>    
+                </table>
+            </div>@push('styles')
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <style>
+        .service-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        #servicesTable_filter {
+            margin-bottom: 10px;
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+    
     <script>
-        // Delete functionality
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const serviceId = this.dataset.id;
+        $(document).ready(function() {
+            const table = $('#servicesTable').DataTable({
+                responsive: true,
+                processing: true,
+                data: @json($services),
+                columns: [
+                    { data: 'id' },
+                    { 
+                        data: 'icon',
+                        render: function(data) {
+                            return data ? `<img src="${window.location.origin}/storage/${data}" alt="Icon" class="img-fluid">` : '<span class="text-muted">No Icon</span>';
+                        }
+                    },
+                    { data: 'title' },
+                    { 
+                        data: 'description',
+                        render: function(data) {
+                            return data.length > 100 ? data.substring(0, 100) + '...' : data;
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data) {
+                            return `<button class="btn btn-sm btn-info" onclick="showServiceDetails(${data})">
+                                    <i class="fas fa-info-circle"></i> Details
+                                   </button>`;
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data) {
+                            return `<div class="action-buttons">
+                                    <a href="/admin/service/edit/${data}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-danger delete-btn" data-id="${data}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                   </div>`;
+                        }
+                    }
+                ]
+            });
+
+            // Delete functionality
+            $('#servicesTable').on('click', '.delete-btn', function() {
+                const serviceId = $(this).data('id');
                 if (confirm('Are you sure you want to delete this service?')) {
-                    // Create a form to submit DELETE request
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = `/admin/service/delete/${serviceId}`;
-
-                    const csrfToken = document.createElement('input');
-                    csrfToken.type = 'hidden';
-                    csrfToken.name = '_token';
-                    csrfToken.value = '{{ csrf_token() }}';
-
-                    const methodField = document.createElement('input');
-                    methodField.type = 'hidden';
-                    methodField.name = '_method';
-                    methodField.value = 'DELETE';
-
-                    form.appendChild(csrfToken);
-                    form.appendChild(methodField);
-                    document.body.appendChild(form);
+                    const form = $('<form>', {
+                        'method': 'POST',
+                        'action': `/admin/service/delete/${serviceId}`
+                    }).append($('<input>', {
+                        'type': 'hidden',
+                        'name': '_token',
+                        'value': '{{ csrf_token() }}'
+                    })).append($('<input>', {
+                        'type': 'hidden',
+                        'name': '_method',
+                        'value': 'DELETE'
+                    }));
+                    
+                    $(document.body).append(form);
                     form.submit();
                 }
             });

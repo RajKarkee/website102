@@ -62,4 +62,10 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::delete('/delete/{id}', [FrontController::class, 'serviceDelete'])->name('delete');
         Route::get('/details/{id}', [FrontController::class, 'serviceDetails'])->name('details');
     });
+    Route::prefix('jumbotron')->name('jumbotron.')->group(function(){
+        Route::get('/', [FrontController::class, 'jumbotronIndex'])->name('index');
+        Route::match(['get', 'post'], '/add', [FrontController::class, 'jumbotronAdd'])->name('add');
+        Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'jumbotronEdit'])->name('edit');
+        Route::delete('/delete/{id}', [FrontController::class, 'jumbotronDelete'])->name('delete');
+    });
 });

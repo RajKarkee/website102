@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Industry;
 use App\Models\Service;
+use App\Models\Jumbotron;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -73,6 +74,8 @@ public function serviceAdd(Request $request)
         $serviceData->icon_title = json_encode(request('icon_title', []));
         $serviceData->icon_description = json_encode(request('icon_description', []));
         $serviceData->save();
+        return redirect()->route('admin.service.index')
+            ->with('success', 'Service created successfully.');
     }
 
     return view('admin.services.add');
@@ -95,6 +98,8 @@ public function serviceEdit($id, Request $request)
         $serviceData->icon_title = json_encode(request('icon_title', []));
         $serviceData->icon_description = json_encode(request('icon_description', []));
         $serviceData->save();
+        return redirect()->route('admin.service.index')
+            ->with('success', 'Service updated successfully.');
     }
 
     return view('admin.services.edit', compact('serviceData'));
@@ -120,6 +125,34 @@ public function serviceDetails($id)
         'icon_title' => $service->icon_title,
         'icon_description' => $service->icon_description
     ]);
+}
+public function jumbotronIndex(){
+    $jumbotrons = Jumbotron::all();
+    return view('admin.jumbotron.index', compact('jumbotrons'));
+
+}
+public function jumbotronAdd(Request $request)
+{
+    if($request->isMethod('post')){
+        $validated =$request->validate([
+            'page' => 'required|string|unique|jumbotrons,page',
+            'title'=> 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'icon' => 'nullable|string|max:255',
+            'badge' => 'nullable|string|max:255',   
+        ]);
+        if($request->hasFile('background_image')){
+            $path = $request->file('background_image')->store('jumbotrons', 'public');
+            $validated['background_image'] = $path;
+
+        }
+        Jumbotron::create($validated);
+        return redirect()->route('admin.jumbotron.index')
+            ->with('success', 'Jumbotron created successfully.');
+    }
+    return view('admin.jumbotron.add');
 }
 
 }
