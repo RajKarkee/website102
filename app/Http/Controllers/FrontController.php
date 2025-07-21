@@ -225,4 +225,15 @@ public function statusChange($id, Request $request)
     return redirect()->route('admin.jumbotron.index')
         ->with('success', 'Jumbotron status updated successfully.');
 }
+public function about()
+{
+    return view('admin.about.index');
+}
+public function aboutAdd(Request $request){
+    if($request->isMethod('post')){
+
+    }
+    return view('admin.about.add');
+}
+
 }

@@ -25,6 +25,12 @@
                     <span>Jumbotron</span>
                 </a>
             </div>
+            <div class="nav-item">
+                <a href="{{ route('admin.about.index') }}" class="nav-link">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+            </div>
 
             <div class="nav-item">
                 <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#productSubmenu">
