@@ -171,7 +171,7 @@ public function jumbotronAdd(Request $request)
 public function jumbotronEdit($id, Request $request)
 {
     $jumbotron = Jumbotron::findOrFail($id);
-    if ($request->isMethod('post')) {
+    if ($request->isMethod('patch')) {
         if ($request->hasFile('background_image')) {
             if ($jumbotron->background_image) {
                 Storage::disk('public')->delete($jumbotron->background_image);
