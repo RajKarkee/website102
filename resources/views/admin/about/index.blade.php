@@ -22,10 +22,11 @@
 
     <div class="card">
         <div class="card-body">
+            @if($about->isEmpty())
             <div class="text-right mb-3">
                 <a href="{{{ route('admin.about.add') }}}" class="btn btn-primary">Add About</a>
             </div>
-            
+            @endif
                 <table id="aboutTable" class="table table-bordered">
                     <thead>
                         <tr>
@@ -36,8 +37,8 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    {{-- <tbody>
-                        @foreach($abouts as $about)
+                    <tbody>
+                        @foreach($about as $about)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $about->title }}</td>
@@ -51,15 +52,16 @@
                             </td>
                             <td>
                                 <a href="{{ route('admin.about.edit', $about->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                <form action="{{ route('admin.about.destroy', $about->id) }}" method="POST" style="display:inline-block;">
+                                <form action="{{ route('admin.about.delete', $about->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                 </form>
+                                <a href="{{ route('admin.about.addPoint',$about->id) }}" class="btn btn-sm btn-info">Add points</a>
                             </td>
                         </tr>
                         @endforeach
-                    </tbody> --}}
+                    </tbody>
                 </table>
 
                 @push('scripts')

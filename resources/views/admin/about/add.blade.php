@@ -24,7 +24,7 @@
     </div>
     <div class="card">
         <div class="card-body">
-         <form action="#" method="POST" enctype="multipart/form-data">
+         <form action="{{ route('admin.about.add') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <!-- Title -->
@@ -40,6 +40,7 @@
     </div>
 
     <!-- Image with Dropify -->
+    <br>
     <div class="form-group">
         <label for="image">Image</label>
         <input type="file" name="image" id="image" class="dropify" 
@@ -52,7 +53,7 @@
     <!-- Experience & Client -->
     <div class="form-group">
         <label for="Experience">Experience</label>
-        <input type="number" name="Experience" class="form-control">
+        <input type="number" name="experience" class="form-control">
     </div>
 
     <div class="form-group">
@@ -71,7 +72,7 @@
         <input type="text" name="point_description" class="form-control">
     </div> --}}
 
-    <h4>Points Details</h4>
+    {{-- <h4>Points Details</h4> --}}
   {{-- @for($i = 1; $i <= 4; $i++)
     <div class="card p-2 mb-3">
         <h5>Point {{ $i }}</h5>
@@ -94,7 +95,7 @@
     </div>
 @endfor --}}
 
-
+<br>
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
 

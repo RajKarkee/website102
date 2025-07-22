@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->string('image')->nullable();
-            $table->integer('Experience')->nullable();
-            $table->integer('client')->nullable( );
-            $table->string('point_title');
-            $table->string('point_description');
-            $table->json('point_1');
-            $table->json('point_2');
-            $table->json('point_3');
-            $table->json('point_4'); // Assuming this is an integer field for years of experience
+            $table->integer('Experience');
+            $table->integer('client')->default('0');
+            $table->string('point_title')->nullable();
+            $table->string('point_description')->nullable();
+            $table->json('point_1')->nullable();
+            $table->json('point_2')->nullable();
+            $table->json('point_3')->nullable();
+            $table->json('point_4')->nullable();// Assuming this is an integer field for years of experience
             $table->timestamps();
         });
     }
