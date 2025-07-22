@@ -104,25 +104,13 @@ $(document).ready(function() {
 });
 </script>
 @endpush
+
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropify/0.2.2/js/dropify.min.js"></script>
+@endpush
 @push('scripts')
 <script>
 $(function() {
-    // Initialize dropify
-    if ($.fn.dropify) {
-        $('.dropify').dropify({
-            messages: {
-                'default': 'Drag and drop an icon here or click',
-                'replace': 'Drag and drop or click to replace',
-                'remove':  'Remove',
-                'error':   'Oops, something wrong happened.'
-            },
-            error: {
-                'fileSize': 'The file size is too big (2M max).',
-                'fileExtension': 'The file extension is not allowed (png, jpg, jpeg, svg only).'
-            }
-        });
-    }
-
             let maxPoints = 4;
 
     function updatePointNumbering() {
@@ -175,7 +163,5 @@ $(function() {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropify/0.2.2/css/dropify.min.css" />
 @endpush
 
-@push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropify/0.2.2/js/dropify.min.js"></script>
-@endpush
+
 @endsection
