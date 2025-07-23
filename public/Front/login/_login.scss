@@ -1,0 +1,298 @@
+// ===================================
+// MIXINS
+// ===================================
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin smooth-transition($duration: 0.3s) {
+    transition: all $duration ease;
+}
+
+@mixin glassmorphism {
+    background: $white-15;
+    backdrop-filter: blur(20px);
+    border: 1px solid $white-20;
+}
+
+
+// ===================================
+// BASE STYLES
+// ===================================
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: $primary-gradient;
+    min-height: 100vh;
+    @include flex-center;
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+
+// ===================================
+// FLOATING BACKGROUND ELEMENTS
+// ===================================
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    background: $white-10;
+    border-radius: 50%;
+    animation: float 20s infinite ease-in-out;
+
+    &:nth-child(1) {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+        width: 150px;
+        height: 150px;
+        top: 70%;
+        right: 20%;
+        animation-delay: 5s;
+    }
+
+    &:nth-child(3) {
+        width: 100px;
+        height: 100px;
+        bottom: 20%;
+        left: 20%;
+        animation-delay: 10s;
+    }
+
+    &:nth-child(4) {
+        width: 80px;
+        height: 80px;
+        top: 30%;
+        right: 10%;
+        animation-delay: 15s;
+    }
+}
+
+.wave-shape {
+    position: absolute;
+    background: $white-08;
+    border-radius: 30px;
+    animation: wave 15s infinite ease-in-out;
+
+    &:nth-child(5) {
+        width: 120px;
+        height: 60px;
+        top: 60%;
+        left: 5%;
+        animation-delay: 3s;
+    }
+
+    &:nth-child(6) {
+        width: 90px;
+        height: 45px;
+        bottom: 40%;
+        right: 15%;
+        animation-delay: 8s;
+    }
+}
+
+
+// ===================================
+// ANIMATIONS
+// ===================================
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    33% {
+        transform: translateY(-30px) rotate(120deg);
+    }
+
+    66% {
+        transform: translateY(20px) rotate(240deg);
+    }
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        transform: translateX(0px) scaleX(1);
+    }
+
+    50% {
+        transform: translateX(20px) scaleX(1.1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+// ===================================
+// LOGIN CONTAINER
+// ===================================
+.login-container {
+    @include glassmorphism;
+    border-radius: 20px;
+    padding: 40px;
+    width: 400px;
+    max-width: 90vw;
+    box-shadow: 0 8px 32px rgba($black, 0.3);
+    z-index: 10;
+    position: relative;
+    animation: slideIn 0.8s ease-out;
+}
+
+
+// ===================================
+// LOGO SECTION
+// ===================================
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-icon {
+    width: 60px;
+    height: 60px;
+    background: $white-90;
+    border-radius: 15px;
+    @include flex-center;
+    margin: 0 auto 15px;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background: $logo-gradient;
+        border-radius: 8px;
+        transform: rotate(45deg);
+    }
+}
+
+.logo-text {
+    color: $white;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.login-title {
+    color: $white;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+
+// ===================================
+// FORM STYLES
+// ===================================
+.form-group {
+    margin-bottom: 20px;
+
+    label {
+        display: block;
+        color: $white;
+        font-size: 14px;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid $white-30;
+        border-radius: 10px;
+        background: $white-10;
+        color: $white;
+        font-size: 16px;
+        @include smooth-transition;
+
+        &::placeholder {
+            color: $white-60;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $white-60;
+            background: $white-15;
+            box-shadow: 0 0 0 3px $white-10;
+        }
+    }
+}
+
+
+// ===================================
+// BUTTON STYLES
+// ===================================
+.signin-btn {
+    width: 100%;
+    padding: 15px;
+    background: $black-40;
+    color: $white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    @include smooth-transition;
+    margin-top: 20px;
+
+    &:hover {
+        background: $black-60;
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+
+// ===================================
+// RESPONSIVE DESIGN
+// ===================================
+@media (max-width: 480px) {
+    .login-container {
+        padding: 30px 20px;
+        width: 95vw;
+    }
+
+    .login-title {
+        font-size: 22px;
+    }
+}

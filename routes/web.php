@@ -10,6 +10,9 @@ use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +49,12 @@ Route::get('/admin', function () {
 })->name('admin.dashboard');
 
 
-Route::prefix('admin')->name('admin.')->group(function(){
-    Route::prefix('industry')->name('industry.')->group(function(){
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::prefix('login')->name('login.')->group(function () {
+        Route::get('/', [LoginController::class, 'showLoginForm'])->name('form');
+        Route::post('/', [LoginController::class, 'login'])->name('submit');
+    });
+    Route::prefix('industry')->name('industry.')->group(function () {
         Route::get('/', [FrontController::class, 'industry'])->name('index');
         Route::match(['get', 'post'], '/add', [FrontController::class, 'industryAdd'])->name('add');
         Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'industryEdit'])->name('edit');
@@ -55,19 +62,19 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // To get the industry index route name:
         // 'admin.industry.index'
     });
-    Route::prefix('service')->name('service.')->group(function(){
+    Route::prefix('service')->name('service.')->group(function () {
         Route::get('/', [FrontController::class, 'service'])->name('index');
         Route::match(['get', 'post'], '/add', [FrontController::class, 'serviceAdd'])->name('add');
         Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'serviceEdit'])->name('edit');
         Route::delete('/delete/{id}', [FrontController::class, 'serviceDelete'])->name('delete');
         Route::get('/details/{id}', [FrontController::class, 'serviceDetails'])->name('details');
     });
-    Route::prefix('jumbotron')->name('jumbotron.')->group(function(){
+    Route::prefix('jumbotron')->name('jumbotron.')->group(function () {
         Route::get('/', [FrontController::class, 'jumbotronIndex'])->name('index');
         Route::match(['get', 'post'], '/add', [FrontController::class, 'jumbotronAdd'])->name('add');
         Route::match(['get', 'patch'], '/edit/{id}', [FrontController::class, 'jumbotronEdit'])->name('edit');
         Route::delete('/delete/{id}', [FrontController::class, 'jumbotronDelete'])->name('delete');
-        Route::post('/change/{id}',[FrontController::class, 'StatusChange'])->name('change');
+        Route::post('/change/{id}', [FrontController::class, 'StatusChange'])->name('change');
     });
     Route::prefix('about')->name('about.')->group(function(){
         Route::get('/', [FrontController::class, 'about'])->name('index');
@@ -79,3 +86,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         // Route::match(['get', 'post'], '/edit', [FrontController::class, 'aboutEdit'])->name('edit');
     });
 });
+
+
+Route::post('/admin/logout', function () {
+    Auth::logout();
+    return redirect('/admin/login')->with('success', 'Logged out successfully!');
+})->name('admin.logout');
+
+Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
