@@ -25,8 +25,15 @@
 
                <div class="user-menu">
                    <button class="user-btn" id="userBtn">
-                       <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('default-user.png') }}"
+                       @php
+                           use Illuminate\Support\Facades\Auth;
+                           use App\Models\Userpic;
+
+                           $userpic = Userpic::where('user_id', Auth::id())->first();
+                       @endphp
+                       <img src="{{asset('storage/' . $imagepath) : asset('default-user.png') }}"
                            alt="User Image" class="user-img" />
+
                        <span class="user-name">{{ Auth::user()->name }}</span>
                        <i class="fas fa-chevron-down"></i>
                    </button>
