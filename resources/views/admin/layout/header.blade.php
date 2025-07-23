@@ -51,21 +51,6 @@
                        display: inline-block;
                    }
 
-                   .user-btn {
-                       display: flex;
-                       align-items: center;
-                       background-color: #3498db;
-                       border: 1px solid #ecf0f1;
-                       border-radius: 8px;
-                       padding: 6px 12px;
-                       cursor: pointer;
-                       transition: background-color 0.3s;
-                   }
-
-                   .user-btn:hover {
-                       background-color: #3c72ab;
-                   }
-
                    .user-img {
                        width: 36px;
                        height: 36px;
@@ -77,7 +62,7 @@
                    .user-name {
                        font-weight: 500;
                        margin-right: 8px;
-                       color: white;
+                       color: #bbb;
                    }
 
                    .user-dropdown {
