@@ -282,30 +282,46 @@ class FrontController extends Controller
         $aboutdata->delete();
         return redirect()->route('admin.about.index')->with('success', 'About section deleted successfully.');
     }
-    public function aboutAddPoint($id, Request $request)
-    {
-        $aboutdata=About::findOrFail('$id');
-        if ($request->isMethod('post')) {
-          
-            $Points=[];
-            for($i=1;i<=4;$i++){
-                if($request->hasFile('point_[$i].icon'){
-                    $path = $request->file('point_[$i].icon')->store('about_points', 'public');
-                    $Points[] = [
-                        'title' => $request->input("point_[$i].title"),
-                        'description' => $request->input("point_[$i].description"),
-                        'icon' => $path,
-                    ];
-                } else {
-                    $Points[] = [
-                        'title' => $request->input("point_[$i].title"),
-                        'description' => $request->input("point_[$i].description"),
-                        'icon' => null,
-                    ];
-                }
+  public function aboutAddPoint($id, Request $request)
+{
+    $aboutdata = About::findOrFail($id);
+
+    if ($request->isMethod('post')) {
+        $points = [];
+        
+        // Main point details
+        $aboutdata->point_title = $request->input('point_title');
+        $aboutdata->point_description = $request->input('point_description');
+
+        // Individual points
+        for ($i = 1; $i <= 4; $i++) {
+            $pointKey = "point_$i";
+            $points[$pointKey] = [
+                'title' => $request->input("{$pointKey}.title"),
+                'description' => $request->input("{$pointKey}.description"),
+                'icon' => null
+            ];
+
+            if ($request->hasFile("{$pointKey}.icon")) {
+                $path = $request->file("{$pointKey}.icon")->store('about_points', 'public');
+                $points[$pointKey]['icon'] = $path;
             }
         }
 
-        return view('admin.about.addPoint');
+        $aboutdata->point_1 = json_encode($points['point_1']);
+        $aboutdata->point_2 = json_encode($points['point_2']);
+        $aboutdata->point_3 = json_encode($points['point_3']);
+        $aboutdata->point_4 = json_encode($points['point_4']);
+        
+        $aboutdata->save();
+
+        return redirect()->route('admin.about.index')
+            ->with('success', 'Points added successfully.');
     }
+
+    return view('admin.about.addpoint', compact('aboutdata'));
+
+   
+}
+
 }
