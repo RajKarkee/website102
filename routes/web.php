@@ -84,7 +84,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::match(['get', 'post'], '/addPoint/{id}', [FrontController::class, 'aboutAddPoint'])->name('addPoint');
         // Route::get('/details/{id}', [FrontController::class,
         // Route::match(['get', 'post'], '/edit', [FrontController::class, 'aboutEdit'])->name('edit');
-        Route::prefix(])
+       
     });
 });
 
