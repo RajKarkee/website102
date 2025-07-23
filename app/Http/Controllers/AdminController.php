@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+use App\Models\Userpic;
+
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
 
     public function updateProfile(Request $request)
     {
-        $user = \App\Models\User::findOrFail(\Illuminate\Support\Facades\Auth::id());
+        $user = User::findOrFail(Auth::id());
+
 
         $request->validate([
             'name' => 'required|string',
@@ -28,13 +33,24 @@ class AdminController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            if ($user->image) {
-                Storage::delete('public/' . $user->image);
+            $image = $request->file('image');
+            $imagePath = $image->store('profile_pics', 'public');
+
+            if (Auth::user()->userpic) {
+                $userpic = Auth::user()->userpic;
+                Storage::disk('public')->delete($userpic->image);
+                $userpic->image = $imagePath;
+                $userpic->save();
+            } else {
+                $userpic = new Userpic();
+                $userpic->user_id = $user->id;
+                $userpic->image = $imagePath;
+                $userpic->save();
             }
-            $user->image = $request->file('image')->store('users', 'public');
         }
 
         $user->save();
+
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
