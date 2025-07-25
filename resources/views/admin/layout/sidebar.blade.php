@@ -67,10 +67,46 @@
             </div>
 
             <div class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Analytics</span>
+                <a href="{{ route('admin.testimonials.index') }}" class="nav-link">
+                    <i class="fas fa-comments"></i>
+                    <span>Testimonials</span>
                 </a>
+
+
+                <div class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                </div>
+
+                <div class="nav-item">
+                    <a href="{{ route('admin.industry.index') }}" class="nav-link">
+                        <i class="fas fa-industry"></i>
+                        <span>Industry</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ route('admin.service.index') }}" class="nav-link">
+                        <i class="fas fa-wrench"></i>
+                        <span>Services</span>
+                    </a>
+                </div>
+
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#reportSubmenu">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Reports</span>
+                        <i class="fas fa-chevron-down arrow"></i>
+                    </a>
+                    <div class="submenu" id="reportSubmenu">
+                        <a href="#" class="nav-link">Sales Report</a>
+                        <a href="#" class="nav-link">User Report</a>
+                        <a href="#" class="nav-link">Product Report</a>
+                    </div>
+                </div>
+            </div>
+    </nav>
 
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-nav">
@@ -187,3 +223,4 @@
         </div>
     </div>
 </nav>
+

@@ -198,13 +198,6 @@ class FrontController extends Controller
 
 
 
-
-
-
-
-
-
-
     public function jumbotronIndex()
     {
         $jumbotrons = Jumbotron::all();
