@@ -50,6 +50,7 @@ Route::get('/admin', function () {
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('cta', App\Http\Controllers\Admin\CtaController::class);
     Route::prefix('login')->name('login.')->group(function () {
         Route::get('/', [LoginController::class, 'showLoginForm'])->name('form');
         Route::post('/', [LoginController::class, 'login'])->name('submit');
@@ -76,7 +77,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/delete/{id}', [FrontController::class, 'jumbotronDelete'])->name('delete');
         Route::post('/change/{id}', [FrontController::class, 'StatusChange'])->name('change');
     });
-    Route::prefix('about')->name('about.')->group(function(){
+    Route::prefix('about')->name('about.')->group(function () {
         Route::get('/', [FrontController::class, 'about'])->name('index');
         Route::match(['get', 'post'], '/add', [FrontController::class, 'aboutAdd'])->name('add');
         Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'aboutEdit'])->name('edit');
@@ -84,7 +85,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::match(['get', 'post'], '/addPoint/{id}', [FrontController::class, 'aboutAddPoint'])->name('addPoint');
         // Route::get('/details/{id}', [FrontController::class,
         // Route::match(['get', 'post'], '/edit', [FrontController::class, 'aboutEdit'])->name('edit');
-       
+
     });
 });
 
