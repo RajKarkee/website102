@@ -39,7 +39,7 @@
 
                     {{-- Page Header --}}
                     <div class="mb-3">
-                        <label class="form-label">Our Partners</label>
+                        <label class="form-label">Valued Partners</label>
                         <input type="text" class="form-control" placeholder="Header here...">
                     </div>
 
