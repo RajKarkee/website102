@@ -76,7 +76,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/delete/{id}', [FrontController::class, 'jumbotronDelete'])->name('delete');
         Route::post('/change/{id}', [FrontController::class, 'StatusChange'])->name('change');
     });
-    Route::prefix('about')->name('about.')->group(function(){
+    Route::prefix('about')->name('about.')->group(function () {
         Route::get('/', [FrontController::class, 'about'])->name('index');
         Route::match(['get', 'post'], '/add', [FrontController::class, 'aboutAdd'])->name('add');
         Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'aboutEdit'])->name('edit');
@@ -84,14 +84,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::match(['get', 'post'], '/addPoint/{id}', [FrontController::class, 'aboutAddPoint'])->name('addPoint');
         // Route::get('/details/{id}', [FrontController::class,
         // Route::match(['get', 'post'], '/edit', [FrontController::class, 'aboutEdit'])->name('edit');
-       Route::prefix('partner')->name('partner.')->group(function () {
-            Route::get('/', [FrontController::class, 'partner'])->name('index');
-            Route::match(['get', 'post'], '/add', [FrontController::class, 'partnerAdd'])->name('add');
-            Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'partnerEdit'])->name('edit');
-            Route::delete('/delete/{id}', [FrontController::class, 'partnerDelete'])->name('delete');
-        });
+
     });
 });
+
 
 
 Route::post('/admin/logout', function () {
@@ -100,3 +96,7 @@ Route::post('/admin/logout', function () {
 })->name('admin.logout');
 
 Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+
+
+Route::get('/admin/partner/index', [FrontController::class, 'partnerIndex'])->name('admin.partner.index');
+Route::post('/admin/partner/store', [FrontController::class, 'partnerStore'])->name('admin.partner.store');

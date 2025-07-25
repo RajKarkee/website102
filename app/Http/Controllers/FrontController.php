@@ -7,6 +7,8 @@ use App\Models\Service;
 use App\Models\Jumbotron;
 use App\Models\About;
 use Illuminate\Http\Request;
+use App\Models\Partner;
+use Illuminate\Support\Facades\Storage;
 
 class FrontController extends Controller
 {
@@ -128,6 +130,81 @@ class FrontController extends Controller
             'icon_description' => $service->icon_description
         ]);
     }
+
+
+
+
+
+    public function partnerIndex()
+    {
+        $partner = Partner::all(); // Use the correct Partners model
+        return view('admin.partner.index', compact('partner'));
+    }
+
+
+    public function partnerStore(Request $request)
+    {
+        $action = $request->input('action');
+
+        // DELETE partner
+        if (str_starts_with($action, 'delete_')) {
+            $id = explode('_', $action)[1];
+            $partner = Partner::find($id);
+            if ($partner) {
+                if ($partner->logo) {
+                    Storage::delete('public/' . $partner->logo);
+                }
+                $partner->delete();
+            }
+            return redirect()->back()->with('success', 'Partner deleted');
+        }
+
+        // UPDATE existing partners
+        if ($request->has('partners')) {
+            foreach ($request->partners as $id => $data) {
+                $partner = Partner::find($id);
+                if ($partner) {
+                    $partner->name = $data['name'];
+                    $partner->email = $data['email'];
+                    if (isset($data['logo'])) {
+                        $file = $request->file("partners.$id.logo");
+                        if ($file) {
+                            $path = $file->store('partner_logos', 'public');
+                            $partner->logo = $path;
+                        }
+                    }
+                    $partner->save();
+                }
+            }
+        }
+
+        // ADD new partner
+        if ($request->filled('new_partner.name')) {
+            $new = new Partner;
+            $new->name = $request->input('new_partner.name');
+            $new->email = $request->input('new_partner.email');
+            if ($request->hasFile('new_partner.logo')) {
+                $path = $request->file('new_partner.logo')->store('partner_logos', 'public');
+                $new->logo = $path;
+            }
+            $new->save();
+        }
+
+        return redirect()->back()->with('success', 'Changes saved successfully');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function jumbotronIndex()
     {
         $jumbotrons = Jumbotron::all();
@@ -228,8 +305,8 @@ class FrontController extends Controller
     }
     public function about()
     {
-        $about=About::all();
-        return view('admin.about.index',compact('about'));
+        $about = About::all();
+        return view('admin.about.index', compact('about'));
     }
     public function aboutAdd(Request $request)
     {
@@ -252,7 +329,8 @@ class FrontController extends Controller
 
         return view('admin.about.add');
     }
-    public function aboutEdit($id, Request $request){
+    public function aboutEdit($id, Request $request)
+    {
         $aboutdata = About::findOrFail($id);
         if ($request->isMethod('post')) {
             $aboutdata->title = $request->input('title');
@@ -282,46 +360,43 @@ class FrontController extends Controller
         $aboutdata->delete();
         return redirect()->route('admin.about.index')->with('success', 'About section deleted successfully.');
     }
-  public function aboutAddPoint($id, Request $request)
-{
-    $aboutdata = About::findOrFail($id);
+    public function aboutAddPoint($id, Request $request)
+    {
+        $aboutdata = About::findOrFail($id);
 
-    if ($request->isMethod('post')) {
-        $points = [];
-        
-        // Main point details
-        $aboutdata->point_title = $request->input('point_title');
-        $aboutdata->point_description = $request->input('point_description');
+        if ($request->isMethod('post')) {
+            $points = [];
 
-        // Individual points
-        for ($i = 1; $i <= 4; $i++) {
-            $pointKey = "point_$i";
-            $points[$pointKey] = [
-                'title' => $request->input("{$pointKey}.title"),
-                'description' => $request->input("{$pointKey}.description"),
-                'icon' => null
-            ];
+            // Main point details
+            $aboutdata->point_title = $request->input('point_title');
+            $aboutdata->point_description = $request->input('point_description');
 
-            if ($request->hasFile("{$pointKey}.icon")) {
-                $path = $request->file("{$pointKey}.icon")->store('about_points', 'public');
-                $points[$pointKey]['icon'] = $path;
+            // Individual points
+            for ($i = 1; $i <= 4; $i++) {
+                $pointKey = "point_$i";
+                $points[$pointKey] = [
+                    'title' => $request->input("{$pointKey}.title"),
+                    'description' => $request->input("{$pointKey}.description"),
+                    'icon' => null
+                ];
+
+                if ($request->hasFile("{$pointKey}.icon")) {
+                    $path = $request->file("{$pointKey}.icon")->store('about_points', 'public');
+                    $points[$pointKey]['icon'] = $path;
+                }
             }
+
+            $aboutdata->point_1 = json_encode($points['point_1']);
+            $aboutdata->point_2 = json_encode($points['point_2']);
+            $aboutdata->point_3 = json_encode($points['point_3']);
+            $aboutdata->point_4 = json_encode($points['point_4']);
+
+            $aboutdata->save();
+
+            return redirect()->route('admin.about.index')
+                ->with('success', 'Points added successfully.');
         }
 
-        $aboutdata->point_1 = json_encode($points['point_1']);
-        $aboutdata->point_2 = json_encode($points['point_2']);
-        $aboutdata->point_3 = json_encode($points['point_3']);
-        $aboutdata->point_4 = json_encode($points['point_4']);
-        
-        $aboutdata->save();
-
-        return redirect()->route('admin.about.index')
-            ->with('success', 'Points added successfully.');
+        return view('admin.about.addpoint', compact('aboutdata'));
     }
-
-    return view('admin.about.addpoint', compact('aboutdata'));
-
-   
-}
-
 }
