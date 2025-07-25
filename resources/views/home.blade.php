@@ -175,15 +175,19 @@
                     </p>
                 </div>
 
+                @php
+                    $teamMembers = \App\Models\Team::with('position')->get();
+                @endphp
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mb-12">
                     @foreach ($teamMembers as $member)
                         <div
-                            class="gradient-card hover:scale-105 transition-all duration-300 border-0 text-center bg-card rounded-xl shadow-sm">
-                            <div class="p-4 sm:p-6">
-                                <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}"
-                                    class="w-20 h-20 rounded-full object-cover mx-auto mb-4">
-                                <h4 class="font-semibold text-foreground">{{ $member['name'] }}</h4>
-                                <p class="text-sm text-muted-foreground">{{ $member['role'] }}</p>
+                            class="bg-primary/10 border border-primary/20 rounded-3xl shadow-sm hover:scale-105 transition-all duration-300 text-center">
+                            <div class="p-6">
+                                <img src="{{ $member->image ? asset('storage/' . $member->image) : 'https://ui-avatars.com/api/?name=' . urlencode($member->name) . '&background=0D8ABC&color=fff&size=128' }}"
+                                    alt="{{ $member->name }}"
+                                    class="w-20 h-20 rounded-full object-cover mx-auto mb-4 border-4 border-primary/20">
+                                <h4 class="font-semibold text-foreground mb-1">{{ $member->name }}</h4>
+                                <span class="badge bg-primary text-white mb-2">{{ $member->position->name ?? '-' }}</span>
                             </div>
                         </div>
                     @endforeach

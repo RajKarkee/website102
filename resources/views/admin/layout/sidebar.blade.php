@@ -37,6 +37,18 @@
             </a>
         </div>
         <div class="nav-item">
+            <a href="{{ route('admin.team.index') }}" class="nav-link">
+                <i class="fas fa-users"></i>
+                <span>Team</span>
+            </a>
+        </div>
+        <div class="nav-item">
+            <a href="{{ route('admin.position.index') }}" class="nav-link">
+                <i class="fas fa-briefcase"></i>
+                <span>Positions</span>
+            </a>
+        </div>
+        <div class="nav-item">
             <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#productSubmenu">
                 <i class="fas fa-box"></i>
                 <span>Products</span>

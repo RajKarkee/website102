@@ -51,6 +51,8 @@ Route::get('/admin', function () {
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('cta', App\Http\Controllers\Admin\CtaController::class);
+    Route::resource('team', App\Http\Controllers\Admin\TeamController::class);
+    Route::resource('position', App\Http\Controllers\Admin\PositionController::class);
     Route::prefix('login')->name('login.')->group(function () {
         Route::get('/', [LoginController::class, 'showLoginForm'])->name('form');
         Route::post('/', [LoginController::class, 'login'])->name('submit');
