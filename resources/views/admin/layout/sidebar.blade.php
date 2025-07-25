@@ -6,7 +6,7 @@
                     <span>Dashboard</span>
                 </a>
             </div>
-            
+
             <div class="nav-item">
                 <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#userSubmenu">
                     <i class="fas fa-users"></i>
@@ -19,7 +19,7 @@
                     <a href="#" class="nav-link">User Roles</a>
                 </div>
             </div>
-                   <div class="nav-item">
+            <div class="nav-item">
                 <a href="{{ route('admin.jumbotron.index') }}" class="nav-link">
                     <i class="fas fa-chart-bar"></i>
                     <span>Jumbotron</span>
@@ -59,6 +59,13 @@
             </div>
 
             <div class="nav-item">
+                <a href="{{ route('admin.partner.index') }}" class="nav-link">
+                    <i class="fas fa-handshake"></i>
+                    <span>Partners</span>
+                </a>
+            </div>
+
+            <div class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="fas fa-chart-bar"></i>
                     <span>Analytics</span>
@@ -71,7 +78,7 @@
                     <span>Industry</span>
                 </a>
             </div>
-              <div class="nav-item">
+            <div class="nav-item">
                 <a href="{{ route('admin.service.index') }}" class="nav-link">
                     <i class="fas fa-wrench"></i>
                     <span>Services</span>
