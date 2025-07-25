@@ -175,15 +175,19 @@
                     </p>
                 </div>
 
+                @php
+                    $teamMembers = \App\Models\Team::with('position')->get();
+                @endphp
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mb-12">
                     @foreach ($teamMembers as $member)
                         <div
-                            class="gradient-card hover:scale-105 transition-all duration-300 border-0 text-center bg-card rounded-xl shadow-sm">
-                            <div class="p-4 sm:p-6">
-                                <img src="{{ $member['image'] }}" alt="{{ $member['name'] }}"
-                                    class="w-20 h-20 rounded-full object-cover mx-auto mb-4">
-                                <h4 class="font-semibold text-foreground">{{ $member['name'] }}</h4>
-                                <p class="text-sm text-muted-foreground">{{ $member['role'] }}</p>
+                            class="bg-primary/10 border border-primary/20 rounded-3xl shadow-sm hover:scale-105 transition-all duration-300 text-center">
+                            <div class="p-6">
+                                <img src="{{ $member->image ? asset('storage/' . $member->image) : 'https://ui-avatars.com/api/?name=' . urlencode($member->name) . '&background=0D8ABC&color=fff&size=128' }}"
+                                    alt="{{ $member->name }}"
+                                    class="w-20 h-20 rounded-full object-cover mx-auto mb-4 border-4 border-primary/20">
+                                <h4 class="font-semibold text-foreground mb-1">{{ $member->name }}</h4>
+                                <span class="badge bg-primary text-white mb-2">{{ $member->position->name ?? '-' }}</span>
                             </div>
                         </div>
                     @endforeach
@@ -282,34 +286,26 @@
             </div>
         </section>
 
-        <!-- Contact CTA -->
-        <section class="py-20">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <div class="bg-primary/10 rounded-3xl p-12 border border-primary/20">
-                    <i data-lucide="message-square" class="h-16 w-16 text-primary mx-auto mb-6"></i>
-                    <h2 class="text-4xl font-bold mb-6">
-                        <span class="text-primary">
-                            Ready to Get Started?
-                        </span>
-                    </h2>
-                    <p class="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                        Transform your business finances with professional accounting services.
-                        Get your free consultation today and discover how we can help your business thrive.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="{{ route('contact') }}"
-                            class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full text-lg font-semibold inline-flex items-center justify-center transition-colors">
-                            Get Free Consultation
-                            <i data-lucide="arrow-right" class="ml-2 h-5 w-5"></i>
-                        </a>
-                        <a href="{{ route('services.index') }}"
-                            class="border border-primary text-primary hover:bg-primary/10 px-8 py-4 rounded-full text-lg font-semibold inline-flex items-center justify-center transition-colors">
-                            View Our Services
-                        </a>
+        <!-- Dynamic CTA -->
+        @php
+            $cta = \App\Models\Cta::where('page', 'home')->first();
+        @endphp
+        @if ($cta)
+            <section class="py-20">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <div class="bg-primary/10 rounded-3xl p-12 border border-primary/20">
+                        <i data-lucide="{{ $cta->icon ?? 'target' }}" class="h-16 w-16 text-primary mx-auto mb-6"></i>
+                        @include('components.cta', [
+                            'icon' => $cta->icon ?? 'target',
+                            'title' => $cta->title,
+                            'description' => $cta->description,
+                            'button1_text' => $cta->button1_text,
+                            'button2_text' => $cta->button2_text,
+                        ])
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
     </div>
 @endsection
 
