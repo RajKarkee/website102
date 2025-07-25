@@ -31,8 +31,8 @@
 
                            $userpic = Userpic::where('user_id', Auth::id())->first();
                        @endphp
-                       <img src="{{ asset('storage/' . ($userpic?->image ?? 'default.png')) }}"
-                           alt="User Image" class="user-img" />
+                       <img src="{{ asset('storage/' . ($userpic?->image ?? 'default.png')) }}" alt="User Image"
+                           class="user-img" />
 
                        <span class="user-name">{{ Auth::user()->name }}</span>
                        <i class="fas fa-chevron-down"></i>

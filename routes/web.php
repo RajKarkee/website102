@@ -92,9 +92,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
+
 Route::post('/admin/logout', function () {
     Auth::logout();
     return redirect('/admin/login')->with('success', 'Logged out successfully!');
 })->name('admin.logout');
 
 Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+
+
+Route::get('/admin/partner/index', [FrontController::class, 'partnerIndex'])->name('admin.partner.index');
+Route::post('/admin/partner/store', [FrontController::class, 'partnerStore'])->name('admin.partner.store');
