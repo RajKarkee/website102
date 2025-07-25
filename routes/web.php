@@ -84,7 +84,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::match(['get', 'post'], '/addPoint/{id}', [FrontController::class, 'aboutAddPoint'])->name('addPoint');
         // Route::get('/details/{id}', [FrontController::class,
         // Route::match(['get', 'post'], '/edit', [FrontController::class, 'aboutEdit'])->name('edit');
-       
+       Route::prefix('partner')->name('partner.')->group(function () {
+            Route::get('/', [FrontController::class, 'partner'])->name('index');
+            Route::match(['get', 'post'], '/add', [FrontController::class, 'partnerAdd'])->name('add');
+            Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'partnerEdit'])->name('edit');
+            Route::delete('/delete/{id}', [FrontController::class, 'partnerDelete'])->name('delete');
+        });
     });
 });
 
