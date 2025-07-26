@@ -2,22 +2,22 @@
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-nav">
             <div class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <i class="fas fa-home"></i>
                     <span>Dashboard</span>
                 </a>
             </div>
 
             <div class="nav-item">
-                <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#userSubmenu">
+                <a href="#" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" data-bs-toggle="collapse" data-bs-target="#userSubmenu">
                     <i class="fas fa-users"></i>
                     <span>Users</span>
                     <i class="fas fa-chevron-down arrow"></i>
                 </a>
                 <div class="submenu" id="userSubmenu">
-                    <a href="#" class="nav-link">All Users</a>
-                    <a href="#" class="nav-link">Add User</a>
-                    <a href="#" class="nav-link">User Roles</a>
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link">All Users</a>
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link">Add User</a>
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link">User Roles</a>
                 </div>
             </div>
             <div class="nav-item">
@@ -108,27 +108,7 @@
             </div>
     </nav>
 
-<nav class="sidebar" id="sidebar">
-    <div class="sidebar-nav">
-        <div class="nav-item">
-            <a href="#" class="nav-link active">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
-            </a>
-        </div>
-        <div class="nav-item">
-            <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#userSubmenu">
-                <i class="fas fa-users"></i>
-                <span>Users</span>
-                <i class="fas fa-chevron-down arrow"></i>
-            </a>
-            <div class="submenu" id="userSubmenu">
-                <a href="#" class="nav-link">All Users</a>
-                <a href="#" class="nav-link">Add User</a>
-                <a href="#" class="nav-link">User Roles</a>
-
-            </div>
-        </div>
+            <!-- Remove duplicate navigation -->
         <div class="nav-item">
             <a href="{{ route('admin.jumbotron.index') }}" class="nav-link">
                 <i class="fas fa-chart-bar"></i>

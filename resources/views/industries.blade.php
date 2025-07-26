@@ -136,7 +136,7 @@
                     ];
                 @endphp
 
-                @foreach ($industries as $industry)
+                @foreach ($industryData as $industry)
                     <div
                         class="gradient-card p-6 border-0 rounded-xl shadow-sm hover:scale-105 transition-all duration-300 group h-full flex flex-col">
                         <div
