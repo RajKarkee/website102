@@ -12,7 +12,11 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TestimonialController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\CtaController as AdminCtaController;
+use App\Http\Controllers\Admin\TeamController as AdminTeamController;
+use App\Http\Controllers\Admin\PositionController as AdminPositionController;
 
 /*
 |--------------------------------------------------------------------------
