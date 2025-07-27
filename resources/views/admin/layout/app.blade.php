@@ -23,6 +23,18 @@
     
     @stack('styles')
     <style>
+        :root {
+            --header-height: 60px;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+        }
+
         .header {
             background: linear-gradient(135deg, var(--primary-color), var(--hover-color));
             color: var(--text-light);
@@ -40,7 +52,126 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            height: 100%;
             padding: 0 20px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--header-height);
+            padding: 20px;
+            flex: 1;
+            min-height: calc(100vh - var(--header-height));
+            background-color: #f8f9fa;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: #f8f9fa;
+            color: var(--primary-color);
+        }
+
+        .submenu {
+            background-color: #f8f9fa;
+            overflow: hidden;
+            transition: height 0.3s ease-out;
+            padding-left: 25px;
+        }
+
+        .submenu .nav-link {
+            padding: 8px 15px;
+            font-size: 0.95em;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .submenu .nav-link:hover {
+            opacity: 1;
+            padding-left: 20px;
+        }
+
+        .arrow {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            text-align: center;
+            line-height: 16px;
+        }
+
+        .arrow.rotated {
+            transform: rotate(180deg);
+        }
+
+        /* Prevent text selection during navigation */
+        .nav-link {
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Active state styles */
+        .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link i {
+            width: 20px;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .submenu {
+            padding-left: 30px;
+            display: none;
+            overflow: hidden;
+        }
+
+        .submenu.show {
+            display: block;
+        }
+
+        .arrow {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .arrow.rotated {
+            transform: rotate(180deg);
         }
 
         .logo {
@@ -191,26 +322,41 @@
             });
 
             // Sidebar dropdown functionality
-            $('.nav-link[data-bs-toggle="collapse"]').on('click', function(e) {
+            $(document).on('click', '.nav-link[data-bs-toggle="collapse"]', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
+
+                const $this = $(this);
+                const $submenu = $($this.data('bs-target'));
+                const $arrow = $this.find('.arrow');
+                
+                // Close other submenus
+                $('.submenu').not($submenu).slideUp(300);
+                $('.arrow').not($arrow).removeClass('rotated');
+                
+                // Toggle current submenu
+                $submenu.slideToggle(300, function() {
+                    // Update arrow only after animation completes
+                    $arrow.toggleClass('rotated');
+                });
+                
+                // Set active state
+                $('.nav-link').not($this).removeClass('active');
+                $this.toggleClass('active');
+                e.preventDefault();
+                e.stopPropagation();
 
                 const target = $(this).data('bs-target');
                 const submenu = $(target);
                 const arrow = $(this).find('.arrow');
 
-                // Toggle submenu
-                if (submenu.hasClass('show')) {
-                    submenu.removeClass('show');
-                    arrow.removeClass('rotated');
-                } else {
-                    // Close other submenus
-                    $('.submenu').removeClass('show');
-                    $('.arrow').removeClass('rotated');
+                // Toggle current submenu
+                submenu.slideToggle(300);
+                arrow.toggleClass('rotated');
 
-                    // Open clicked submenu
-                    submenu.addClass('show');
-                    arrow.addClass('rotated');
-                }
+                // Close other submenus
+                $('.submenu').not(submenu).slideUp(300);
+                $('.arrow').not(arrow).removeClass('rotated');
             });
 
             // Active nav link
