@@ -22,38 +22,50 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
+
+            
             <!-- Company Overview -->
+            @foreach($aboutData as $aboutData)
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
                 <div>
                     <h2 class="text-3xl font-bold mb-6 text-primary">
-                        Professional Accounting Excellence
+                       {{ $aboutData->title }}
                     </h2>
+                   @php
+    $description = strip_tags($aboutData->description ?? '');
+
+    if (!is_string($description)) {
+        $description = (string) $description;
+    }
+
+    $words = str_word_count($description, 1);
+    $half = ceil(count($words) / 2);
+    $firstHalf = implode(' ', array_slice($words, 0, $half));
+    $secondHalf = implode(' ', array_slice($words, $half));
+@endphp
+
                     <p class="text-lg text-muted-foreground mb-6 leading-relaxed">
-                        At B&B Tax and Accounting Service Limited, we specialize in providing comprehensive
-                        accounting services tailored to the needs of small and medium businesses across New Zealand.
-                        Our experienced team is dedicated to helping you stay compliant, organized, and focused on
-                        growing your business.
+                        {{ $firstHalf }}
                     </p>
                     <p class="text-lg text-muted-foreground mb-8 leading-relaxed">
-                        With over 15 years in the industry, we understand the unique challenges facing New Zealand
-                        businesses. Our modern approach combines traditional accounting expertise with cutting-edge
-                        technology to deliver efficient, accurate, and cost-effective solutions.
+                      {{ $secondHalf }}
                     </p>
 
                     <div class="grid grid-cols-2 gap-6">
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-primary mb-2">15+</div>
+                            <div class="text-3xl font-bold text-primary mb-2">{{$aboutData->Experience}}</div>
                             <div class="text-muted-foreground">Years Experience</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-primary mb-2">500+</div>
+                            <div class="text-3xl font-bold text-primary mb-2">{{$aboutData->client}}</div>
                             <div class="text-muted-foreground">Happy Clients</div>
                         </div>
                     </div>
                 </div>
+                @endforeach
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                        alt="B&B Tax team at work" class="rounded-2xl shadow-xl">
+                    <img src="{{ asset('storage/' . $aboutData->image) }}" alt="B&B Tax team" class="rounded-2xl shadow-xl w-full h-auto">
+                        
                 </div>
             </div>
 
@@ -105,13 +117,14 @@
             </div>
 
             <!-- Why Choose Us -->
+            @foreach($aboutData as $aboutData)
             <div class="mb-20">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold mb-4 text-primary">
-                        Why Choose B&B Tax?
+                        {{ $aboutData->point_title }}
                     </h2>
                     <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-                        Discover what sets us apart from other accounting firms
+                       {{ $aboutData->point_description }}
                     </p>
                 </div>
 

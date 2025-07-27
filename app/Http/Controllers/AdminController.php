@@ -54,12 +54,6 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
-public function this(){
-    this->validate([
-        'name' => 'required|string',
-        'email' => 'required|email|unique:users,email,' . Auth::id(),
-        'password' => 'nullable|min:6',
-    ]);
-}
+
 
 }

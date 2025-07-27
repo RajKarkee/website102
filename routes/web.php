@@ -40,7 +40,7 @@ Route::get('/services/xero-training', [ServiceController::class, 'xeroTraining']
 
 // Other Pages
 Route::get('/industries', [Front1Controller::class, 'industryPage'])->name('industries');
-Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/about', [Front1Controller::class, 'aboutPage'])->name('about');
 Route::get('/team', [TeamController::class, 'index'])->name('team');
 Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials');
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
