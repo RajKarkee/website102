@@ -137,6 +137,7 @@
         </div>
     </div>
 </nav>
+</aside>
 {{-- 
             <div class="nav-item">
                 <a href="#" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" data-bs-toggle="collapse" data-bs-target="#userSubmenu">
