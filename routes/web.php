@@ -156,6 +156,7 @@ Route::post('/admin/partner/store', [FrontController::class, 'partnerStore'])->n
 
 
 Route::prefix('admin')->group(function () {
+ 
     Route::get('testimonials', [TestimonialController::class, 'index'])->name('admin.testimonials.index');
     Route::post('testimonials', [TestimonialController::class, 'store'])->name('admin.testimonials.store');
     Route::put('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('admin.testimonials.update'); // ✅ Added

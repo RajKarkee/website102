@@ -73,7 +73,12 @@
                 <span>Positions</span>
             </a>
         </div>
-
+        <div class="nav-item">
+            <a href="{{ route('admin.testimonials.index') }}" class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
+                <i class="fas fa-comments"></i>
+                <span>Testimonials</span>
+            </a>
+        </div>
         <div class="nav-item">
             <a href="{{ route('admin.partner.index') }}" class="nav-link {{ request()->routeIs('admin.partner.*') ? 'active' : '' }}">
                 <i class="fas fa-handshake"></i>
