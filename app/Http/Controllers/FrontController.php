@@ -344,6 +344,43 @@ class FrontController extends Controller
 
         return view('admin.about.edit', compact('aboutdata'));
     }
+
+    public function aboutUpdate(Request $request, $id)
+    {
+        // Validate the form input
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:2048',
+        ]);
+
+        // Fetch the About record
+        $about = About::findOrFail($id);
+
+        // Update the title and description
+        $about->title = $request->input('title');
+        $about->description = $request->input('description');
+
+        // Handle image upload if a new one is provided
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($about->image && Storage::disk('public')->exists($about->image)) {
+                Storage::disk('public')->delete($about->image);
+            }
+
+            // Store new image
+            $imagePath = $request->file('image')->store('about_images', 'public');
+            $about->image = $imagePath;
+        }
+
+        // Save the updated record
+        $about->save();
+
+        // Redirect back with success message
+        return redirect()->route('admin.about.index')->with('success', 'About section updated successfully.');
+    }
+
+
     public function aboutDelete($id)
     {
         $aboutdata = About::findOrFail($id);

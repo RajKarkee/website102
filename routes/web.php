@@ -66,7 +66,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('cta', AdminCtaController::class);
         Route::resource('team', AdminTeamController::class);
         Route::resource('position', AdminPositionController::class);
-        
+
         // Industry routes
         Route::prefix('industry')->name('industry.')->group(function () {
             Route::get('/', [FrontController::class, 'industry'])->name('index');
@@ -93,14 +93,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/change/{id}', [FrontController::class, 'StatusChange'])->name('change');
         });
 
-        // About routes
+        // // About routes
+        // Route::prefix('about')->name('about.')->group(function () {
+        //     Route::get('/', [FrontController::class, 'about'])->name('index');
+        //     Route::match(['get', 'post'], '/add', [FrontController::class, 'aboutAdd'])->name('add');
+        //     Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'aboutEdit'])->name('edit');
+        //     Route::delete('/delete/{id}', [FrontController::class, 'aboutDelete'])->name('delete');
+        //     Route::match(['get', 'post'], '/addPoint/{id}', [FrontController::class, 'aboutAddPoint'])->name('addPoint');
+
+        // });
         Route::prefix('about')->name('about.')->group(function () {
             Route::get('/', [FrontController::class, 'about'])->name('index');
             Route::match(['get', 'post'], '/add', [FrontController::class, 'aboutAdd'])->name('add');
             Route::match(['get', 'post'], '/edit/{id}', [FrontController::class, 'aboutEdit'])->name('edit');
+            Route::put('/update/{id}', [FrontController::class, 'aboutUpdate'])->name('update'); // ✅ Here
             Route::delete('/delete/{id}', [FrontController::class, 'aboutDelete'])->name('delete');
             Route::match(['get', 'post'], '/addPoint/{id}', [FrontController::class, 'aboutAddPoint'])->name('addPoint');
         });
+
 
         // Products routes
         Route::prefix('products')->name('products.')->group(function () {
@@ -115,10 +125,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/pending', [AdminController::class, 'ordersPending'])->name('pending');
             Route::get('/completed', [AdminController::class, 'ordersCompleted'])->name('completed');
         });
-        
+
         // Analytics route
         Route::get('/analytics', [AdminController::class, 'analytics'])->name('analytics');
-        
+
         // Reports routes
         Route::prefix('reports')->name('reports.')->group(function () {
             Route::get('/sales', [AdminController::class, 'salesReport'])->name('sales');
@@ -155,11 +165,12 @@ Route::post('/admin/partner/store', [FrontController::class, 'partnerStore'])->n
 
 
 
+
 Route::prefix('admin')->group(function () {
- 
     Route::get('testimonials', [TestimonialController::class, 'index'])->name('admin.testimonials.index');
     Route::post('testimonials', [TestimonialController::class, 'store'])->name('admin.testimonials.store');
-    Route::put('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('admin.testimonials.update'); // ✅ Added
+    Route::get('testimonials/{testimonial}/edit', [TestimonialController::class, 'edit'])->name('admin.testimonials.edit');
+    Route::put('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('admin.testimonials.update');
     Route::get('testimonials/status/{testimonial}', [TestimonialController::class, 'updateStatus'])->name('admin.testimonials.status');
     Route::delete('testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('admin.testimonials.destroy');
 });
