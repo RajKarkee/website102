@@ -19,7 +19,14 @@ class Front1Controller extends Controller
 
     public function aboutPage(){
         $aboutData=About::all();
-        return view('about', compact('aboutData'));
+        $about=About::first(); // Assuming you want the first record for the about page
+         $points = [
+        $about->point_1,
+        $about->point_2,
+        $about->point_3,
+        $about->point_4,
+    ];
+        return view('about', compact('aboutData', 'points','about'));
        
     }
 }

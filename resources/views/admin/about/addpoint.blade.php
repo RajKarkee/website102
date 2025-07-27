@@ -11,10 +11,10 @@
         </nav>
     </div>
     @php
-        $point_1 =json_decode($aboutdata->point_1,true);
-        $point_2 =json_decode($aboutdata->point_2,true);
-        $point_3 =json_decode($aboutdata->point_3,true);
-        $point_4 =json_decode($aboutdata->point_4,true);
+        $point_1 = old('point_1', $aboutdata->point_1 ?? '');
+        $point_2 = old('point_2', $aboutdata->point_2 ?? '');
+        $point_3 = old('point_3', $aboutdata->point_3 ?? '');
+        $point_4 = old('point_4', $aboutdata->point_4 ?? '');
         $points =[
             '1' => $point_1,
             '2' => $point_2,
