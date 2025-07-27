@@ -20,7 +20,7 @@ class TestimonialController extends Controller
             'image' => 'nullable|image|max:2048',
             'description' => 'required|string',
             'sub_description' => 'nullable|string',
-            'others' => 'nullable|string', // ✅ New field validation
+            'others' => 'nullable|string',
         ]);
 
         $path = $request->file('image')?->store('testimonials', 'public');
@@ -29,26 +29,33 @@ class TestimonialController extends Controller
             'image' => $path,
             'description' => $request->description,
             'sub_description' => $request->sub_description,
-            'others' => $request->others,     // ✅ Store others
-            'status' => 0,                    // ✅ Default disabled
+            'others' => $request->others,
+            'status' => 0,
         ]);
 
         return redirect()->back()->with('success', 'Testimonial added successfully.');
     }
 
+    public function edit(Testimonial $testimonial)
+    {
+        return view('admin.testimonials.edit', compact('testimonial'));
+    }
+
     public function update(Request $request, Testimonial $testimonial)
     {
         $request->validate([
+            'image' => 'nullable|image|max:2048',
             'description' => 'required|string',
             'sub_description' => 'nullable|string',
             'others' => 'nullable|string',
+            'status' => 'nullable|in:1',
         ]);
 
         $testimonial->description = $request->description;
         $testimonial->sub_description = $request->sub_description;
         $testimonial->others = $request->others;
+        $testimonial->status = $request->has('status') ? 1 : 0;
 
-        // Optional: handle image update
         if ($request->hasFile('image')) {
             if ($testimonial->image) {
                 Storage::disk('public')->delete($testimonial->image);
@@ -58,7 +65,7 @@ class TestimonialController extends Controller
 
         $testimonial->save();
 
-        return redirect()->back()->with('success', 'Testimonial updated successfully.');
+        return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial updated successfully.');
     }
 
     public function updateStatus(Testimonial $testimonial)
@@ -75,6 +82,7 @@ class TestimonialController extends Controller
             Storage::disk('public')->delete($testimonial->image);
         }
         $testimonial->delete();
+
         return redirect()->back()->with('success', 'Testimonial deleted.');
     }
 }
