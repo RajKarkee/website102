@@ -13,6 +13,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\CtaController as AdminCtaController;
 use App\Http\Controllers\Admin\TeamController as AdminTeamController;
@@ -173,4 +174,12 @@ Route::prefix('admin')->group(function () {
     Route::put('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('admin.testimonials.update');
     Route::get('testimonials/status/{testimonial}', [TestimonialController::class, 'updateStatus'])->name('admin.testimonials.status');
     Route::delete('testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('admin.testimonials.destroy');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('faq', [FaqController::class, 'index'])->name('admin.faq.index');
+    Route::post('faq', [FaqController::class, 'store'])->name('admin.faq.store');
+    Route::put('faq/{faq}', [FaqController::class, 'update'])->name('admin.faq.update');
+    Route::delete('faq/{faq}', [FaqController::class, 'destroy'])->name('admin.faq.destroy');
+    Route::get('faq/status/{faq}', [FaqController::class, 'updateStatus'])->name('admin.faq.status');
 });

@@ -26,13 +26,6 @@
 
         @section('content')
             <div class="contanier">
-                <h1 class="mb-4">Partners</h1>
-                <div class="text-right mb-3">
-                </div>
-
-
-
-
 
                 <form method="POST" action="{{ route('admin.partner.store') }}" enctype="multipart/form-data">
                     @csrf
