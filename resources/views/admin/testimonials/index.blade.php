@@ -24,7 +24,7 @@
 
 
 
-        @section('content')
+
             <div class="container">
                 <div class="d-flex justify-content-between mb-3">
                     <h2>Testimonials</h2>
@@ -93,12 +93,10 @@
                                 </td>
                                 <td>
                                     <!-- Edit Button -->
-                                    <button class="btn btn-sm btn-warning edit-btn" data-id="{{ $testimonial->id }}"
-                                        data-description="{{ $testimonial->description }}"
-                                        data-sub_description="{{ $testimonial->sub_description }}"
-                                        data-others="{{ $testimonial->others }}">
+                                    <a href="{{ route('admin.testimonials.edit', $testimonial->id) }}"
+                                        class="btn btn-sm btn-warning">
                                         Edit
-                                    </button>
+                                    </a>
 
                                     <!-- Delete Form -->
                                     <form method="POST" action="{{ route('admin.testimonials.destroy', $testimonial) }}"
@@ -118,9 +116,11 @@
                     </tbody>
                 </table>
             </div>
-        @endsection
 
 
 
 
-    </div>
+
+        </div>
+    </main>
+@endsection
