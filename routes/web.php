@@ -66,7 +66,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('cta', AdminCtaController::class);
         Route::resource('team', AdminTeamController::class);
         Route::resource('position', AdminPositionController::class);
-        
+
         // Industry routes
         Route::prefix('industry')->name('industry.')->group(function () {
             Route::get('/', [FrontController::class, 'industry'])->name('index');
@@ -115,10 +115,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/pending', [AdminController::class, 'ordersPending'])->name('pending');
             Route::get('/completed', [AdminController::class, 'ordersCompleted'])->name('completed');
         });
-        
+
         // Analytics route
         Route::get('/analytics', [AdminController::class, 'analytics'])->name('analytics');
-        
+
         // Reports routes
         Route::prefix('reports')->name('reports.')->group(function () {
             Route::get('/sales', [AdminController::class, 'salesReport'])->name('sales');
@@ -148,3 +148,17 @@ Route::post('/admin/logout', function () {
 })->name('admin.logout');
 
 Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+
+
+Route::get('/admin/partner/index', [FrontController::class, 'partnerIndex'])->name('admin.partner.index');
+Route::post('/admin/partner/store', [FrontController::class, 'partnerStore'])->name('admin.partner.store');
+
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('testimonials', [TestimonialController::class, 'index'])->name('admin.testimonials.index');
+    Route::post('testimonials', [TestimonialController::class, 'store'])->name('admin.testimonials.store');
+    Route::put('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('admin.testimonials.update'); // ✅ Added
+    Route::get('testimonials/status/{testimonial}', [TestimonialController::class, 'updateStatus'])->name('admin.testimonials.status');
+    Route::delete('testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('admin.testimonials.destroy');
+});
