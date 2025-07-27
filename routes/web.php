@@ -125,6 +125,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/users', [AdminController::class, 'usersReport'])->name('users');
             Route::get('/products', [AdminController::class, 'productsReport'])->name('products');
         });
+
+        // Partner routes
+        Route::prefix('partner')->name('partner.')->group(function () {
+            Route::get('/', [FrontController::class, 'partnerIndex'])->name('index');
+            Route::post('/store', [FrontController::class, 'partnerStore'])->name('store');
+        });
     });
 });
 
