@@ -28,7 +28,7 @@ use App\Http\Controllers\Admin\PositionController as AdminPositionController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Services Routes
-Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+Route::get('/services', [Front1Controller::class, 'servicePage'])->name('services.index');
 Route::get('/services/payroll-management', [ServiceController::class, 'payrollManagement'])->name('services.payroll-management');
 Route::get('/services/accounts-receivable', [ServiceController::class, 'accountsReceivable'])->name('services.accounts-receivable');
 Route::get('/services/accounts-payable', [ServiceController::class, 'accountsPayable'])->name('services.accounts-payable');

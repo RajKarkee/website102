@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Industry;
 use App\Models\About;
+use App\Models\Service;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 
@@ -36,5 +37,16 @@ class Front1Controller extends Controller
         return view('about', compact('aboutData', 'points','about'));
        
     }
-    public function
+    public function servicePage(){
+        $serviceData=Service::all();
+        foreach($serviceData as $service) {
+            $service->points = json_decode($service->points ?? '[]', true);
+            $service->points_description = json_decode($service->points_description ?? '[]', true);
+            $service->point_icon = json_decode($service->point_icon ?? '[]', true);
+            $service->icon_title = json_decode($service->icon_title ?? '[]', true);
+            $service->icon_description = json_decode($service->icon_description ?? '[]', true);
+        }
+        return view('services.index', compact('serviceData'));
+
+}
 }

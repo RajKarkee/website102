@@ -58,6 +58,7 @@ class FrontController extends Controller
     public function service()
     {
         $services = Service::all();
+     
         return view('admin.services.index', compact('services'));
     }
 
@@ -74,9 +75,23 @@ class FrontController extends Controller
             $serviceData->long_description = request('long_description');
             $serviceData->points = json_encode(request('points', []));
             $serviceData->points_description = json_encode(request('points_description', []));
-            $serviceData->point_icon = json_encode(request('point_icon', []));
+
             $serviceData->icon_title = json_encode(request('icon_title', []));
             $serviceData->icon_description = json_encode(request('icon_description', []));
+            $pointIcons = [];
+
+            if ($request->hasFile('point_icon')) {
+                foreach ($request->file('point_icon') as $iconFile) {
+                    if ($iconFile && $iconFile->isValid()) {
+                        $path = $iconFile->store('point_icons', 'public');
+                        $pointIcons[] = $path;
+                    }
+                }
+            }
+
+            $serviceData->point_icon = json_encode($pointIcons);
+
+
             $serviceData->save();
             return redirect()->route('admin.service.index')
                 ->with('success', 'Service created successfully.');
@@ -93,6 +108,12 @@ class FrontController extends Controller
                 $path = $request->file('icon')->store('service_icons', 'public');
                 $serviceData->icon = $path;
             }
+              $point_icons = [];
+    if ($request->hasFile('point_icon')) {
+        foreach ($request->file('point_icon') as $iconFile) {
+            $point_icons[] = $iconFile->store('point_icons', 'public');
+        }
+    }
             $serviceData->title = request('title');
             $serviceData->description = request('description');
             $serviceData->long_description = request('long_description');
@@ -105,6 +126,7 @@ class FrontController extends Controller
             return redirect()->route('admin.service.index')
                 ->with('success', 'Service updated successfully.');
         }
+        
 
         return view('admin.services.edit', compact('serviceData'));
     }
@@ -428,18 +450,19 @@ class FrontController extends Controller
         }
 
 
-    function safe_decode($json) {
-        $decoded = json_decode($json, true);
-        return is_array($decoded) ? $decoded : ['title' => '', 'description' => '', 'icon' => ''];
-    }
+        function safe_decode($json)
+        {
+            $decoded = json_decode($json, true);
+            return is_array($decoded) ? $decoded : ['title' => '', 'description' => '', 'icon' => ''];
+        }
 
-    $points = [
-        1 => safe_decode(old('point_1', $aboutdata->point_1 ?? '')),
-        2 => safe_decode(old('point_2', $aboutdata->point_2 ?? '')),
-        3 => safe_decode(old('point_3', $aboutdata->point_3 ?? '')),
-        4 => safe_decode(old('point_4', $aboutdata->point_4 ?? '')),
-    ];
-      
-        return view('admin.about.addpoint', compact('aboutdata','points'));
+        $points = [
+            1 => safe_decode(old('point_1', $aboutdata->point_1 ?? '')),
+            2 => safe_decode(old('point_2', $aboutdata->point_2 ?? '')),
+            3 => safe_decode(old('point_3', $aboutdata->point_3 ?? '')),
+            4 => safe_decode(old('point_4', $aboutdata->point_4 ?? '')),
+        ];
+
+        return view('admin.about.addpoint', compact('aboutdata', 'points'));
     }
 }
