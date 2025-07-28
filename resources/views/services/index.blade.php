@@ -4,7 +4,7 @@
 @section('meta_description',
     'Professional accounting services including payroll management, GST filing, tax returns,
     and Xero training for New Zealand businesses.')
-
+ 
 @section('content')
     <div class="min-h-screen bg-background text-foreground">
 
@@ -28,7 +28,12 @@
                         <div class="p-6 relative">
                             <div
                                 class="w-14 h-14 {{ $service['color'] }} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
-                                <i data-lucide="{{ $service['icon'] }}" class="h-7 w-7 text-white"></i>
+                              
+                                 
+                               
+                                    <img src="{{ asset('storage/' . $service['icon']) }}" alt="service"
+                                       >
+                        
                             </div>
                             <div
                                 class="absolute -top-2 -right-2 w-20 h-20 {{ $service['color'] }} rounded-full opacity-10 group-hover:scale-150 transition-transform duration-500">
@@ -40,14 +45,15 @@
                                 {{ $service['description'] }}
                             </p>
                             <div class="flex justify-between items-center mt-auto">
-                                <a href="{{ route($service['link']) }}"
+                                <a href="{{ route('serviceSingle',$service->id) }}"
                                     class="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors">
                                     Learn More
                                     <i data-lucide="arrow-right" class="ml-2 h-4 w-4"></i>
                                 </a>
                                 <div
                                     class="w-8 h-8 {{ $service['color'] }} rounded-lg flex items-center justify-center opacity-20 group-hover:opacity-100 transition-opacity">
-                                    <i data-lucide="{{ $service['icon'] }}" class="h-4 w-4 text-white"></i>
+                                    <img src="{{ asset('storage/' . $service['icon']) }}" class="h-4 w-4 text-white"></i>
+                                  
                                 </div>
                             </div>
                         </div>
