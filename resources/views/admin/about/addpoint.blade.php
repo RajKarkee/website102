@@ -10,18 +10,6 @@
             </ol>
         </nav>
     </div>
-    @php
-        $point_1 = old('point_1', $aboutdata->point_1 ?? '');
-        $point_2 = old('point_2', $aboutdata->point_2 ?? '');
-        $point_3 = old('point_3', $aboutdata->point_3 ?? '');
-        $point_4 = old('point_4', $aboutdata->point_4 ?? '');
-        $points =[
-            '1' => $point_1,
-            '2' => $point_2,
-            '3' => $point_3,
-            '4' => $point_4
-        ];
-    @endphp
 
     <div class="container">
         <div class="card">
@@ -36,7 +24,7 @@
 
                     <div class="form-group mb-3">
                         <label for="point_description" class="form-label">Point Description</label>
-                        <textarea name="point_description" id="point_description" class="form-control" rows="3" required>{{$aboutdata->point_description}}</textarea>
+                        <textarea name="point_description" id="point_description" class="form-control" rows="3" required>{{ $aboutdata->point_description }}</textarea>
                     </div>
 
                     <div class="row">
@@ -49,17 +37,20 @@
                                     <div class="card-body">
                                         <div class="form-group mb-3">
                                             <label for="point_{{ $i }}_title">Title</label>
-                                            <input type="text" name="point_{{ $i }}[title]" id="point_{{ $i }}_title" class="form-control" required value='{{ $points[$i]['title'] ?? '' }}'>
+                                            <input type="text" name="point_{{ $i }}[title]" id="point_{{ $i }}_title" class="form-control" required value="{{ $points[$i]['title'] ?? '' }}">
                                         </div>
 
                                         <div class="form-group mb-3">
                                             <label for="point_{{ $i }}_description">Description</label>
-                                            <textarea name="point_{{ $i }}[description]" id="point_{{ $i }}_description" class="form-control" rows="2" required>{{$points[$i]['description']}}</textarea>
+                                            <textarea name="point_{{ $i }}[description]" id="point_{{ $i }}_description" class="form-control" rows="2" required>{{ $points[$i]['description'] ?? '' }}</textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="point_{{ $i }}_icon">Icon</label>
-                                            <input type="file" name="point_{{ $i }}[icon]" id="point_{{ $i }}_icon" class="form-control dropify" data-height="150" accept="image/*,.svg" / value="{{ $points[$i]['icon'] ?? '' }}">
+                                            <input type="file" name="point_{{ $i }}[icon]" id="point_{{ $i }}_icon" class="form-control dropify" data-height="150" accept="image/*,.svg">
+                                            @if (!empty($points[$i]['icon']))
+                                                <small class="text-muted">Current Icon: {{ $points[$i]['icon'] }}</small>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
