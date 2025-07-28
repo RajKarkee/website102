@@ -27,9 +27,9 @@
 
             <div class="container">
                 <div class="d-flex justify-content-between mb-3">
-                    <h2>Testimonials</h2>
                     <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#testimonialForm">+
                         Add</button>
+
                 </div>
 
                 {{-- Form --}}
