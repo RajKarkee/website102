@@ -13,6 +13,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
+// use App\Http\Controllers\ColorHelper;
+use App\Helpers\ColorHelper;
 
 class FrontController extends Controller
 {
@@ -78,6 +80,7 @@ class FrontController extends Controller
             $serviceData->title = request('title');
             $serviceData->description = request('description');
             $serviceData->long_description = request('long_description');
+         
             $serviceData->colors = request('colors', null);
             $serviceData->points = json_encode(request('points', []));
             $serviceData->points_description = json_encode(request('points_description', []));
@@ -481,6 +484,9 @@ $colors = Color::all();
                 $color = new Color();
                 $color->color = $request->color;
                 $color->hex_code = $request->hex_code;
+                 $hex = $request->colors;
+             $tailwindClass = ColorHelper::getClosestTailwindClass($hex);
+            $color->tailwind_class = $tailwindClass;
                 $color->save();
             } catch (QueryException $e) {
                 if($e->getCode() == 23000) { // Integrity constraint violation

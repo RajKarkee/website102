@@ -7,6 +7,7 @@ use App\Models\About;
 use App\Models\Service;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Front1Controller extends Controller
 {
@@ -38,14 +39,21 @@ class Front1Controller extends Controller
        
     }
     public function servicePage(){
-        $serviceData=Service::all();
-        foreach($serviceData as $service) {
-            $service->points = json_decode($service->points ?? '[]', true);
-            $service->points_description = json_decode($service->points_description ?? '[]', true);
-            $service->point_icon = json_decode($service->point_icon ?? '[]', true);
-            $service->icon_title = json_decode($service->icon_title ?? '[]', true);
-            $service->icon_description = json_decode($service->icon_description ?? '[]', true);
-        }
+        // $serviceData=Service::all();
+        $serviceData = DB::table('services')
+            ->join('colors', 'services.colors', '=', 'colors.id')
+            ->select('services.*', 'colors.tailwind_class as color')
+            ->get()
+            ->map(function ($service) {
+                $service = (array) $service;
+                $service['points'] = json_decode($service['points'] ?? '[]', true);
+                $service['points_description'] = json_decode($service['points_description'] ?? '[]', true);
+                $service['point_icon'] = json_decode($service['point_icon'] ?? '[]', true);
+                $service['icon_title'] = json_decode($service['icon_title'] ?? '[]', true);
+                $service['icon_description'] = json_decode($service['icon_description'] ?? '[]', true);
+                return $service;
+            })
+            ->toArray();  
         return view('services.index', compact('serviceData'));
 
 }
