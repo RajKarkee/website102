@@ -60,7 +60,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [LoginController::class, 'showLoginForm'])->name('form');
         Route::post('/', [LoginController::class, 'login'])->name('submit');
     });
-
+Route::prefix('color')->name('color.')->group(function () {
+    Route::match(['get', 'post'],   '/', [FrontController::class, 'colorIndex'])->name('index');
+    Route::delete('/delete/{id}', [FrontController::class, 'colorDelete'])->name('destroy');
+});
     // Authentication required routes
     Route::middleware(['auth'])->group(function () {
         // Resource routes

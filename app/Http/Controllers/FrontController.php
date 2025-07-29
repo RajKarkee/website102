@@ -8,7 +8,11 @@ use App\Models\Jumbotron;
 use App\Models\About;
 use Illuminate\Http\Request;
 use App\Models\Partner;
+use App\Models\Color;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
 class FrontController extends Controller
 {
@@ -58,13 +62,14 @@ class FrontController extends Controller
     public function service()
     {
         $services = Service::all();
-     
+
         return view('admin.services.index', compact('services'));
     }
 
     public function serviceAdd(Request $request)
     {
         if (request()->isMethod('post')) {
+           
             $serviceData = new Service();
             if ($request->hasFile('icon')) {
                 $path = $request->file('icon')->store('service_icons', 'public');
@@ -73,6 +78,7 @@ class FrontController extends Controller
             $serviceData->title = request('title');
             $serviceData->description = request('description');
             $serviceData->long_description = request('long_description');
+            $serviceData->colors = request('colors', null);
             $serviceData->points = json_encode(request('points', []));
             $serviceData->points_description = json_encode(request('points_description', []));
 
@@ -96,8 +102,9 @@ class FrontController extends Controller
             return redirect()->route('admin.service.index')
                 ->with('success', 'Service created successfully.');
         }
+         $colors = Color::all();
 
-        return view('admin.services.add');
+        return view('admin.services.add', compact('colors'));
     }
 
     public function serviceEdit($id, Request $request)
@@ -117,6 +124,7 @@ class FrontController extends Controller
             $serviceData->title = request('title');
             $serviceData->description = request('description');
             $serviceData->long_description = request('long_description');
+            $serviceData->colors=request('colors',null);
             $serviceData->points = json_encode(request('points', []));
             $serviceData->points_description = json_encode(request('points_description', []));
             $serviceData->point_icon = json_encode(request('point_icon', []));
@@ -126,9 +134,9 @@ class FrontController extends Controller
             return redirect()->route('admin.service.index')
                 ->with('success', 'Service updated successfully.');
         }
-        
 
-        return view('admin.services.edit', compact('serviceData'));
+$colors = Color::all();
+        return view('admin.services.edit', compact('serviceData', 'colors'));
     }
 
     public function serviceDelete($id)
@@ -235,7 +243,7 @@ class FrontController extends Controller
             //     'description' => 'nullable|string',
             //     'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             //     'icon' => 'nullable|string|max:255',
-            //     'badge' => 'nullable|string|max:255',   
+            //     'badge' => 'nullable|string|max:255',
             // ]);
             if ($request->hasFile('background_image')) {
                 $path = $request->file('background_image')->store('jumbotrons', 'public');
@@ -407,7 +415,7 @@ class FrontController extends Controller
     {
         $aboutdata = About::findOrFail($id);
         // if ($aboutdata->image) {
-        //     Storage::disk('public')->delete($aboutdata->image); 
+        //     Storage::disk('public')->delete($aboutdata->image);
         // }
         $aboutdata->delete();
         return redirect()->route('admin.about.index')->with('success', 'About section deleted successfully.');
@@ -464,5 +472,30 @@ class FrontController extends Controller
         ];
 
         return view('admin.about.addpoint', compact('aboutdata', 'points'));
+    }
+    public function colorIndex(Request $request)
+    {
+        $colors = Color::all();
+        if ($request->isMethod('post')) {
+            try{
+                $color = new Color();
+                $color->color = $request->color;
+                $color->hex_code = $request->hex_code;
+                $color->save();
+            } catch (QueryException $e) {
+                if($e->getCode() == 23000) { // Integrity constraint violation
+                    return redirect()->back()->with('error', 'Color already exists.');
+                }
+                Log::error('Failed to add color: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Failed to add color.');
+            }
+        }
+        return view('admin.color.index', compact('colors'));
+    }
+    public function colorDelete(){
+        $id = request('id');
+        $color = Color::findOrFail($id);
+        $color->delete();
+        return redirect()->back()->with('success', 'Color deleted successfully.');
     }
 }

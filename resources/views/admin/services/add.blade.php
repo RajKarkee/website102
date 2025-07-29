@@ -51,6 +51,24 @@
                                     <textarea class="form-control" id="long_description" name="long_description" rows="5"
                                         placeholder="Detailed description for service pages"></textarea>
                                 </div>
+                                <div class="form-group mb-3">
+                                    <label for="color" class="form-label">Service Color</label>
+                                    <select class="form-control" id="color" name="colors" onchange="updateColorPreview(this)">
+                                        <option value="">Select Color</option>
+                                        @foreach($colors as $color)
+                                            <option value="{{ $color->id }}" data-color="{{ $color->hex_code }}" style="background-color: {{ $color->hex_code }}; color: {{ $color->hex_code === '#FFFFFF' || $color->hex_code === '#ffffff' ? '#000' : '#fff' }};">
+                                                {{ $color->color }} ({{ $color->hex_code }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <small class="form-text text-muted">Choose a color for this service (optional)</small>
+                                    <div id="selected-color-preview" class="mt-2" style="display: none;">
+                                        <div class="d-flex align-items-center">
+                                            <div id="color-swatch" class="border rounded me-2" style="width: 30px; height: 30px; background-color: #ffffff;"></div>
+                                            <span id="color-info" class="text-muted">No color selected</span>
+                                        </div>
+                                    </div>
+                                </div>  
 
                                 <div class="form-group mb-3">
                                     <label class="form-label">Service Points</label>
@@ -132,7 +150,90 @@
         </div>
     </main>
 
+    <style>
+        /* Color select styling */
+        #color option {
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin: 2px 0;
+        }
+        
+        #color option:hover {
+            opacity: 0.8;
+        }
+        
+        #selected-color-preview {
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        
+        #color-swatch {
+            border: 2px solid #dee2e6 !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        /* Icon preview styling */
+        .icon-preview {
+            text-align: center;
+            padding: 15px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+        
+        .icon-preview.active {
+            border-color: #007bff;
+            background-color: #e7f3ff;
+        }
+        
+        .icon-preview img {
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .preview-text {
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        /* Dynamic field buttons */
+        .add-field-btn {
+            border-style: dashed;
+        }
+        
+        .add-field-btn:hover {
+            border-style: solid;
+        }
+    </style>
+
     <script>
+        // Color preview function
+        function updateColorPreview(select) {
+            const selectedOption = select.options[select.selectedIndex];
+            const colorPreview = document.getElementById('selected-color-preview');
+            const colorSwatch = document.getElementById('color-swatch');
+            const colorInfo = document.getElementById('color-info');
+
+            if (selectedOption.value && selectedOption.dataset.color) {
+                const colorCode = selectedOption.dataset.color;
+                const colorName = selectedOption.text;
+                
+                colorSwatch.style.backgroundColor = colorCode;
+                colorInfo.textContent = colorName;
+                colorPreview.style.display = 'block';
+            } else {
+                colorPreview.style.display = 'none';
+                colorInfo.textContent = 'No color selected';
+            }
+        }
+
         // Dynamic form fields
         document.getElementById('add-point').addEventListener('click', function() {
             const container = document.getElementById('points-container');

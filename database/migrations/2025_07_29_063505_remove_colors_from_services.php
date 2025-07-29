@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('services', function (Blueprint $table) {
-              $table->unsignedBigInteger('colors')->change();
-               $table->foreign('colors')->references('id')->on('colors')->onDelete('cascade');
+           
+            $table->dropColumn('colors');
+       
         });
     }
 
@@ -23,11 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('services', function (Blueprint $table) {
-              $table->dropForeign(['colors']);
-
-            // Change column back (optional, depending on original type)
-            $table->string('colors')->change();
-
+               $table->string('colors')->nullable(); 
         });
     }
 };

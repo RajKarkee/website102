@@ -33,6 +33,13 @@
                 <span>Jumbotron</span>
             </a>
         </div>
+        <div class="nav-item">
+            <a href="{{ route('admin.color.index') }}"
+                class="nav-link {{ request()->routeIs('admin.color.*') ? 'active' : '' }}">
+                <i class="fas fa-palette"></i>
+                <span>Colors</span>
+            </a>
+        </div>
 
         <div class="nav-item">
             <a href="{{ route('admin.about.index') }}"

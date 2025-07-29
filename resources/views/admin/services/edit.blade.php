@@ -55,6 +55,27 @@
                                 <textarea class="form-control" id="long_description" name="long_description" rows="5">{{ $serviceData->long_description }}</textarea>
                             </div>
 
+                            <!-- Service Color -->
+                            <div class="form-group mb-3">
+                                <label for="color" class="form-label">Service Color</label>
+                                <select class="form-control" id="color" name="colors" onchange="updateColorPreview(this)">
+                                    <option value="">Select Color</option>
+                                    @foreach($colors as $color)
+                                        <option value="{{ $color->id }}" data-color="{{ $color->hex_code }}" style="background-color: {{ $color->hex_code }}; color: {{ $color->hex_code === '#FFFFFF' || $color->hex_code === '#ffffff' ? '#000' : '#fff' }};">
+                                            {{ $color->color }} ({{ $color->hex_code }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <small class="form-text text-muted">Choose a color for this service (optional)</small>
+                                <div id="selected-color-preview" class="mt-2" style="display: none;">
+                                    <div class="d-flex align-items-center">
+                                        <div id="color-swatch" class="border rounded me-2" style="width: 30px; height: 30px; background-color: #ffffff;"></div>
+                                        <span id="color-info" class="text-muted">No color selected</span>
+                                    </div>
+                                </div>
+                            </div>  
+
+
                             <!-- Service Points -->
                             <div class="form-group mb-3">
                                 <label class="form-label">Service Points</label>
@@ -234,6 +255,25 @@ function previewIcon(input) {
         reader.readAsDataURL(input.files[0]);
     } else {
         preview.style.display = 'none';
+    }
+}
+
+// Update color preview
+function updateColorPreview(selectElement) {
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const colorPreview = document.getElementById('selected-color-preview');
+    const colorSwatch = document.getElementById('color-swatch');
+    const colorInfo = document.getElementById('color-info');
+
+    if (selectedOption && selectedOption.dataset.color) {
+        const color = selectedOption.dataset.color;
+        colorSwatch.style.backgroundColor = color;
+        colorInfo.textContent = `${selectedOption.text} (${color})`;
+        colorPreview.style.display = 'flex';
+    } else {
+        colorSwatch.style.backgroundColor = '#ffffff';
+        colorInfo.textContent = 'No color selected';
+        colorPreview.style.display = 'none';
     }
 }
 </script>
