@@ -1,0 +1,273 @@
+@extends('admin.layout.app')
+
+@section('content')
+    <main class="main-content">
+        <div class="content-header fade-in">
+            <h1>Add New Logo</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.logo.index') }}">Logo Management</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Add New Logo</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="logo-admin">
+            @include('components.alerts')
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="mb-0">Create Company Logo</h3>
+                <a href="{{ route('admin.logo.index') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+
+            <div class="card border-primary shadow rounded-4">
+                <div class="card-body">
+                    <form action="{{ route('admin.logo.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <!-- Basic Information -->
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-building"></i> Company Information
+                                </h5>
+                                
+                                <div class="form-group mb-3">
+                                    <label for="company_name" class="form-label">Company Name <span class="text-danger">*</span></label>
+                                    <input type="text" 
+                                           class="form-control @error('company_name') is-invalid @enderror" 
+                                           id="company_name" 
+                                           name="company_name" 
+                                           value="{{ old('company_name') }}" 
+                                           required>
+                                    @error('company_name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="tagline" class="form-label">Tagline</label>
+                                    <input type="text" 
+                                           class="form-control @error('tagline') is-invalid @enderror" 
+                                           id="tagline" 
+                                           name="tagline" 
+                                           value="{{ old('tagline') }}" 
+                                           placeholder="e.g., Professional Accounting Services">
+                                    @error('tagline')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="website" class="form-label">Website URL</label>
+                                    <input type="url" 
+                                           class="form-control @error('website') is-invalid @enderror" 
+                                           id="website" 
+                                           name="website" 
+                                           value="{{ old('website') }}" 
+                                           placeholder="https://www.example.com">
+                                    @error('website')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-image"></i> Logo Image
+                                </h5>
+                                
+                                <div class="form-group mb-3">
+                                    <label for="logo_image" class="form-label">Upload Logo</label>
+                                    <input type="file" 
+                                           class="form-control dropify @error('logo_image') is-invalid @enderror" 
+                                           id="logo_image" 
+                                           name="logo_image" 
+                                           accept="image/*">
+                                    <small class="form-text text-muted">Supported formats: JPEG, PNG, JPG, GIF, SVG. Max size: 2MB</small>
+                                    @error('logo_image')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active" checked>
+                                    <label class="form-check-label" for="is_active">
+                                        Set as Active Logo
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Contact Information -->
+                        <h5 class="text-primary mb-3">
+                            <i class="fas fa-address-book"></i> Contact Information
+                        </h5>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="text" 
+                                           class="form-control @error('phone') is-invalid @enderror" 
+                                           id="phone" 
+                                           name="phone" 
+                                           value="{{ old('phone') }}" 
+                                           placeholder="+64 9 123 4567">
+                                    @error('phone')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" 
+                                           class="form-control @error('email') is-invalid @enderror" 
+                                           id="email" 
+                                           name="email" 
+                                           value="{{ old('email') }}" 
+                                           placeholder="contact@example.com">
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control @error('address') is-invalid @enderror" 
+                                      id="address" 
+                                      name="address" 
+                                      rows="3" 
+                                      placeholder="Enter business address">{{ old('address') }}</textarea>
+                            @error('address')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Social Media Links -->
+                        <h5 class="text-primary mb-3">
+                            <i class="fas fa-share-alt"></i> Social Media Links
+                        </h5>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="facebook_url" class="form-label">
+                                        <i class="fab fa-facebook text-primary"></i> Facebook URL
+                                    </label>
+                                    <input type="url" 
+                                           class="form-control @error('facebook_url') is-invalid @enderror" 
+                                           id="facebook_url" 
+                                           name="facebook_url" 
+                                           value="{{ old('facebook_url') }}" 
+                                           placeholder="https://facebook.com/yourpage">
+                                    @error('facebook_url')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="instagram_url" class="form-label">
+                                        <i class="fab fa-instagram text-danger"></i> Instagram URL
+                                    </label>
+                                    <input type="url" 
+                                           class="form-control @error('instagram_url') is-invalid @enderror" 
+                                           id="instagram_url" 
+                                           name="instagram_url" 
+                                           value="{{ old('instagram_url') }}" 
+                                           placeholder="https://instagram.com/yourpage">
+                                    @error('instagram_url')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="youtube_url" class="form-label">
+                                        <i class="fab fa-youtube text-danger"></i> YouTube URL
+                                    </label>
+                                    <input type="url" 
+                                           class="form-control @error('youtube_url') is-invalid @enderror" 
+                                           id="youtube_url" 
+                                           name="youtube_url" 
+                                           value="{{ old('youtube_url') }}" 
+                                           placeholder="https://youtube.com/yourchannel">
+                                    @error('youtube_url')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="twitter_url" class="form-label">
+                                        <i class="fab fa-twitter text-info"></i> Twitter URL
+                                    </label>
+                                    <input type="url" 
+                                           class="form-control @error('twitter_url') is-invalid @enderror" 
+                                           id="twitter_url" 
+                                           name="twitter_url" 
+                                           value="{{ old('twitter_url') }}" 
+                                           placeholder="https://twitter.com/yourhandle">
+                                    @error('twitter_url')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="linkedin_url" class="form-label">
+                                        <i class="fab fa-linkedin text-primary"></i> LinkedIn URL
+                                    </label>
+                                    <input type="url" 
+                                           class="form-control @error('linkedin_url') is-invalid @enderror" 
+                                           id="linkedin_url" 
+                                           name="linkedin_url" 
+                                           value="{{ old('linkedin_url') }}" 
+                                           placeholder="https://linkedin.com/company/yourcompany">
+                                    @error('linkedin_url')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <a href="{{ route('admin.logo.index') }}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Create Logo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+@endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        // Initialize Dropify
+        $('.dropify').dropify({
+            messages: {
+                default: 'Drag and drop logo image here or click to select',
+                replace: 'Drag and drop or click to replace',
+                remove: 'Remove',
+                error: 'Sorry, this file is too large'
+            }
+        });
+    });
+</script>
+@endpush

@@ -15,7 +15,8 @@ class Service extends Model
         'points_description',
         'point_icon',
         'icon_title',
-        'icon_description'
+        'icon_description',
+        'colors',
     ];
 
     protected $casts = [
@@ -25,4 +26,9 @@ class Service extends Model
         'icon_title' => 'array',
         'icon_description' => 'array'
     ];
+
+    public function color()
+    {
+        return $this->belongsTo(Color::class, 'colors');
+    }
 }

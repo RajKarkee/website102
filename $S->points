@@ -1,0 +1,16 @@
+[90m= [39m[34;4mApp\Models\Service[39;24m {#6376
+    [34mid[39m: [35m1[39m,
+    [34micon[39m: "[32mservice_icons/SpfnEMgykJUGpT2ckse65rHcZcge7ZaxgHsJGH7H.jpg[39m",
+    [34mtitle[39m: "[32mthis is service[39m",
+    [34mdescription[39m: "[32mthis is short description[39m",
+    [34mlong_description[39m: "[32mthis is long description[39m",
+    [34mpoints[39m: "[32m"[\"This is service points\",\"this is service 2nd points\",\"this is service 3rd points\"]"[39m",
+    [34mpoints_description[39m: "[32m"[\"this is point descriptioin\",\"this is second point description\",\"this is third point description\"]"[39m",
+    [34mpoint_icon[39m: "[32m"[\"point_icons\\\/Dm3L9h736myzVfmq6eP8gMz3GlupnGjC3q5Fkbo6.jpg\",\"point_icons\\\/DiyjkUuzPBkgHI4T81TKxoTU6NgjqbuV2mQSB4On.jpg\",\"point_icons\\\/ROXDlQ4GS9o1biDoWeRzy2knCzO3cwqRVtmy5Fw7.jpg\"]"[39m",
+    [34micon_title[39m: "[32m"[\"This is icon titles\",\"this is second icon titles\",\"this is third icon titles\"]"[39m",
+    [34micon_description[39m: "[32m"[\"this is decription\",\"this is second icon description\",\"this is third icon description\"]"[39m",
+    [34mcreated_at[39m: "[32m2025-07-30 06:15:46[39m",
+    [34mupdated_at[39m: "[32m2025-07-30 06:15:46[39m",
+    [34mcolors[39m: [35m3[39m,
+  }
+

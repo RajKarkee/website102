@@ -10,20 +10,7 @@
             </a>
         </div>
 
-        <!-- Users Management -->
-        <div class="nav-item">
-            <a href="#" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
-                data-bs-toggle="collapse" data-bs-target="#userSubmenu">
-                <i class="fas fa-users"></i>
-                <span>Users</span>
-                <i class="fas fa-chevron-down arrow"></i>
-            </a>
-            <div class="submenu" id="userSubmenu">
-                <a href="{{ route('admin.dashboard') }}" class="nav-link">All Users</a>
-                <a href="{{ route('admin.dashboard') }}" class="nav-link">Add User</a>
-                <a href="{{ route('admin.dashboard') }}" class="nav-link">User Roles</a>
-            </div>
-        </div>
+        <!-- Users Management section removed for cleaner sidebar -->
 
         <!-- Content Management -->
         <div class="nav-item">
@@ -38,6 +25,13 @@
                 class="nav-link {{ request()->routeIs('admin.color.*') ? 'active' : '' }}">
                 <i class="fas fa-palette"></i>
                 <span>Colors</span>
+            </a>
+        </div>
+          <div class="nav-item">
+            <a href="{{ route('admin.logo.index') }}"
+                class="nav-link {{ request()->routeIs('admin.logo.*') ? 'active' : '' }}">
+                <i class="fas fa-image"></i>
+                <span>Logo Management</span>
             </a>
         </div>
 

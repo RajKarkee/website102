@@ -13,6 +13,10 @@ class Front1Controller extends Controller
 {
     public function industryPage(){
         $industryData=Industry::all();
+     
+        foreach ($industryData as $industry) {
+            $industry->services = json_decode($industry->services, true);
+        }
         return view('industries',compact('industryData'));
     }
 

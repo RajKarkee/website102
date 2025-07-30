@@ -14,6 +14,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\LogoController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\CtaController as AdminCtaController;
 use App\Http\Controllers\Admin\TeamController as AdminTeamController;
@@ -47,6 +48,11 @@ Route::get('/testimonials', [TestimonialController::class, 'index'])->name('test
 Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// Logo Helper Test Route (remove in production)
+Route::get('/logo-test', function () {
+    return view('logo-test');
+})->name('logo.test');
 
 
 Route::get('/admin', function () {
@@ -171,7 +177,7 @@ Route::post('/admin/partner/store', [FrontController::class, 'partnerStore'])->n
 
 
 Route::prefix('admin')->group(function () {
-    Route::get('testimonials', [TestimonialController::class, 'index'])->name('admin.testimonials.index');
+    Route::get('testimonials', [TestimonialController::class, 'adminIndex'])->name('admin.testimonials.index');
     Route::post('testimonials', [TestimonialController::class, 'store'])->name('admin.testimonials.store');
     Route::get('testimonials/{testimonial}/edit', [TestimonialController::class, 'edit'])->name('admin.testimonials.edit');
     Route::put('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('admin.testimonials.update');
@@ -185,4 +191,18 @@ Route::prefix('admin')->group(function () {
     Route::put('faq/{faq}', [FaqController::class, 'update'])->name('admin.faq.update');
     Route::delete('faq/{faq}', [FaqController::class, 'destroy'])->name('admin.faq.destroy');
     Route::get('faq/status/{faq}', [FaqController::class, 'updateStatus'])->name('admin.faq.status');
+});
+
+// Logo Management Routes
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::resource('logo', LogoController::class)->names([
+        'index' => 'admin.logo.index',
+        'create' => 'admin.logo.create',
+        'store' => 'admin.logo.store',
+        'show' => 'admin.logo.show',
+        'edit' => 'admin.logo.edit',
+        'update' => 'admin.logo.update',
+        'destroy' => 'admin.logo.destroy',
+    ]);
+    Route::patch('logo/{logo}/activate', [LogoController::class, 'activate'])->name('admin.logo.activate');
 });

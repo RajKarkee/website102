@@ -10,7 +10,7 @@ class ServiceController extends Controller
     public function index()
     {
         // Get services from database
-        $dbServices = Service::all();
+        $dbServices = Service::with('color')->get();
 
         // If no services in database, use fallback data
         if ($dbServices->isEmpty()) {
@@ -87,7 +87,7 @@ class ServiceController extends Controller
                     'icon' => $service->icon ?? 'sparkles',
                     'title' => $service->title,
                     'description' => $service->description,
-                    'color' => 'bg-blue-600', // Default color, can be enhanced later
+                    'color' => $service->color && $service->color->tailwind_class ? $service->color->tailwind_class : 'bg-blue-600',
                     'link' => 'services.detail', // Generic link, can be enhanced later
                     'long_description' => $service->long_description,
                     'points' => is_array($service->points) ? $service->points : [],
