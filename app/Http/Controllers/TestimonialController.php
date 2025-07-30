@@ -10,6 +10,12 @@ class TestimonialController extends Controller
 {
     public function index()
     {
+        $testimonials = Testimonial::where('status', 1)->get();
+        return view('testimonials', compact('testimonials'));
+    }
+
+    public function adminIndex()
+    {
         $testimonials = Testimonial::all();
         return view('admin.testimonials.index', compact('testimonials'));
     }
