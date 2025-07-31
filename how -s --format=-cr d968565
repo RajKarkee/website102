@@ -1,0 +1,482 @@
+[33mcommit 98d44166e3df28f2599fb2ae36f3c1ac91965e55[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 49f2824 cb8a675
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   18 hours ago
+
+    Merge pull request #13 from RajKarkee/updated
+    
+    Add new views for logo testing, resources, team, and testimonials; implement logo management routes
+
+[33mcommit cb8a675c7b5ce568445edebcc2c4ad08bf2fa172[m[33m ([m[1;31morigin/updated[m[33m)[m
+Author: RajKarkee <karkeemiraj@gmail.com>
+Date:   23 hours ago
+
+    Add new views for logo testing, resources, team, and testimonials; implement logo management routes
+
+[33mcommit 49f28240692ef49d67a39f85d09e76364e19083e[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   2 days ago
+
+    Refactor service data retrieval to use DB join for color integration and update service view to reflect changes
+
+[33mcommit b1575b64a2be31c9ca3cff7a3b878cbaf97a028d[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   2 days ago
+
+    Implement color management feature with CRUD operations and integrate color selection in service forms
+
+[33mcommit 7eac7f3ba457f93ee5c385c76b09c4e75df95168[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   2 days ago
+
+    This is fimish
+
+[33mcommit 3a67086aff17796e342c3722118a824100ba466f[m
+Merge: 2cb9ad0 ac08e9f
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   2 days ago
+
+    Merge pull request #12 from RajKarkee/master
+    
+    Master
+
+[33mcommit 2cb9ad0c40d9b13084529e883df3d3a5c17ef5d7[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   3 days ago
+
+    this is commet
+
+[33mcommit ac08e9f167569d7403d696e0ab5fa600c961acf9[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   3 days ago
+
+    added colors table on services
+
+[33mcommit 38482fca79bc6c83de9b456fe2f75e93e6ac49b1[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   3 days ago
+
+    commit
+
+[33mcommit efc0248905c9252c5b7e0aee76790b918e29bde0[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   3 days ago
+
+    color change
+
+[33mcommit 92b748ee84f250d3fd97886455059dcedcc440b4[m
+Merge: fb950ae 0565df6
+Author: Raj <karkeemiraj@gmail.com>
+Date:   3 days ago
+
+    Merge branch 'main' of https://github.com/RajKarkee/website102
+
+[33mcommit fb950ae21b5143078c25205d71ddf6225deda100[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   3 days ago
+
+    Updated about us
+
+[33mcommit 0565df6cae8fcab230a85423bb48bede87eb7fea[m
+Merge: 165e23d 7959070
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   4 days ago
+
+    Merge pull request #11 from RajKarkee/master
+    
+    Add FAQ management routes and update sidebar for navigation
+
+[33mcommit 7959070ab372f3aed628d5b12cde4ad3883d0adb[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   4 days ago
+
+    Add FAQ management routes and update sidebar for navigation
+
+[33mcommit 165e23d797c221e7c84778743280533498a2a879[m
+Merge: 8c83555 62819b0
+Author: Raj <karkeemiraj@gmail.com>
+Date:   4 days ago
+
+    Merge branch 'main' of https://github.com/RajKarkee/website102
+
+[33mcommit 8c83555cc03207dca48fff5892bdd69767e92afb[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   4 days ago
+
+    this is commit
+
+[33mcommit 62819b045ab52fe60be5eee7014ab91d26add3f9[m
+Merge: 13aa578 aff3f30
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   4 days ago
+
+    Merge pull request #10 from RajKarkee/master
+    
+    faq
+
+[33mcommit aff3f305763a5489a41b63a80f4768bc744a364f[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   4 days ago
+
+    faq
+
+[33mcommit 13aa5789c56c3ed6e9c02f64bb30b0b7262ee76d[m
+Merge: b38d6dd 26e1994
+Author: Raj <karkeemiraj@gmail.com>
+Date:   4 days ago
+
+    Merge branch 'main' of https://github.com/RajKarkee/website102
+
+[33mcommit b38d6dddfbc08e4c0638b5251bb391f004943c6b[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   4 days ago
+
+    Refactor AdminController and Front1Controller; implement about page and update routes
+
+[33mcommit 26e1994c51d134b5fd58558d9d3d8f283aaa0514[m
+Merge: 7ed5a84 793eb7c
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   4 days ago
+
+    Merge pull request #9 from RajKarkee/master
+    
+    updates
+
+[33mcommit 793eb7c36bd814632b1d182376af4f2b8a98503f[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   4 days ago
+
+    updates
+
+[33mcommit 7ed5a84d5dc3c5ab19313e64e1b2b72ad1904732[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   4 days ago
+
+    Fix sidebar closing tag placement in admin layout
+
+[33mcommit c80d6bdfda14b447ceee3eb3c1217ee27471319b[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   4 days ago
+
+    Add testimonials management routes and sidebar link in admin layout
+
+[33mcommit f97128da91f1cf1f31aaa6e22c2452ba4b387ddf[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   4 days ago
+
+    Add validation method for user profile updates in AdminController
+
+[33mcommit b06482413bc5d6fb2f270fa607b6b992a38a75c7[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   4 days ago
+
+    Enhance admin layout and sidebar navigation; add new routes for partner management and improve alerts component
+
+[33mcommit 159a749bb55333e2587e836b269afb83ca77f2c3[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   5 days ago
+
+    Add Front1Controller and industry page route; include necessary imports
+
+[33mcommit 4cd003e9e0b0c92dd7b080d5032cf26a25d6b22c[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   5 days ago
+
+    Refactor navigation links and remove duplicates; update route for industries page
+
+[33mcommit d5313f6b5fe2e45f530acf53adc0c640268dfa0f[m
+Merge: 3b9a161 d58a7f5
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   6 days ago
+
+    Merge pull request #8 from RajKarkee/kritik
+    
+    testimonials
+
+[33mcommit d58a7f5a673fbf72615c4ecd17816665368060ef[m
+Merge: 8c79dd8 3b9a161
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   6 days ago
+
+    Merge branch 'main' into kritik
+
+[33mcommit 8c79dd8d57987ca1f0d043f2dd991c1577ea47dd[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   6 days ago
+
+    testimonials
+
+[33mcommit 3b9a161eb0ddeb1302235d50504b941d79bf9107[m
+Merge: 095a975 509e859
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   6 days ago
+
+    Merge pull request #7 from RajKarkee/test
+    
+    Test
+
+[33mcommit 509e85908825a040a277215114bd17f547cf2644[m[33m ([m[1;31morigin/test[m[33m)[m
+Merge: 095a975 83bac7f
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   6 days ago
+
+    Merge branch 'Bipul' into test
+
+[33mcommit 83bac7fdd876bf24fdb25078ed9e5102115da60f[m
+Author: Bipulz <bhandaribipul345@gmail.com>
+Date:   6 days ago
+
+    Team section fully implemented
+
+[33mcommit c3619ca63bd1a1406f3015886766db2ddde7525f[m
+Author: Bipulz <bhandaribipul345@gmail.com>
+Date:   6 days ago
+
+    Made CTA section fully manageable from backend
+
+[33mcommit 095a9753021472d8e06ff4e9351a812783ccd2b8[m
+Merge: 6f269e6 5e53f40
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   6 days ago
+
+    Merge pull request #4 from RajKarkee/Bipul
+    
+    Bipul
+
+[33mcommit 6f269e671197783db3fc83d23e7ef8fcaa7c3d5d[m
+Merge: 1f39833 9f3676f
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   6 days ago
+
+    Merge pull request #3 from RajKarkee/kritik
+    
+    Kritik
+
+[33mcommit 9f3676f212a8023eb8a68eeb39047c2215d228f5[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   6 days ago
+
+    feat: Add Partner model, migration, and admin view for managing partners
+
+[33mcommit 483e509cb47ac43a072628400a724f16a2f64214[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   6 days ago
+
+    feat: Implement Partners Management with CRUD operations and update routes
+
+[33mcommit 5e53f40630bf9df4bde265d6051e7492c7cf4f42[m
+Author: Bipulz <bhandaribipul345@gmail.com>
+Date:   6 days ago
+
+    slider updated
+
+[33mcommit 1f3983307a64bd8b6ebf3b92ce700ce016a9cbfb[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   6 days ago
+
+    feat: Enhance industry form with dynamic points management and validation; update partner routes
+
+[33mcommit 91ddd6c14988916116bee081f5b9c67ca379a447[m
+Author: Bipulz <bhandaribipul345@gmail.com>
+Date:   6 days ago
+
+    added
+
+[33mcommit f3b5ac89ce7363c9acc2e95a4cefb225a7a2e8c4[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   8 days ago
+
+    new change
+
+[33mcommit 6ac847379f6e3cbcf34b5f2b3f30f09de0d94922[m
+Merge: 5f26552 9bd9998
+Author: Raj <karkeemiraj@gmail.com>
+Date:   8 days ago
+
+    Merge branch 'main' of https://github.com/RajKarkee/website102
+
+[33mcommit 5f26552df766beb9a465b1bb8af52cdf580408c8[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   8 days ago
+
+    feat: Add Partners Management view with success message handling
+
+[33mcommit 9bd99986bf384e6aeb3b6ac5d794b14fbd94a9ad[m
+Merge: ce02192 78a290c
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   8 days ago
+
+    Merge pull request #2 from RajKarkee/kritik
+    
+    this is poudh
+
+[33mcommit 78a290cedd5b3a070e30f4b08a1f917015a65774[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   8 days ago
+
+    this is poudh
+
+[33mcommit ce021921e615e56b35c7a1bd5a20db111a9a6f3b[m
+Merge: c7b1111 47bad85
+Author: Raj <70433349+RajKarkee@users.noreply.github.com>
+Date:   8 days ago
+
+    Merge pull request #1 from RajKarkee/kritik
+    
+    Kritik
+
+[33mcommit 47bad85be463ab120177c44f328d48ad0ffac8af[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   8 days ago
+
+    changed
+
+[33mcommit b153955ea80b2a5c8c3bcd2d0269278a70aab3cc[m
+Merge: 97caa37 c7b1111
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   8 days ago
+
+    this is commit
+
+[33mcommit c7b11113b019faea7bd5e95e68ba6203434c933e[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   8 days ago
+
+    feat: Refactor About points management to improve data handling and UI integration
+
+[33mcommit 97caa37751f51e801538bd3ba663376ca1614e55[m
+Author: Kritik-G <kritik.98620@gmail.com>
+Date:   8 days ago
+
+    feat: Update league/commonmark to version 2.7.1 and enhance psalm compatibility
+    
+    chore: Rename package-lock.json project name to project-1
+    
+    refactor: Revamp admin header layout with user profile dropdown and modal for profile editing
+    
+    feat: Add login routes and controller for admin authentication
+    
+    feat: Implement MakeAdmin command for creating admin users via Artisan
+    
+    feat: Create AdminController for handling profile updates
+    
+    feat: Add Userpic model and migration for user profile images
+    
+    style: Enhance login page styles with SCSS variables and mixins
+    
+    style: Refactor main CSS for login page with improved animations and responsiveness
+    
+    feat: Create login view with form handling and floating background shapes
+
+[33mcommit 5318fb6de599b4e357bea3141c445f9139c73953[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   9 days ago
+
+    feat: Add About management with CRUD operations and points management
+
+[33mcommit 79a079f2d86e6a06616582764a86533d0c47906f[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   9 days ago
+
+    feat: Implement About management with form and Dropify integration
+
+[33mcommit 57a9b51a28be37113932dc8148d0a5fad18ed89f[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   10 days ago
+
+    feat: Add About management with CRUD operations and UI integration
+
+[33mcommit a7e375173578c2047702d4a5adbcd123f93a3b81[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   10 days ago
+
+    feat: Enhance Jumbotron Management
+    
+    - Updated the main CSS map to include new service styles.
+    - Refactored the Jumbotron add view to improve UI and UX with dynamic image input handling.
+    - Modified the routes to use PATCH method for editing Jumbotron entries.
+    - Created a new Jumbotron edit view with pre-filled data for easier updates.
+
+[33mcommit 4e601b6802465c44781c9ca56798cd802eca46e5[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   11 days ago
+
+    Thia ia uodate
+
+[33mcommit 4baa0bb5e962946e2fb02e2cf97223b9c8e86f0a[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   11 days ago
+
+    feat: Implement jumbotron management with CRUD operations and UI integration
+
+[33mcommit d35a6bf5cfb5bee024d259a41c5ef4cb87df8001[m
+Author: chhatraman shrestha <cms111000111@gmail.com>
+Date:   11 days ago
+
+    style: Clean up whitespace in SCSS and Blade files for consistency
+
+[33mcommit 6f950e6acdd3ac87bcacbf5ca3461b2cd97b697e[m
+Author: chhatraman shrestha <cms111000111@gmail.com>
+Date:   11 days ago
+
+    feat: Add service management functionality with CRUD operations
+    
+    - Implemented Service model with fillable attributes and casts for array fields.
+    - Created a new Blade view for adding services with dynamic fields for points, descriptions, icon titles, and descriptions.
+    - Enhanced the services index view with a table to display services, including a details button for each service.
+    - Added AJAX functionality to fetch and display service details in a modal.
+    - Implemented delete functionality for services with confirmation prompt.
+    - Updated routes to include service details retrieval.
+    - Created ServiceSeeder to populate the database with sample services.
+    - Added SCSS styles for service management UI, including responsive design improvements.
+    - Created an edit service view with pre-filled data and dynamic fields for editing service attributes.
+
+[33mcommit 6a08b1d7c57086795e094b1a48d2138d35b959fb[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   11 days ago
+
+    feat: Update service page layout and button for adding new services
+
+[33mcommit 09aa7ca799bbc27be4b1a1ebe58a3e1ca5f5c859[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   11 days ago
+
+    feat: Implement service management functionality with CRUD operations and UI updates
+
+[33mcommit 2d43a1681e71e55a3eb9224a37bb676bdb6f2676[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   2 weeks ago
+
+    feat: Update industry routes and form action for adding industries
+
+[33mcommit 65df3c479b1dbdb2f6bbf6e4ac80ee92e941281d[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   2 weeks ago
+
+    feat: Create Industry model and migration for industries table
+
+[33mcommit 33b8c9d677a69385e9fa21ba9041d494ca8e980c[m
+Author: Raj <karkeemiraj@gmail.com>
+Date:   2 weeks ago
+
+    feat: Add industry management pages and layout components
+    
+    - Created main layout for admin dashboard with header and sidebar.
+    - Implemented industry add and index pages with form handling.
+    - Added SCSS files for styling and included necessary imports.
+    - Integrated Dropify for file uploads in the industry form.
+    - Enhanced user experience with dynamic point input fields.
+    - Established breadcrumb navigation for better page context.
+    - Included JavaScript for interactive elements and form validation
+
+[33mcommit 1077e85d5834f80e00ab21d59f1342c1d9d8c352[m
+Author: Bipulz <bhandaribipul345@gmail.com>
+Date:   3 weeks ago
+
+    all-mighty-push
+
+[33mcommit ad23b292014f4776e5b913a1ae9ef233ed473515[m
+Author: Bipulz <bhandaribipul345@gmail.com>
+Date:   3 weeks ago
+
+    first commit
