@@ -2,16 +2,18 @@
 
 @section('content')
     <main class="main-content">
-        <div class="content-header fade-in">
-            <h1>Edit Logo</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.logo.index') }}">Logo Management</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit Logo</li>
-                </ol>
-            </nav>
-        </div>
+        @include('admin.layout.partials.header', [
+            'title' => 'Edit Logo',
+            'description' => 'Update company logo and branding information',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'Logo Management', 'url' => route('admin.logo.index')],
+                ['title' => 'Edit: ' . $logo->company_name, 'url' => '#']
+            ],
+            'actions' => '<a href="' . route('admin.logo.index') . '" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Logo List
+            </a>'
+        ])
 
         <div class="logo-admin">
             @include('components.alerts')
@@ -77,41 +79,26 @@
                             </div>
 
                             <div class="col-md-4">
-                                <h5 class="text-primary mb-3">
-                                    <i class="fas fa-image"></i> Logo Image
-                                </h5>
-                                
-                                @if($logo->logo_image)
-                                    <div class="current-logo mb-3">
-                                        <label class="form-label">Current Logo:</label>
-                                        <div class="border rounded p-2 text-center">
-                                            <img src="{{ asset('storage/' . $logo->logo_image) }}" 
-                                                 alt="{{ $logo->company_name }}" 
-                                                 class="img-fluid" 
-                                                 style="max-height: 120px;">
-                                        </div>
-                                    </div>
-                                @endif
-                                
-                                <div class="form-group mb-3">
-                                    <label for="logo_image" class="form-label">Upload New Logo (Optional)</label>
-                                    <input type="file" 
-                                           class="form-control dropify @error('logo_image') is-invalid @enderror" 
-                                           id="logo_image" 
-                                           name="logo_image" 
-                                           accept="image/*">
-                                    <small class="form-text text-muted">Leave empty to keep current logo. Supported formats: JPEG, PNG, JPG, GIF, SVG. Max size: 2MB</small>
-                                    @error('logo_image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                @include('admin.components.image-upload', [
+                                    'name' => 'logo_image',
+                                    'label' => 'Logo Image',
+                                    'required' => false,
+                                    'accept' => 'image/*',
+                                    'maxSize' => '2MB',
+                                    'previewSize' => 'medium',
+                                    'currentImage' => $logo->logo_image ? asset('storage/' . $logo->logo_image) : null,
+                                    'description' => 'Upload a new logo or keep the current one. Leave empty to keep existing logo.',
+                                    'placeholder' => 'Upload New Logo'
+                                ])
 
-                                <div class="form-check">
+                                <div class="form-check mt-3">
                                     <input class="form-check-input" type="checkbox" id="is_active" name="is_active" 
                                            {{ old('is_active', $logo->is_active) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_active">
+                                    <label class="form-check-label d-flex align-items-center" for="is_active">
+                                        <i class="fas fa-star text-warning me-2"></i>
                                         Set as Active Logo
                                     </label>
+                                    <small class="form-text text-muted">The active logo will be displayed on your website</small>
                                 </div>
                             </div>
                         </div>

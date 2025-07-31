@@ -146,21 +146,44 @@ Route::prefix('color')->name('color.')->group(function () {
             Route::get('/products', [AdminController::class, 'productsReport'])->name('products');
         });
 
+        // Testimonials routes
+        Route::prefix('testimonials')->name('testimonials.')->group(function () {
+            Route::get('/', [TestimonialController::class, 'adminIndex'])->name('index');
+            Route::post('/', [TestimonialController::class, 'store'])->name('store');
+            Route::get('/{testimonial}/edit', [TestimonialController::class, 'edit'])->name('edit');
+            Route::put('/{testimonial}', [TestimonialController::class, 'update'])->name('update');
+            Route::get('/status/{testimonial}', [TestimonialController::class, 'updateStatus'])->name('status');
+            Route::delete('/{testimonial}', [TestimonialController::class, 'destroy'])->name('destroy');
+        });
+
+        // FAQ routes
+        Route::prefix('faq')->name('faq.')->group(function () {
+            Route::get('/', [FaqController::class, 'index'])->name('index');
+            Route::post('/', [FaqController::class, 'store'])->name('store');
+            Route::put('/{faq}', [FaqController::class, 'update'])->name('update');
+            Route::delete('/{faq}', [FaqController::class, 'destroy'])->name('destroy');
+            Route::get('/status/{faq}', [FaqController::class, 'updateStatus'])->name('status');
+        });
+
+        // Middle section routes
+        Route::prefix('middle')->name('middle.')->group(function () {
+            Route::get('/', [FrontController::class, 'middleIndex'])->name('index');
+            Route::get('/create', [FrontController::class, 'middleCreate'])->name('create');
+            Route::post('/', [FrontController::class, 'middleStore'])->name('store');
+            Route::get('/{id}/edit', [FrontController::class, 'middleEdit'])->name('edit');
+            Route::put('/{id}', [FrontController::class, 'middleUpdate'])->name('update');
+            Route::delete('/{id}', [FrontController::class, 'middleDestroy'])->name('destroy');
+        });
+
         // Partner routes
         Route::prefix('partner')->name('partner.')->group(function () {
             Route::get('/', [FrontController::class, 'partnerIndex'])->name('index');
+            Route::get('/index', [FrontController::class, 'partnerIndex'])->name('index.alt');
             Route::post('/store', [FrontController::class, 'partnerStore'])->name('store');
+            Route::post('/', [FrontController::class, 'partnerStore'])->name('store.alt');
         });
     });
 });
-
-// Partner routes (these should also be under auth middleware)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/partner/index', [FrontController::class, 'partnerIndex'])->name('admin.partner.index');
-    Route::post('/admin/partner/store', [FrontController::class, 'partnerStore'])->name('admin.partner.store');
-});
-
-
 
 Route::post('/admin/logout', function () {
     Auth::logout();
@@ -168,30 +191,6 @@ Route::post('/admin/logout', function () {
 })->name('admin.logout');
 
 Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
-
-
-Route::get('/admin/partner/index', [FrontController::class, 'partnerIndex'])->name('admin.partner.index');
-Route::post('/admin/partner/store', [FrontController::class, 'partnerStore'])->name('admin.partner.store');
-
-
-
-
-Route::prefix('admin')->group(function () {
-    Route::get('testimonials', [TestimonialController::class, 'adminIndex'])->name('admin.testimonials.index');
-    Route::post('testimonials', [TestimonialController::class, 'store'])->name('admin.testimonials.store');
-    Route::get('testimonials/{testimonial}/edit', [TestimonialController::class, 'edit'])->name('admin.testimonials.edit');
-    Route::put('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('admin.testimonials.update');
-    Route::get('testimonials/status/{testimonial}', [TestimonialController::class, 'updateStatus'])->name('admin.testimonials.status');
-    Route::delete('testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('admin.testimonials.destroy');
-});
-
-Route::prefix('admin')->group(function () {
-    Route::get('faq', [FaqController::class, 'index'])->name('admin.faq.index');
-    Route::post('faq', [FaqController::class, 'store'])->name('admin.faq.store');
-    Route::put('faq/{faq}', [FaqController::class, 'update'])->name('admin.faq.update');
-    Route::delete('faq/{faq}', [FaqController::class, 'destroy'])->name('admin.faq.destroy');
-    Route::get('faq/status/{faq}', [FaqController::class, 'updateStatus'])->name('admin.faq.status');
-});
 
 // Logo Management Routes
 Route::prefix('admin')->middleware(['auth'])->group(function () {

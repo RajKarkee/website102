@@ -1,18 +1,21 @@
 @extends('admin.layout.app')
+
 @section('content')
 <main class="main-content">
-    <div class="content-header fade-in">
-        <h1>Jumbotron</h1>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="#">Jumbotron</a></li>
-              
-            </ol>
-        </nav>
-    </div>
+    @include('admin.layout.partials.header', [
+        'title' => 'Jumbotron Management',
+        'description' => 'Manage hero sections and banner content',
+        'breadcrumbs' => [
+            ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['title' => 'Jumbotron Management', 'url' => '#']
+        ],
+        'actions' => '<a href="' . route('admin.jumbotron.add') . '" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add New Jumbotron
+        </a>'
+    ])
 
-  <div class="jumbotron">
-<a href="{{ route('admin.jumbotron.add') }}" class="btn btn-primary mb-3">Add New Jumbotron</a>
+    <div class="jumbotron-admin">
+        @include('components.alerts')
 
 <table class="table table-striped">
     <thead>

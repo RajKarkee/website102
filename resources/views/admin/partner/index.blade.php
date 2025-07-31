@@ -1,102 +1,183 @@
 @extends('admin.layout.app')
+
 @section('content')
     <main class="main-content">
-        <div class="content-header fade-in">
-            <h1>@yield('page-title', 'Partners Management')</h1>
-            <p class="text-muted">Welcome to the partner page where you can add partners.</p>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">@yield('page-title', 'Partners')</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="service">
+        @include('admin.layout.partials.header', [
+            'title' => 'Partners Management',
+            'description' => 'Manage your business partners and their information',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'Partners Management', 'url' => '#']
+            ],
+            'actions' => '<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartnerModal">
+                <i class="fas fa-plus"></i> Add Partner
+            </a>'
+        ])
 
+        @if (session('success'))
+            @include('admin.layout.partials.alert', ['type' => 'success', 'message' => session('success')])
+        @endif
 
-
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
-            {{-- @extends('layouts.admin') --}}
-
-        @section('content')
-            <div class="contanier">
-
-                <form method="POST" action="{{ route('admin.partner.store') }}" enctype="multipart/form-data">
-                    @csrf
-
-                    {{-- Page Header --}}
-                    <div class="mb-3">
-                        <label class="form-label">Valued Partners</label>
-                        <input type="text" class="form-control" placeholder="Header here...">
-                    </div>
-
-                    {{-- Page Description --}}
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-control" rows="3" placeholder="Description here..."></textarea>
-                    </div>
-
-                    {{-- Partners Table --}}
-                    <h4 class="mt-4">Partners</h4>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Logo</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($partner as $item)
-                                <tr>
-                                    <td>
-                                        <input type="text" name="partners[{{ $item->id }}][name]"
-                                            value="{{ $item->name }}" class="form-control">
-                                    </td>
-                                    <td>
-                                        <input type="email" name="partners[{{ $item->id }}][email]"
-                                            value="{{ $item->email }}" class="form-control">
-                                    </td>
-                                    <td>
-                                        @if ($item->logo)
-                                            <img src="{{ asset('storage/' . $item->logo) }}" width="50"
-                                                class="mb-1" />
-                                        @endif
-                                        <input type="file" name="partners[{{ $item->id }}][logo]"
-                                            class="form-control">
-                                    </td>
-                                    <td>
-                                        <button type="submit" name="action" value="delete_{{ $item->id }}"
-                                            class="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                            {{-- New Partner Row --}}
-                            <tr>
-                                <td><input type="text" name="new_partner[name]" class="form-control"
-                                        placeholder="New name"></td>
-                                <td><input type="email" name="new_partner[email]" class="form-control"
-                                        placeholder="New email"></td>
-                                <td><input type="file" name="new_partner[logo]" class="form-control"></td>
-                                <td><small class="text-muted">New</small></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <button type="submit" name="action" value="save" class="btn btn-primary mt-2">Submit</button>
-                </form>
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-handshake me-2"></i>Partners Management
+                </h5>
             </div>
-        @endsection
+            <div class="card-body">
+                @if ($partner->count())
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Logo</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($partner as $item)
+                                    <tr>
+                                        <td>
+                                            <div class="fw-bold">{{ $item->name }}</div>
+                                        </td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>
+                                            @if ($item->logo)
+                                                <img src="{{ asset('storage/' . $item->logo) }}" 
+                                                    alt="{{ $item->name }}" class="img-thumbnail" 
+                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                            @else
+                                                <div class="bg-light border rounded d-flex align-items-center justify-content-center"
+                                                    style="width: 50px; height: 50px;">
+                                                    <i class="fas fa-building text-muted"></i>
+                                                </div>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-outline-primary" 
+                                                    data-bs-toggle="modal" data-bs-target="#editPartnerModal{{ $item->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <form action="{{ route('admin.partner.store') }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" name="action" value="delete_{{ $item->id }}" class="btn btn-outline-danger"
+                                                        onclick="return confirm('Are you sure you want to delete this partner?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="text-center py-5">
+                        <i class="fas fa-handshake text-muted" style="font-size: 4rem;"></i>
+                        <h5 class="mt-3 text-muted">No partners found</h5>
+                        <p class="text-muted mb-4">Add your first business partner to get started</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartnerModal">
+                            <i class="fas fa-plus"></i> Add First Partner
+                        </button>
+                    </div>
+                @endif
+            </div>
+        </div>
 
+        <!-- Add Partner Modal -->
+        <div class="modal fade" id="addPartnerModal" tabindex="-1" aria-labelledby="addPartnerModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addPartnerModalLabel">
+                            <i class="fas fa-plus me-2"></i>Add New Partner
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="{{ route('admin.partner.store') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Partner Name <span class="text-danger">*</span></label>
+                                <input type="text" name="new_partner[name]" class="form-control" required
+                                    placeholder="Enter partner name">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Partner Email <span class="text-danger">*</span></label>
+                                <input type="email" name="new_partner[email]" class="form-control" required
+                                    placeholder="Enter partner email">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Partner Logo</label>
+                                <input type="file" name="new_partner[logo]" class="form-control" accept="image/*">
+                                <small class="form-text text-muted">Upload an image file (JPG, PNG, etc.)</small>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </button>
+                            <button type="submit" name="action" value="save" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Add Partner
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-
-
-    </div>
+        <!-- Edit Partner Modals -->
+        @foreach ($partner as $item)
+            <div class="modal fade" id="editPartnerModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fas fa-edit me-2"></i>Edit Partner: {{ $item->name }}
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="POST" action="{{ route('admin.partner.store') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Partner Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="partners[{{ $item->id }}][name]" class="form-control" required
+                                        value="{{ $item->name }}" placeholder="Enter partner name">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Partner Email <span class="text-danger">*</span></label>
+                                    <input type="email" name="partners[{{ $item->id }}][email]" class="form-control" required
+                                        value="{{ $item->email }}" placeholder="Enter partner email">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Partner Logo</label>
+                                    @if ($item->logo)
+                                        <div class="mb-2">
+                                            <img src="{{ asset('storage/' . $item->logo) }}" alt="{{ $item->name }}"
+                                                class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+                                        </div>
+                                    @endif
+                                    <input type="file" name="partners[{{ $item->id }}][logo]" class="form-control" accept="image/*">
+                                    <small class="form-text text-muted">Upload a new image to replace the current logo</small>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fas fa-times me-2"></i>Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Update Partner
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </main>
+@endsection

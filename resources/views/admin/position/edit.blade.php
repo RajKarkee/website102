@@ -2,17 +2,28 @@
 
 @section('content')
     <main class="main-content">
-        <div class="content-header fade-in">
-            <h1>Edit Position</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.team.index') }}">Team</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit Position</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="cta-admin">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+        @include('admin.layout.partials.header', [
+            'title' => 'Edit Position',
+            'description' => 'Update position information',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'Position Management', 'url' => route('admin.position.index')],
+                ['title' => 'Edit: ' . $position->name, 'url' => '#']
+            ],
+            'actions' => '<a href="' . route('admin.position.index') . '" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Positions
+            </a>'
+        ])
+
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-edit me-2"></i>Edit Position: {{ $position->name }}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="cta-admin">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
                 <a href="{{ route('admin.team.index') }}" class="btn btn-secondary">Back</a>
             </div>
             <div class="card border-primary shadow rounded-4">

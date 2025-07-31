@@ -1,31 +1,28 @@
 @extends('admin.layout.app')
+
 @section('content')
     <main class="main-content">
-        <div class="content-header fade-in">
-            <h1>@yield('page-title', 'FAQs')</h1>
-            <p class="text-muted">FAQs</p>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">@yield('page-title', 'FAQs')</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="service">
+        @include('admin.layout.partials.header', [
+            'title' => 'FAQ Management',
+            'description' => 'Manage frequently asked questions',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'FAQ Management', 'url' => '#']
+            ]
+        ])
 
+        @if (session('success'))
+            @include('admin.layout.partials.alert', ['type' => 'success', 'message' => session('success')])
+        @endif
 
-
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
-
-
-
-            <div class="container">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-question-circle me-2"></i>FAQ Management
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="container">
                 {{-- Add FAQ Form --}}
                 <form action="{{ route('admin.faq.store') }}" method="POST" class="mb-4">
                     @csrf
@@ -92,4 +89,6 @@
                     </tbody>
                 </table>
             </div>
-        @endsection
+        </div>
+    </main>
+@endsection

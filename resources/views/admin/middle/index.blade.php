@@ -1,57 +1,90 @@
 @extends('admin.layout.app')
+
 @section('content')
-<main class="main-content">
-    <div class="content-header fade-in">
-        <h1>Middle Section</h1>
-        <p class="text-muted">This is for middle section</p>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Middle Section</li>
-            </ol>
-        </nav>
-    </div>
-    <div class="container-Middle">
-         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+    <main class="main-content">
+        @include('admin.layout.partials.header', [
+            'title' => 'Middle Section Management',
+            'description' => 'Manage the middle section content of your website',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'Middle Section', 'url' => '#']
+            ],
+            'actions' => '<a href="' . route('admin.middle.create') . '" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Content
+            </a>'
+        ])
+
+        @if(session('success'))
+            @include('admin.layout.partials.alert', ['type' => 'success', 'message' => session('success')])
         @endif
+        
         @if(session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            @include('admin.layout.partials.alert', ['type' => 'danger', 'message' => session('error')])
+        @endif
+        
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-align-center me-2"></i>Middle Section Content
+                </h5>
             </div>
-            @endif
-    <table class="table table-bordered table-striped" id="middleTable">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Created At</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($middles as $index => $middle)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $middle->title }}</td>
-                <td>{{ $middle->description }}</td>
-                <td>{{ $middle->created_at->format('Y-m-d') }}</td>
-                <td>
-                    <a href="{{ route('admin.middle.edit', $middle->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                    <form action="{{ route('admin.middle.destroy', $middle->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    </div>
-</main>
+            <div class="card-body">
+                @if ($middles->count())
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle" id="middleTable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 40px;">#</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Created</th>
+                                    <th style="width: 120px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($middles as $index => $middle)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>
+                                            <div class="fw-bold">{{ $middle->title }}</div>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted">{{ Str::limit($middle->description, 60) }}</span>
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">{{ $middle->created_at->format('M d, Y') }}</small>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="{{ route('admin.middle.edit', $middle->id) }}" class="btn btn-outline-primary">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="{{ route('admin.middle.destroy', $middle->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-outline-danger" 
+                                                        onclick="return confirm('Are you sure you want to delete this content?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="text-center py-5">
+                        <i class="fas fa-align-center text-muted" style="font-size: 4rem;"></i>
+                        <h5 class="mt-3 text-muted">No middle section content found</h5>
+                        <p class="text-muted mb-4">Create content for the middle section of your website</p>
+                        <a href="{{ route('admin.middle.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Content
+                        </a>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </main>
+@endsection

@@ -23,6 +23,7 @@
     
     @stack('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/admin-app.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/sidebar.css') }}">
 </head>
 
 <body>
@@ -47,20 +48,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropify/0.2.2/js/dropify.min.js"></script>
 
     <!-- Custom JavaScript -->
+    <script src="{{ asset('assets/js/sidebar.js') }}"></script>
+    <script src="{{ asset('assets/js/admin-forms.js') }}"></script>
     <script>
         $(document).ready(function() {
-            // Mobile menu toggle
-            $('#menuToggle').on('click', function() {
-                $('#sidebar').toggleClass('show');
-                $('#overlay').toggleClass('show');
-            });
-
-            // Close sidebar when clicking overlay
-            $('#overlay').on('click', function() {
-                $('#sidebar').removeClass('show');
-                $('#overlay').removeClass('show');
-            });
-
             // User dropdown toggle
             $('#userBtn').on('click', function(e) {
                 e.preventDefault();
@@ -72,44 +63,6 @@
                 if (!$(e.target).closest('.user-menu').length) {
                     $('#userDropdown').removeClass('show');
                 }
-            });
-
-            // Sidebar dropdown functionality
-            $(document).on('click', '.nav-link[data-bs-toggle="collapse"]', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const $this = $(this);
-                const $submenu = $($this.data('bs-target'));
-                const $arrow = $this.find('.arrow');
-                
-                // Close other submenus
-                $('.submenu').not($submenu).slideUp(300);
-                $('.arrow').not($arrow).removeClass('rotated');
-                
-                // Toggle current submenu
-                $submenu.slideToggle(300, function() {
-                    // Update arrow only after animation completes
-                    $arrow.toggleClass('rotated');
-                });
-                
-                // Set active state
-                $('.nav-link').not($this).removeClass('active');
-                $this.toggleClass('active');
-                e.preventDefault();
-                e.stopPropagation();
-
-                const target = $(this).data('bs-target');
-                const submenu = $(target);
-                const arrow = $(this).find('.arrow');
-
-                // Toggle current submenu
-                submenu.slideToggle(300);
-                arrow.toggleClass('rotated');
-
-                // Close other submenus
-                $('.submenu').not(submenu).slideUp(300);
-                $('.arrow').not(arrow).removeClass('rotated');
             });
 
             // Active nav link
@@ -131,21 +84,12 @@
                 }
             });
 
-            // Close mobile menu when window is resized
-            $(window).on('resize', function() {
-                if ($(window).width() > 768) {
-                    $('#sidebar').removeClass('show');
-                    $('#overlay').removeClass('show');
-                }
-            });
-
             // Add loading animation to cards
             $('.stat-card').each(function(index) {
                 $(this).delay(index * 100).queue(function() {
                     $(this).addClass('fade-in').dequeue();
                 });
             });
-
         });
     </script>@stack('scripts')
 </body>

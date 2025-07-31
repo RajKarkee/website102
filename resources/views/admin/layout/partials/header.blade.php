@@ -43,7 +43,7 @@
         
         @if($actions)
             <div class="page-actions ms-3">
-                {{ $actions }}
+                {!! $actions !!}
             </div>
         @endif
     </div>

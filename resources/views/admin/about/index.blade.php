@@ -2,25 +2,25 @@
 
 @section('content')
 <main class="main-content">
-    <div class="content-header fade-in">
-        <h1>@yield('page-title', 'About')</h1>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@yield('page-title', 'About')</li>
-            </ol>
-        </nav>
-    </div>
+    @include('admin.layout.partials.header', [
+        'title' => 'About Management',
+        'description' => 'Manage your company about section content',
+        'breadcrumbs' => [
+            ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['title' => 'About Management', 'url' => '#']
+        ],
+        'actions' => '<a href="' . route('admin.about.add') . '" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add About Section
+        </a>'
+    ])
 
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-    @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>   
-    @endif
-
-    <div class="card">
+        @if (session('success'))
+            @include('admin.layout.partials.alert', ['type' => 'success', 'message' => session('success')])
+        @endif
+        @if (session('error'))
+            @include('admin.layout.partials.alert', ['type' => 'danger', 'message' => session('error')])
+        @endif    <div class="card">
         <div class="card-body">
             @if($about->isEmpty())
             <div class="text-right mb-3">

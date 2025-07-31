@@ -1,15 +1,19 @@
 @extends('admin.layout.app')
+
 @section('content')
     <main class="main-content">
-        <div class="content-header fade-in">
-            <h1>Add New Service</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.service.index') }}">Services</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Add Service</li>
-                </ol>
-            </nav>
-        </div>
+        @include('admin.layout.partials.header', [
+            'title' => 'Add New Service',
+            'description' => 'Create a new service offering for your company',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'Services', 'url' => route('admin.service.index')],
+                ['title' => 'Add Service', 'url' => '#']
+            ],
+            'actions' => '<a href="' . route('admin.service.index') . '" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Services
+            </a>'
+        ])
 
         <div class="content-body">
             <div class="row">
@@ -29,14 +33,16 @@
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label for="icon" class="form-label">Service Icon</label>
-                                    <input type="file" class="form-control" id="icon" name="icon"
-                                        accept="image/*" onchange="previewIcon(this)">
-                                    <small class="form-text text-muted">Upload an icon for this service (optional)</small>
-                                    <div id="icon-preview" class="icon-preview mt-2" style="display: none;">
-                                        <img id="preview-img" src="" alt="Icon Preview">
-                                        <div class="preview-text">Icon Preview</div>
-                                    </div>
+                                    @include('admin.components.image-upload', [
+                                        'name' => 'icon',
+                                        'label' => 'Service Icon',
+                                        'required' => false,
+                                        'accept' => 'image/*',
+                                        'maxSize' => '1MB',
+                                        'previewSize' => 'small',
+                                        'description' => 'Upload an icon to represent this service.',
+                                        'placeholder' => 'Upload Service Icon'
+                                    ])
                                 </div>
 
                                 <div class="form-group mb-3">

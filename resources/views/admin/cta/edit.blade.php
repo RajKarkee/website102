@@ -2,15 +2,18 @@
 
 @section('content')
     <main class="main-content">
-        <div class="content-header fade-in">
-            <h1>Edit CTA</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.cta.index') }}">CTA</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
-                </ol>
-            </nav>
-        </div>
+        @include('admin.layout.partials.header', [
+            'title' => 'Edit CTA',
+            'description' => 'Update call-to-action section content',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'CTA Management', 'url' => route('admin.cta.index')],
+                ['title' => 'Edit CTA', 'url' => '#']
+            ],
+            'actions' => '<a href="' . route('admin.cta.index') . '" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to CTA
+            </a>'
+        ])
         <div class="cta-admin">
             <form action="{{ route('admin.cta.update', $cta) }}" method="POST">
                 @csrf
