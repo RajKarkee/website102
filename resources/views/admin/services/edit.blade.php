@@ -1,15 +1,19 @@
 @extends('admin.layout.app')
+
 @section('content')
 <main class="main-content">
-    <div class="content-header fade-in">
-        <h1>Edit Service</h1>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.service.index') }}">Services</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Service</li>
-            </ol>
-        </nav>
-    </div>
+    @include('admin.layout.partials.header', [
+        'title' => 'Edit Service',
+        'description' => 'Update service information and details',
+        'breadcrumbs' => [
+            ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['title' => 'Services', 'url' => route('admin.service.index')],
+            ['title' => 'Edit: ' . $serviceData->title, 'url' => '#']
+        ],
+        'actions' => '<a href="' . route('admin.service.index') . '" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Services
+        </a>'
+    ])
 
     <div class="content-body">
         <div class="row">
@@ -30,18 +34,17 @@
 
                             <!-- Service Icon -->
                             <div class="form-group mb-3">
-                                <label for="icon" class="form-label">Service Icon</label>
-                                @if($serviceData->icon)
-                                    <div class="mb-2">
-                                        <img src="{{ asset('storage/' . $serviceData->icon) }}" alt="Current Icon" style="width:60px;height:60px;border-radius:8px;">
-                                        <small class="text-muted d-block">Current icon</small>
-                                    </div>
-                                @endif
-                                <input type="file" class="form-control" id="icon" name="icon" accept="image/*" onchange="previewIcon(this)">
-                                <div id="icon-preview" class="mt-2" style="display: none;">
-                                    <img id="preview-img" src="" alt="New Icon Preview" style="width:80px;height:80px;border-radius:8px;border:1px solid #ddd;">
-                                    <small class="text-muted d-block">New icon preview</small>
-                                </div>
+                                @include('admin.components.image-upload', [
+                                    'name' => 'icon',
+                                    'label' => 'Service Icon',
+                                    'required' => false,
+                                    'accept' => 'image/*',
+                                    'maxSize' => '1MB',
+                                    'previewSize' => 'small',
+                                    'currentImage' => $serviceData->icon ? asset('storage/' . $serviceData->icon) : null,
+                                    'description' => 'Update the icon for this service or keep the current one.',
+                                    'placeholder' => 'Upload New Icon'
+                                ])
                             </div>
 
                             <!-- Short & Long Description -->

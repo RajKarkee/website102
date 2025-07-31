@@ -2,12 +2,20 @@
 
 @section('content')
     <main class="main-content">
-        <div class="content-header fade-in">
-            <h1>CTA Management</h1>
+        @include('admin.layout.partials.header', [
+            'title' => 'CTA Management',
+            'description' => 'Manage call-to-action sections across your website',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'CTA Management', 'url' => '#']
+            ],
+            'actions' => '<a href="' . route('admin.cta.create') . '" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add New CTA
+            </a>'
+        ])
 
-        </div>
         <div class="cta-admin">
-            <a href="{{ route('admin.cta.create') }}" class="btn btn-primary mb-3">Add New CTA</a>
+            @include('components.alerts')
             <div class="table-responsive">
                 <table class="table table-hover align-middle shadow-sm border rounded">
                     <thead class="table-light">

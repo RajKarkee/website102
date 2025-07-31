@@ -1,34 +1,29 @@
 @extends('admin.layout.app')
+
 @section('content')
-<main class="main-content">
-    <div class="content-header fade-in">
-        <h1>Services Management</h1>
-        <p class="text-muted">Welcome to the services page. Here you can manage your services.</p>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Services</li>
-            </ol>
-        </nav>
-    </div>
-    <div class="service">
-        {{-- @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif --}}
-        @include('components.alerts')
-<div class="container">
-    <div class="card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <h3>Services List</h3>
-                <a href="{{ route('admin.service.add') }}" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Add Service
-                </a>
-            </div>
-        </div>
+    <main class="main-content">
+        @include('admin.layout.partials.header', [
+            'title' => 'Services Management',
+            'description' => 'Manage your company services and offerings',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'Services Management', 'url' => '#']
+            ],
+            'actions' => '<a href="' . route('admin.service.add') . '" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add New Service
+            </a>'
+        ])
+
+        <div class="services-admin">
+            @include('components.alerts')
+            
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0 d-flex align-items-center">
+                        <i class="fas fa-cogs me-2"></i>
+                        Services List
+                    </h5>
+                </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table id="servicesTable" class="table table-striped nowrap w-100">

@@ -16,16 +16,80 @@
         <div class="logo-admin">
             @include('components.alerts')
 
-            @include('admin.layout.partials.table', [
-                'title' => 'Company Logos',
-                'headers' => ['#', 'Logo', 'Company Name', 'Tagline', 'Contact', 'Status', 'Created'],
-                'items' => $logos->map(function($logo, $index) {
-                    return view('admin.logo.partials.table-row', compact('logo', 'index'))->render();
-                }),
-                'searchable' => true,
-                'exportable' => true,
-                'emptyMessage' => 'No logos found. Create your first logo to get started.'
-            ])
+            <!-- Logo Management Table -->
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                <div class="card-header bg-dark text-white">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h5 class="mb-0 d-flex align-items-center">
+                                <i class="fas fa-image me-2"></i>
+                                Company Logos
+                            </h5>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-end gap-2">
+                                <input type="text" 
+                                       class="form-control form-control-sm" 
+                                       id="logoSearch" 
+                                       placeholder="Search logos..."
+                                       style="max-width: 200px;">
+                                <button class="btn btn-outline-light btn-sm" onclick="exportTable()">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" id="logoTable">
+                        <thead class="table-light border-bottom">
+                            <tr>
+                                <th class="fw-semibold">#</th>
+                                <th class="fw-semibold">Logo</th>
+                                <th class="fw-semibold">Company Name</th>
+                                <th class="fw-semibold">Tagline</th>
+                                <th class="fw-semibold">Contact</th>
+                                <th class="fw-semibold">Status</th>
+                                <th class="fw-semibold">Created</th>
+                                <th class="fw-semibold text-center" style="width: 180px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($logos as $logo)
+                                @include('admin.logo.partials.table-row', ['logo' => $logo, 'index' => $loop->index])
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center py-5 text-muted">
+                                        <div class="empty-state">
+                                            <i class="fas fa-image fa-3x mb-3 opacity-50"></i>
+                                            <h6 class="text-muted mb-2">No logos found</h6>
+                                            <p class="text-muted small">Create your first logo to get started.</p>
+                                            <a href="{{ route('admin.logo.create') }}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-plus"></i> Create First Logo
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                
+                @if($logos->count() > 0)
+                    <div class="card-footer bg-light border-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                Showing {{ $logos->count() }} logo{{ $logos->count() !== 1 ? 's' : '' }}
+                            </small>
+                            <div class="d-flex gap-2">
+                                <span class="badge bg-success">{{ $logos->where('is_active', true)->count() }} Active</span>
+                                <span class="badge bg-secondary">{{ $logos->where('is_active', false)->count() }} Inactive</span>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
 
             @if($logos->count() > 0)
                 <div class="mt-4">
@@ -64,109 +128,7 @@
                         </div>
                     </div>
                 </div>
-            @endif
-        </div>
-    </main>
-@endsection
-                                    @foreach($logos as $logo)
-                                        <tr class="{{ $logo->is_active ? 'table-success' : '' }}">
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>
-                                                @if($logo->logo_image)
-                                                    <img src="{{ asset('storage/' . $logo->logo_image) }}" 
-                                                         alt="{{ $logo->company_name }}"
-                                                         class="rounded border border-primary" 
-                                                         style="width: 60px; height: 60px; object-fit: contain;">
-                                                @else
-                                                    <div class="bg-light border rounded d-flex align-items-center justify-content-center" 
-                                                         style="width: 60px; height: 60px;">
-                                                        <i class="fas fa-image text-muted"></i>
-                                                    </div>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="fw-semibold">{{ $logo->company_name }}</div>
-                                                @if($logo->website)
-                                                    <small class="text-muted">{{ $logo->website }}</small>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($logo->tagline)
-                                                    <small class="text-muted fst-italic">{{ Str::limit($logo->tagline, 40) }}</small>
-                                                @else
-                                                    <span class="text-muted">-</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($logo->phone)
-                                                    <div><i class="fas fa-phone text-primary"></i> {{ $logo->phone }}</div>
-                                                @endif
-                                                @if($logo->email)
-                                                    <div><i class="fas fa-envelope text-primary"></i> {{ $logo->email }}</div>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($logo->is_active)
-                                                    <span class="badge bg-success">
-                                                        <i class="fas fa-check"></i> Active
-                                                    </span>
-                                                @else
-                                                    <span class="badge bg-secondary">Inactive</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="btn-group" role="group">
-                                                    <a href="{{ route('admin.logo.show', $logo) }}" 
-                                                       class="btn btn-sm btn-outline-info">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ route('admin.logo.edit', $logo) }}" 
-                                                       class="btn btn-sm btn-outline-warning">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    @if(!$logo->is_active)
-                                                        <form action="{{ route('admin.logo.activate', $logo) }}" 
-                                                              method="POST" 
-                                                              style="display: inline-block;"
-                                                              onsubmit="return confirm('Set this logo as active?')">
-                                                            @csrf
-                                                            @method('PATCH')
-                                                            <button type="submit" class="btn btn-sm btn-outline-success">
-                                                                <i class="fas fa-check"></i>
-                                                            </button>
-                                                        </form>
-                                                    @endif
-                                                    <form action="{{ route('admin.logo.destroy', $logo) }}" 
-                                                          method="POST" class="d-inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" 
-                                                                class="btn btn-sm btn-outline-danger"
-                                                                onclick="return confirm('Delete this logo? This action cannot be undone.')">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @else
-                        <div class="text-center py-5">
-                            <i class="fas fa-image fa-3x text-muted mb-3"></i>
-                            <h5 class="text-muted">No logos found</h5>
-                            <p class="text-muted">Create your first company logo to get started.</p>
-                            <a href="{{ route('admin.logo.create') }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Create First Logo
-                            </a>
-                        </div>
-                    @endif
-                </div>
-            </div>
 
-            @if($logos->count() > 0)
                 <!-- Quick Stats -->
                 <div class="row mt-4">
                     <div class="col-md-3">
@@ -210,3 +172,7 @@
         </div>
     </main>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('assets/js/logo-management.js') }}"></script>
+@endpush

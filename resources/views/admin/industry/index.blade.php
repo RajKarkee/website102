@@ -1,15 +1,18 @@
 @extends('admin.layout.app')
+
 @section('content')
 <main class="main-content">
-    <div class="content-header fade-in">
-        <h1>@yield('page-title', 'Industry')</h1>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@yield('page-title', 'Industry')</li>
-            </ol>
-        </nav>
-    </div>
+    @include('admin.layout.partials.header', [
+        'title' => 'Industry Management',
+        'description' => 'Manage industry sectors and specializations',
+        'breadcrumbs' => [
+            ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['title' => 'Industry Management', 'url' => '#']
+        ],
+        'actions' => '<a href="' . route('admin.industry.add') . '" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add New Industry
+        </a>'
+    ])
 
     <div class="container-indus">
         <style>

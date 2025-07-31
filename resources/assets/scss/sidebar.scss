@@ -9,36 +9,103 @@
   top: 60px;
   left: 0;
   z-index: 999;
+  overflow-y: auto;
+  
   .sidebar-nav {
-    padding: 1.5rem 0.5rem;
+    padding: 1rem 0;
+    
     .nav-item {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
+      
       .nav-link {
-        color: #333;
+        color: #555;
         border-radius: 8px;
         padding: 0.75rem 1rem;
         display: flex;
         align-items: center;
         gap: 0.75rem;
         font-weight: 500;
-        transition: background 0.2s, color 0.2s;
-        &:hover, &.active {
+        text-decoration: none;
+        margin: 0 0.5rem;
+        transition: all 0.3s ease;
+        
+        &:hover {
           background: #f8f9fa;
-          color: var(--primary-color, #007bff);
+          color: #007bff;
+          text-decoration: none;
         }
+        
+        &.active {
+          background: #007bff;
+          color: #fff;
+        }
+        
         i {
           font-size: 1.1rem;
+          width: 20px;
+          text-align: center;
+        }
+        
+        .arrow {
+          margin-left: auto;
+          transition: transform 0.3s ease;
+          font-size: 0.8rem;
+        }
+        
+        &[data-bs-toggle="collapse"] {
+          cursor: pointer;
+          
+          .arrow {
+            transform: rotate(0deg);
+          }
+          
+          &.collapsed .arrow {
+            transform: rotate(-90deg);
+          }
+          
+          &:not(.collapsed) .arrow {
+            transform: rotate(0deg);
+          }
         }
       }
+      
       .submenu {
         background: #f8f9fa;
-        padding-left: 1.5rem;
+        margin: 0.25rem 0.5rem;
+        border-radius: 8px;
+        overflow: hidden;
+        
         .nav-link {
-          font-size: 0.95rem;
-          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
+          padding: 0.5rem 1rem 0.5rem 2.5rem;
+          margin: 0;
+          border-radius: 0;
+          color: #666;
+          
+          &:hover {
+            background: #e9ecef;
+            color: #007bff;
+          }
+          
+          &.active {
+            background: #007bff;
+            color: #fff;
+          }
         }
       }
     }
+  }
+}
+
+// Show/hide submenu animations
+.submenu {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  
+  &.show {
+    max-height: 200px;
+    opacity: 1;
   }
 }
 
@@ -47,8 +114,38 @@
   .sidebar {
     width: 100%;
     min-height: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    
+    &.show {
+      transform: translateX(0);
+    }
+    
     .sidebar-nav {
       padding: 0.5rem;
     }
+  }
+  
+  .main-content {
+    margin-left: 0;
+  }
+}
+
+// Mobile overlay
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  
+  &.show {
+    opacity: 1;
+    visibility: visible;
   }
 }

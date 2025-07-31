@@ -2,28 +2,27 @@
 
 @section('content')
 <main class="main-content">
-    <div class="content-header fade-in">
-        <h1>Color Management</h1>
-        <p class="text-muted">Manage colors for your application.</p>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Colors</li>
-            </ol>
-        </nav>
-    </div>
+    @include('admin.layout.partials.header', [
+        'title' => 'Color Management',
+        'description' => 'Manage colors for your application and branding',
+        'breadcrumbs' => [
+            ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+            ['title' => 'Color Management', 'url' => '#']
+        ],
+        'actions' => '<button type="button" class="btn btn-primary" id="addColorBtn">
+            <i class="fas fa-plus"></i> Add New Color
+        </button>'
+    ])
 
-    <div class="color">
-     @include('components.alerts');
+    <div class="color-admin">
+        @include('components.alerts')
 
-        <div class="card">
-            <div class="card-header">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">Colors List</h3>
-                    <button type="button" class="btn btn-primary" id="addColorBtn">
-                        <i class="fas fa-plus"></i> Add Color
-                    </button>
-                </div>
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0 d-flex align-items-center">
+                    <i class="fas fa-palette me-2"></i>
+                    Colors List
+                </h5>
             </div>
             
             

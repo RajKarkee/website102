@@ -2,16 +2,18 @@
 
 @section('content')
     <main class="main-content">
-        <div class="content-header fade-in">
-            <h1>Add New Logo</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.logo.index') }}">Logo Management</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Add New Logo</li>
-                </ol>
-            </nav>
-        </div>
+        @include('admin.layout.partials.header', [
+            'title' => 'Add New Logo',
+            'description' => 'Create a new company logo and branding information',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'Logo Management', 'url' => route('admin.logo.index')],
+                ['title' => 'Add New Logo', 'url' => '#']
+            ],
+            'actions' => '<a href="' . route('admin.logo.index') . '" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Logo List
+            </a>'
+        ])
 
         <div class="logo-admin">
             @include('components.alerts')
@@ -76,28 +78,24 @@
                             </div>
 
                             <div class="col-md-4">
-                                <h5 class="text-primary mb-3">
-                                    <i class="fas fa-image"></i> Logo Image
-                                </h5>
-                                
-                                <div class="form-group mb-3">
-                                    <label for="logo_image" class="form-label">Upload Logo</label>
-                                    <input type="file" 
-                                           class="form-control dropify @error('logo_image') is-invalid @enderror" 
-                                           id="logo_image" 
-                                           name="logo_image" 
-                                           accept="image/*">
-                                    <small class="form-text text-muted">Supported formats: JPEG, PNG, JPG, GIF, SVG. Max size: 2MB</small>
-                                    @error('logo_image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                @include('admin.components.image-upload', [
+                                    'name' => 'logo_image',
+                                    'label' => 'Logo Image',
+                                    'required' => false,
+                                    'accept' => 'image/*',
+                                    'maxSize' => '2MB',
+                                    'previewSize' => 'medium',
+                                    'description' => 'Upload your company logo. Supported formats: JPEG, PNG, JPG, GIF, SVG.',
+                                    'placeholder' => 'Upload Company Logo'
+                                ])
 
-                                <div class="form-check">
+                                <div class="form-check mt-3">
                                     <input class="form-check-input" type="checkbox" id="is_active" name="is_active" checked>
-                                    <label class="form-check-label" for="is_active">
+                                    <label class="form-check-label d-flex align-items-center" for="is_active">
+                                        <i class="fas fa-star text-warning me-2"></i>
                                         Set as Active Logo
                                     </label>
+                                    <small class="form-text text-muted">The active logo will be displayed on your website</small>
                                 </div>
                             </div>
                         </div>

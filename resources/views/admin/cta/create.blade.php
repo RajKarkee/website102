@@ -2,15 +2,18 @@
 
 @section('content')
     <main class="main-content">
-        <div class="content-header fade-in">
-            <h1>Add New CTA</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.cta.index') }}">CTA</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Add</li>
-                </ol>
-            </nav>
-        </div>
+        @include('admin.layout.partials.header', [
+            'title' => 'Add New CTA',
+            'description' => 'Create a new call-to-action section',
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
+                ['title' => 'CTA Management', 'url' => route('admin.cta.index')],
+                ['title' => 'Add CTA', 'url' => '#']
+            ],
+            'actions' => '<a href="' . route('admin.cta.index') . '" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to CTA
+            </a>'
+        ])
         <div class="cta-admin">
             <form action="{{ route('admin.cta.store') }}" method="POST">
                 @csrf
