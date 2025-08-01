@@ -18,10 +18,10 @@
             <div class="form-group">
                 <label for="page-title" class="title">Page Title</label>
                 <select id="page-title" name="page" class="form-control" required>
-                    <option value="Home" {{ $jumbotron->page == 'Home' ? 'selected' : '' }}>Home</option>
-                    <option value="About" {{ $jumbotron->page == 'About' ? 'selected' : '' }}>About</option>
-                    <option value="Industry" {{ $jumbotron->page == 'Industry' ? 'selected' : '' }}>Industry</option>
-                    <option value="Services" {{ $jumbotron->page == 'Services' ? 'selected' : '' }}>Services</option>
+                    <option value="home" {{ $jumbotron->page == 'home' ? 'selected' : '' }}>Home</option>
+                    <option value="about" {{ $jumbotron->page == 'about' ? 'selected' : '' }}>About</option>
+                    <option value="industries" {{ $jumbotron->page == 'industry' ? 'selected' : '' }}>Industry</option>
+                    <option value="services.index" {{ $jumbotron->page == 'services' ? 'selected' : '' }}>Services</option>
                 </select>
             </div>
             <div class="form-group">

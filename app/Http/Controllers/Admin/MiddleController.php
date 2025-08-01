@@ -77,6 +77,6 @@ class MiddleController extends Controller
         }
 
         // If the request is GET, show the form for adding points
-        return view('admin.middle.addPoint', compact('middle', 'points'));
+        return view('admin.middle.middlepoint', compact('middle', 'points'));
     }
 }

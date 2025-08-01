@@ -9,10 +9,19 @@
                 ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
                 ['title' => 'Testimonials Management', 'url' => '#']
             ],
-            'actions' => '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTestimonialModal">
-                <i class="fas fa-plus"></i> Add Testimonial
-            </button>'
+            'actions' => ''
         ])
+            'actions' => '<a href="' . route('admin.testimonials.create') . '" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Testimonial
+            </a>'
+        ])
+        @push('styles')
+        <style>
+            .main-content { position: relative; z-index: 1; }
+            .table-responsive, .card { position: relative; z-index: 2; }
+            @media (min-width: 992px) { .overlay { display: none !important; } }
+        </style>
+        @endpush
 
         @if (session('success'))
             @include('admin.layout.partials.alert', ['type' => 'success', 'message' => session('success')])
@@ -100,67 +109,51 @@
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTestimonialModal">
                             <i class="fas fa-plus"></i> Add First Testimonial
                         </button>
+                        <a href="{{ route('admin.testimonials.create') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add First Testimonial
+                        </a>
                     </div>
                 @endif
             </div>
         </div>
 
         <!-- Add Testimonial Modal -->
-        <div class="modal fade" id="addTestimonialModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <i class="fas fa-star me-2"></i>Add New Testimonial
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <form action="{{ route('admin.testimonials.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Customer Image</label>
-                                        @include('admin.components.image-upload', [
-                                            'name' => 'image',
-                                            'accept' => 'image/*',
-                                            'previewSize' => 'sm'
-                                        ])
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Additional Notes <small class="text-muted">(Optional)</small></label>
-                                        <textarea name="others" class="form-control" rows="3" placeholder="Role, company, or other details..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label">Testimonial <span class="text-danger">*</span></label>
-                                <textarea name="description" class="form-control" rows="4" required
-                                    placeholder="What did the customer say about your service?"></textarea>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label">Customer Details</label>
-                                <textarea name="sub_description" class="form-control" rows="2"
-                                    placeholder="Customer name, company, or other identifying information..."></textarea>
-                            </div>
-
-                            <!-- Hidden status field -->
-                            <input type="hidden" name="status" value="0">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>Add Testimonial
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </main>
 @endsection
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Ensure overlay is hidden on page load
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+        overlay.classList.remove('show');
+        overlay.style.display = 'none';
+    }
+    // Initialize all modals properly
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(function(modal) {
+        modal.addEventListener('shown.bs.modal', function() {
+            if (overlay) {
+                overlay.classList.remove('show');
+                overlay.style.display = 'none';
+            }
+        });
+        modal.addEventListener('hidden.bs.modal', function() {
+            if (overlay) {
+                overlay.classList.remove('show');
+                overlay.style.display = 'none';
+            }
+        });
+    });
+    // Ensure all interactive elements are clickable
+    setTimeout(function() {
+        const interactiveElements = document.querySelectorAll('button, a, input, select, textarea');
+        interactiveElements.forEach(function(element) {
+            element.style.pointerEvents = 'auto';
+            element.style.position = 'relative';
+            element.style.zIndex = '10';
+        });
+    }, 100);
+});
+</script>
+@endpush

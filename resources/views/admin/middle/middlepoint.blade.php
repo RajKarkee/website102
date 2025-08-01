@@ -29,7 +29,7 @@
                         </div>
                         
                         <div class="card-body p-4">
-                            <form action="{{ route('admin.middle.point.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.middle.addPoint', $middle->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 
                                 <div class="form-group mb-4">

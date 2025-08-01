@@ -8,16 +8,7 @@
     <div class="min-h-screen bg-background text-foreground">
 
         <!-- Jumbotron -->
-        @include('components.jumbotron', [
-            'title' => 'About B&B Tax',
-            'subtitle' => 'Your Trusted Accounting Partner',
-            'description' =>
-                'Over 15 years of experience helping New Zealand businesses navigate their financial challenges and achieve sustainable growth.',
-            'backgroundImage' =>
-                'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
-            'icon' => '<i data-lucide="building" class="h-5 w-5 text-yellow-400"></i>',
-            'badge' => 'About Our Company',
-        ])
+        @include('components.jumbotron')
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 

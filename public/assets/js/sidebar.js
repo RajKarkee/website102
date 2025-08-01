@@ -1,5 +1,12 @@
 // Admin sidebar functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Ensure overlay is hidden on page load (fix for clickability issues)
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+        overlay.classList.remove('show');
+        overlay.style.display = 'none';
+    }
+    
     // Initialize Bootstrap collapse for submenu toggles
     const collapseElements = document.querySelectorAll('[data-bs-toggle="collapse"]');
     
@@ -47,11 +54,18 @@ document.addEventListener('DOMContentLoaded', function() {
         menuToggle.addEventListener('click', function() {
             sidebar.classList.toggle('show');
             overlay.classList.toggle('show');
+            
+            // On desktop, never show overlay
+            if (window.innerWidth >= 992) {
+                overlay.classList.remove('show');
+                overlay.style.display = 'none';
+            }
         });
         
         overlay.addEventListener('click', function() {
             sidebar.classList.remove('show');
             overlay.classList.remove('show');
+            overlay.style.display = 'none';
         });
     }
     
@@ -59,7 +73,16 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', function() {
         if (window.innerWidth > 991) {
             if (sidebar) sidebar.classList.remove('show');
-            if (overlay) overlay.classList.remove('show');
+            if (overlay) {
+                overlay.classList.remove('show');
+                overlay.style.display = 'none';
+            }
         }
     });
+    
+    // Initial check for desktop
+    if (window.innerWidth >= 992 && overlay) {
+        overlay.classList.remove('show');
+        overlay.style.display = 'none';
+    }
 });
