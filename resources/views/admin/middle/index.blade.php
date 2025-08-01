@@ -35,6 +35,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th style="width: 40px;">#</th>
+                                    <th>Page</th>
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Created</th>
@@ -45,17 +46,24 @@
                                 @foreach($middles as $index => $middle)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
+                                           <td>
+                                            <span class="fw-bold">{{ $middle->page }}</span>
+                                        </td>
                                         <td>
                                             <div class="fw-bold">{{ $middle->title }}</div>
                                         </td>
+                                     
                                         <td>
-                                            <span class="text-muted">{{ Str::limit($middle->description, 60) }}</span>
+                                            <span class="text-muted">{{ Str::limit($middle->short_description, 60) }}</span>
                                         </td>
                                         <td>
                                             <small class="text-muted">{{ $middle->created_at->format('M d, Y') }}</small>
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
+                                                    <a href="{{ route('admin.middle.addPoint', $middle->id) }}" class="btn btn-outline-primary">
+                                                    <i class="fas fa-add"></i>
+                                                </a>
                                                 <a href="{{ route('admin.middle.edit', $middle->id) }}" class="btn btn-outline-primary">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
@@ -79,7 +87,7 @@
                         <i class="fas fa-align-center text-muted" style="font-size: 4rem;"></i>
                         <h5 class="mt-3 text-muted">No middle section content found</h5>
                         <p class="text-muted mb-4">Create content for the middle section of your website</p>
-                        <a href="{{ route('admin.middle.create') }}" class="btn btn-primary">
+                        <a href="#" class="btn btn-primary">
                             <i class="fas fa-plus"></i> Add Content
                         </a>
                     </div>

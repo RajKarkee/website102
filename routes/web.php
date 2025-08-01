@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\CtaController as AdminCtaController;
 use App\Http\Controllers\Admin\TeamController as AdminTeamController;
 use App\Http\Controllers\Admin\PositionController as AdminPositionController;
-
+use App\Http\Controllers\Admin\MiddleController as AdminMiddleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,6 +69,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::prefix('color')->name('color.')->group(function () {
     Route::match(['get', 'post'],   '/', [FrontController::class, 'colorIndex'])->name('index');
     Route::delete('/delete/{id}', [FrontController::class, 'colorDelete'])->name('destroy');
+});
+Route::prefix('middle')->name('middle.')->group(function(){
+Route::get('/',[AdminMiddleController::class, 'index'])->name('index');
+Route::match(['get','post'], '/add', [AdminMiddleController::class, 'create'])->name('create');
+Route::match(['get','post'], '/addPoint/{id}', [AdminMiddleController::class, 'addPoint'])->name('addPoint');
+Route::delete('/delete/{id}', [AdminMiddleController::class, 'destroy'])->name('destroy');
+Route::match(['get','post'], '/edit/{id}', [AdminMiddleController::class, 'edit'])->name('edit');
 });
     // Authentication required routes
     Route::middleware(['auth'])->group(function () {
@@ -166,14 +173,14 @@ Route::prefix('color')->name('color.')->group(function () {
         });
 
         // Middle section routes
-        Route::prefix('middle')->name('middle.')->group(function () {
-            Route::get('/', [FrontController::class, 'middleIndex'])->name('index');
-            Route::get('/create', [FrontController::class, 'middleCreate'])->name('create');
-            Route::post('/', [FrontController::class, 'middleStore'])->name('store');
-            Route::get('/{id}/edit', [FrontController::class, 'middleEdit'])->name('edit');
-            Route::put('/{id}', [FrontController::class, 'middleUpdate'])->name('update');
-            Route::delete('/{id}', [FrontController::class, 'middleDestroy'])->name('destroy');
-        });
+        // Route::prefix('middle')->name('middle.')->group(function () {
+        //     Route::get('/', [FrontController::class, 'middleIndex'])->name('index');
+        //     Route::get('/create', [FrontController::class, 'middleCreate'])->name('create');
+        //     Route::post('/', [FrontController::class, 'middleStore'])->name('store');
+        //     Route::get('/{id}/edit', [FrontController::class, 'middleEdit'])->name('edit');
+        //     Route::put('/{id}', [FrontController::class, 'middleUpdate'])->name('update');
+        //     Route::delete('/{id}', [FrontController::class, 'middleDestroy'])->name('destroy');
+        // });
 
         // Partner routes
         Route::prefix('partner')->name('partner.')->group(function () {

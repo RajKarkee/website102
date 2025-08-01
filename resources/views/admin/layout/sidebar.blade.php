@@ -20,6 +20,13 @@
                 <span>Jumbotron</span>
             </a>
         </div>
+         <div class="nav-item">
+            <a href="{{ route('admin.middle.index') }}"
+                class="nav-link {{ request()->routeIs('admin.middle.*') ? 'active' : '' }}">
+                <i class="fas fa-chart-bar"></i>
+                <span>Middle</span>
+            </a>
+        </div>
         <div class="nav-item">
             <a href="{{ route('admin.color.index') }}"
                 class="nav-link {{ request()->routeIs('admin.color.*') ? 'active' : '' }}">

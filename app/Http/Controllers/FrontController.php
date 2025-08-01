@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CacheHelper;
 use App\Models\Industry;
 use App\Models\Service;
 use App\Models\Jumbotron;
@@ -15,7 +16,6 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 // use App\Http\Controllers\ColorHelper;
 use App\Helpers\ColorHelper;
-
 class FrontController extends Controller
 {
     public function industry()
@@ -38,6 +38,12 @@ class FrontController extends Controller
         }
 
         return view('admin.industry.add');
+    }
+
+    public function middleIndex()
+    {
+        $middles= []; // Assuming you want to fetch some data for the middle section
+        return view('admin.middle.index', compact('middles'));
     }
     public function industryEdit($id, Request $request)
     {
@@ -349,6 +355,7 @@ $colors = Color::all();
             $aboutdata->Experience = $request->input('experience');
             $aboutdata->client = $request->input('client');
             $aboutdata->save();
+            $this->aboutRender();
             return redirect()->route('admin.about.index')
                 ->with('success', 'About section created successfully.');
         }
@@ -371,6 +378,7 @@ $colors = Color::all();
             $aboutdata->Experience = $request->input('experience');
             $aboutdata->client = $request->input('client');
             $aboutdata->save();
+             $this->aboutRender();
             return redirect()->route('admin.about.index')
                 ->with('success', 'About section updated successfully.');
         }
@@ -405,7 +413,7 @@ $colors = Color::all();
             $imagePath = $request->file('image')->store('about_images', 'public');
             $about->image = $imagePath;
         }
-
+ $this->aboutRender();
         // Save the updated record
         $about->save();
 
@@ -421,6 +429,7 @@ $colors = Color::all();
         //     Storage::disk('public')->delete($aboutdata->image);
         // }
         $aboutdata->delete();
+         $this->aboutRender();
         return redirect()->route('admin.about.index')->with('success', 'About section deleted successfully.');
     }
     public function aboutAddPoint($id, Request $request)
@@ -455,23 +464,17 @@ $colors = Color::all();
             $aboutdata->point_4 = json_encode($points['point_4']);
 
             $aboutdata->save();
+            $this->aboutPoints();
 
             return redirect()->route('admin.about.index')
                 ->with('success', 'Points added successfully.');
         }
 
-
-        function safe_decode($json)
-        {
-            $decoded = json_decode($json, true);
-            return is_array($decoded) ? $decoded : ['title' => '', 'description' => '', 'icon' => ''];
-        }
-
         $points = [
-            1 => safe_decode(old('point_1', $aboutdata->point_1 ?? '')),
-            2 => safe_decode(old('point_2', $aboutdata->point_2 ?? '')),
-            3 => safe_decode(old('point_3', $aboutdata->point_3 ?? '')),
-            4 => safe_decode(old('point_4', $aboutdata->point_4 ?? '')),
+            1 => $this->safe_decode(old('point_1', $aboutdata->point_1 ?? '')),
+            2 => $this->safe_decode(old('point_2', $aboutdata->point_2 ?? '')),
+            3 => $this->safe_decode(old('point_3', $aboutdata->point_3 ?? '')),
+            4 => $this->safe_decode(old('point_4', $aboutdata->point_4 ?? '')),
         ];
 
         return view('admin.about.addpoint', compact('aboutdata', 'points'));
@@ -503,5 +506,29 @@ $colors = Color::all();
         $color = Color::findOrFail($id);
         $color->delete();
         return redirect()->back()->with('success', 'Color deleted successfully.');
+    }
+    
+    public function aboutRender(){
+        $about=About::all();
+
+        CacheHelper::putCache('front.cache.about', view('admin.template.about.about', compact('about'))->render());
+
+    }
+
+    private function safe_decode($json) {
+        $decoded = json_decode($json, true);
+        return is_array($decoded) ? $decoded : ['title' => '', 'description' => '', 'icon' => ''];
+    }
+
+    public function aboutPoints(){
+        $about=About::first();
+        $points = [
+            1 => $this->safe_decode(old('point_1', $about->point_1 ?? '')),
+            2 => $this->safe_decode(old('point_2', $about->point_2 ?? '')),
+            3 => $this->safe_decode(old('point_3', $about->point_3 ?? '')),
+            4 => $this->safe_decode(old('point_4', $about->point_4 ?? '')),
+        ];
+        CacheHelper::putCache('front.cache.points', view('admin.template.about.point', compact('about','points'))->render());
+
     }
 }
