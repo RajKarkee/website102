@@ -156,6 +156,7 @@ Route::match(['get','post'], '/edit/{id}', [AdminMiddleController::class, 'edit'
         // Testimonials routes
         Route::prefix('testimonials')->name('testimonials.')->group(function () {
             Route::get('/', [TestimonialController::class, 'adminIndex'])->name('index');
+            Route::get('/create', [TestimonialController::class, 'create'])->name('create');
             Route::post('/', [TestimonialController::class, 'store'])->name('store');
             Route::get('/{testimonial}/edit', [TestimonialController::class, 'edit'])->name('edit');
             Route::put('/{testimonial}', [TestimonialController::class, 'update'])->name('update');

@@ -86,10 +86,10 @@
                 <div class="form-group">
                     <label for="page-title" class="title">Page Title</label>
                     <select id="categorySelect" name="page" class="form-control" required>
-                    <option value="Home">Home</option>
-                    <option value="About">About</option>
-                    <option value="Industry">Industry</option>
-                    <option value="Services">Services</option>
+                    <option value="home">Home</option>
+                    <option value="about">About</option>
+                    <option value="industries">Industry</option>
+                    <option value="services.index">Services</option>
                     </select>
                 </div>
                 <br>

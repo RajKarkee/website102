@@ -14,6 +14,11 @@ class TestimonialController extends Controller
         return view('testimonials', compact('testimonials'));
     }
 
+    public function create()
+    {
+        return view('admin.testimonials.create');
+    }
+
     public function adminIndex()
     {
         $testimonials = Testimonial::all();

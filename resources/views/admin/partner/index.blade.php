@@ -9,9 +9,9 @@
                 ['title' => 'Dashboard', 'url' => route('admin.dashboard')],
                 ['title' => 'Partners Management', 'url' => '#']
             ],
-            'actions' => '<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartnerModal">
+            'actions' => '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartnerModal">
                 <i class="fas fa-plus"></i> Add Partner
-            </a>'
+            </button>'
         ])
 
         @if (session('success'))
@@ -58,13 +58,16 @@
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <button type="button" class="btn btn-outline-primary" 
-                                                    data-bs-toggle="modal" data-bs-target="#editPartnerModal{{ $item->id }}">
+                                                    data-bs-toggle="modal" data-bs-target="#editPartnerModal{{ $item->id }}"
+                                                    title="Edit Partner">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                                 <form action="{{ route('admin.partner.store') }}" method="POST" class="d-inline">
                                                     @csrf
-                                                    <button type="submit" name="action" value="delete_{{ $item->id }}" class="btn btn-outline-danger"
-                                                        onclick="return confirm('Are you sure you want to delete this partner?')">
+                                                    <button type="submit" name="action" value="delete_{{ $item->id }}" 
+                                                        class="btn btn-outline-danger delete-partner-btn"
+                                                        title="Delete Partner"
+                                                        data-partner-name="{{ $item->name }}">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
@@ -180,4 +183,117 @@
             </div>
         @endforeach
     </main>
+
+    @push('styles')
+    <style>
+        /* Ensure proper z-index hierarchy */
+        .modal {
+            z-index: 1055 !important;
+        }
+        .modal-backdrop {
+            z-index: 1050 !important;
+        }
+        
+        /* Fix any overlay conflicts */
+        .main-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Ensure buttons are clickable */
+        .btn-group .btn {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Prevent overlay issues */
+        body.modal-open .overlay {
+            display: none !important;
+        }
+        
+        /* Force clickability on interactive elements */
+        button, a, input, select, textarea, .btn {
+            pointer-events: auto !important;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Ensure table content is accessible */
+        .table-responsive {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Fix card content layering */
+        .card {
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Ensure overlay doesn't interfere on desktop */
+        @media (min-width: 992px) {
+            .overlay {
+                display: none !important;
+            }
+        }
+    </style>
+    @endpush
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure overlay is hidden on page load
+            const overlay = document.getElementById('overlay');
+            if (overlay) {
+                overlay.classList.remove('show');
+                overlay.style.display = 'none';
+            }
+            
+            // Initialize all modals properly
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(function(modal) {
+                modal.addEventListener('shown.bs.modal', function() {
+                    // Hide overlay when modal is shown
+                    if (overlay) {
+                        overlay.classList.remove('show');
+                        overlay.style.display = 'none';
+                    }
+                });
+                
+                modal.addEventListener('hidden.bs.modal', function() {
+                    // Ensure overlay stays hidden after modal is closed
+                    if (overlay) {
+                        overlay.classList.remove('show');
+                        overlay.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Handle delete confirmations with better UX
+            const deleteButtons = document.querySelectorAll('.delete-partner-btn');
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const partnerName = this.getAttribute('data-partner-name');
+                    const confirmMessage = `Are you sure you want to delete partner "${partnerName}"? This action cannot be undone.`;
+                    
+                    if (confirm(confirmMessage)) {
+                        // Submit the form
+                        this.closest('form').submit();
+                    }
+                });
+            });
+            
+            // Ensure all interactive elements are clickable
+            setTimeout(function() {
+                const interactiveElements = document.querySelectorAll('button, a, input, select, textarea');
+                interactiveElements.forEach(function(element) {
+                    element.style.pointerEvents = 'auto';
+                    element.style.position = 'relative';
+                    element.style.zIndex = '10';
+                });
+            }, 100);
+        });
+    </script>
+    @endpush
 @endsection
