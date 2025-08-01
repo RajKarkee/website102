@@ -11,23 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logos', function (Blueprint $table) {
-            $table->id();
-            $table->string('company_name');
-            $table->string('tagline')->nullable();
-            $table->string('logo_image')->nullable();
-            $table->string('website')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
-            $table->text('address')->nullable();
-            $table->string('facebook_url')->nullable();
-            $table->string('twitter_url')->nullable();
-            $table->string('instagram_url')->nullable();
-            $table->string('linkedin_url')->nullable();
-            $table->string('youtube_url')->nullable();
-            $table->boolean('is_active')->default(false);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('logos')) {
+            Schema::create('logos', function (Blueprint $table) {
+                $table->id();
+                $table->string('company_name');
+                $table->string('tagline')->nullable();
+                $table->string('logo_image')->nullable();
+                $table->string('website')->nullable();
+                $table->string('phone')->nullable();
+                $table->string('email')->nullable();
+                $table->text('address')->nullable();
+                $table->string('facebook_url')->nullable();
+                $table->string('twitter_url')->nullable();
+                $table->string('instagram_url')->nullable();
+                $table->string('linkedin_url')->nullable();
+                $table->string('youtube_url')->nullable();
+                $table->boolean('is_active')->default(false);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
