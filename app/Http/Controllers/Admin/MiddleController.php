@@ -46,6 +46,7 @@ class MiddleController extends Controller
 
         // Get all points for this middle section
         $points = DB::table('middle_points')
+            ->join('middles', 'middle_points.middle_id', '=', 'middles.id')
             ->where('middle_id', $id)
             ->get();
 

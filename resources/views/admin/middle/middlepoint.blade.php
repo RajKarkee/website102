@@ -21,10 +21,10 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card border-0 shadow-sm rounded-3">
-                        <div class="card-header bg-gradient-primary text-white">
+                        <div class="card-header bg-gradient-primary text-black">
                             <h5 class="mb-0 d-flex align-items-center">
                                 <i class="fas fa-plus-circle me-2"></i>
-                                Middle Point Information
+                                Middle Point Information 
                             </h5>
                         </div>
                         
@@ -32,25 +32,16 @@
                             <form action="{{ route('admin.middle.addPoint', $middle->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 
-                                {{-- <div class="form-group mb-4">
+                                <div class="form-group mb-4">
                                     <label for="middle_id" class="form-label d-flex align-items-center">
                                         <i class="fas fa-layer-group text-primary me-2"></i>
                                         Middle Section
                                         <span class="text-danger ms-1">*</span>
                                     </label>
-                                    <select name="middle_id" 
-                                            id="middle_id" 
-                                            class="form-control @error('middle_id') is-invalid @enderror" 
-                                            required>
-                                        <option value="">Select Middle Section</option>
-                                        @if(isset($middles))
-                                            @foreach($middles as $middle)
-                                                <option value="{{ $middle->id }}" {{ old('middle_id') == $middle->id ? 'selected' : '' }}>
-                                                    {{ $middle->title }}
-                                                </option>
-                                            @endforeach
-                                        @endif --}}
-                                    </select>
+                                    <p>{{ $middle->page }}</p>
+
+                                <input type="hidden" name="middle_id" value="{{ $middle->id }}">
+
                                     @error('middle_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
