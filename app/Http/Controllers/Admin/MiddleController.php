@@ -21,19 +21,19 @@ class MiddleController extends Controller
         $middles = Middle::all(); // Fetch all middle records
         // This method can be used to handle the creation of a new item
         if ($request->isMethod('post')) {
-            $data= new Middle();
+            $data = new Middle();
             $data->title = $request->input('title');
             $data->short_description = $request->input('short_description');
             $data->page = $request->input('page'); // Assuming 'page' is    a field in the form
-            $data->save(); 
+            $data->save();
             return redirect()->route('admin.middle.index')->with('success', 'Middle created successfully.');
         }
 
         // If the request is GET, show the form
         return view('admin.middle.create', compact('middles'));
-    }   
+    }
     public function addPoint(Request $request, $id)
-    {   
+    {
         // Get middle section with its points using query builder
         $middle = Middle::select('middles.*')
             ->leftJoin('middle_points', 'middles.id', '=', 'middle_points.middle_id')
