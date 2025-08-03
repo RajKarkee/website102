@@ -75,7 +75,8 @@ Route::get('/',[AdminMiddleController::class, 'index'])->name('index');
 Route::match(['get','post'], '/add', [AdminMiddleController::class, 'create'])->name('create');
 Route::match(['get','post'], '/addPoint/{id}', [AdminMiddleController::class, 'addPoint'])->name('addPoint');
 Route::delete('/delete/{id}', [AdminMiddleController::class, 'destroy'])->name('destroy');
-Route::match(['get','post'], '/edit/{id}', [AdminMiddleController::class, 'edit'])->name('edit');
+Route::get('/edit/{id}', [AdminMiddleController::class, 'edit'])->name('edit');
+Route::put('/update/{id}', [AdminMiddleController::class, 'update'])->name('update');
 });
     // Authentication required routes
     Route::middleware(['auth'])->group(function () {

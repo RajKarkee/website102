@@ -29,8 +29,9 @@
                         </div>
                         
                         <div class="card-body p-4">
-                            <form action="{{ route('admin.middle.create') }}" method="POST">
+                            <form action="{{ route('admin.middle.update', $middle->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <div class="form-group mb-4">
                                     <label for="page" class="form-label d-flex align-items-center">
                                         <i class="fas fa-file-alt text-primary me-2"></i>
@@ -42,12 +43,12 @@
                                             class="form-control @error('page') is-invalid @enderror" 
                                             required>
                                         <option value="">Select Page</option>
-                                        <option value="home" {{ old('page') == 'home' ? 'selected' : '' }}>Home</option>
-                                        <option value="service" {{ old('page') == 'service' ? 'selected' : '' }}>Service</option>
-                                        <option value="about" {{ old('page') == 'about' ? 'selected' : '' }}>About</option>
-                                        <option value="testimonial" {{ old('page') == 'testimonial' ? 'selected' : '' }}>Testimonial</option>
-                                        <option value="team" {{ old('page') == 'team' ? 'selected' : '' }}>Team</option>
-                                        <option value="industry" {{ old('page') == 'industry' ? 'selected' : '' }}>Industry</option>
+                                        <option value="home" {{ old('page', $middle->page) == 'home' ? 'selected' : '' }}>Home</option>
+                                        <option value="service" {{ old('page', $middle->page) == 'service' ? 'selected' : '' }}>Service</option>
+                                        <option value="about" {{ old('page', $middle->page) == 'about' ? 'selected' : '' }}>About</option>
+                                        <option value="testimonial" {{ old('page', $middle->page) == 'testimonial' ? 'selected' : '' }}>Testimonial</option>
+                                        <option value="team" {{ old('page', $middle->page) == 'team' ? 'selected' : '' }}>Team</option>
+                                        <option value="industry" {{ old('page', $middle->page) == 'industry' ? 'selected' : '' }}>Industry</option>
                                     </select>
                                     @error('page')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -65,7 +66,7 @@
                                            id="title" 
                                            class="form-control form-control-lg @error('title') is-invalid @enderror" 
                                            required
-                                           value="{{ old('title') }}" 
+                                           value="{{ old('title', $middle->title) }}" 
                                            placeholder="Enter middle section title">
                                     @error('title')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -83,7 +84,7 @@
                                               class="form-control @error('short_description') is-invalid @enderror" 
                                               rows="4" 
                                               required
-                                              placeholder="Enter short description">{{ old('short_description') }}</textarea>
+                                              placeholder="Enter short description">{{ old('short_description', $middle->short_description) }}</textarea>
                                     @error('short_description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
