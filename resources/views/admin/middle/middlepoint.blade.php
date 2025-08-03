@@ -32,7 +32,7 @@
                             <form action="{{ route('admin.middle.addPoint', $middle->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 
-                                <div class="form-group mb-4">
+                                {{-- <div class="form-group mb-4">
                                     <label for="middle_id" class="form-label d-flex align-items-center">
                                         <i class="fas fa-layer-group text-primary me-2"></i>
                                         Middle Section
@@ -49,7 +49,7 @@
                                                     {{ $middle->title }}
                                                 </option>
                                             @endforeach
-                                        @endif
+                                        @endif --}}
                                     </select>
                                     @error('middle_id')
                                         <div class="invalid-feedback">{{ $message }}</div>

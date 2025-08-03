@@ -17,7 +17,9 @@
 <body class="min-h-screen bg-background text-foreground font-space overflow-x-hidden">
     <!-- Navigation -->
     @include('components.navbar')
-
+      @if (!Route::is('home'))
+    <div class="top h-20"></div>
+@endif
     <!-- Main Content -->
     <main>
         @yield('content')
