@@ -20,8 +20,8 @@
                 <select id="page-title" name="page" class="form-control" required>
                     <option value="home" {{ $jumbotron->page == 'home' ? 'selected' : '' }}>Home</option>
                     <option value="about" {{ $jumbotron->page == 'about' ? 'selected' : '' }}>About</option>
-                    <option value="industry" {{ $jumbotron->page == 'industry' ? 'selected' : '' }}>Industry</option>
-                    <option value="services" {{ $jumbotron->page == 'services' ? 'selected' : '' }}>Services</option>
+                    <option value="industries" {{ $jumbotron->page == 'industries' ? 'selected' : '' }}>Industries</option>
+                    <option value="services.index" {{ $jumbotron->page == 'services.index' ? 'selected' : '' }}>Services</option>
                     <option value="team" {{ $jumbotron->page == 'team' ? 'selected' : '' }}>Team</option>
                     <option value="testimonials" {{ $jumbotron->page == 'testimonials' ? 'selected' : '' }}>Testimonials</option>
                     <option value="resources" {{ $jumbotron->page == 'resources' ? 'selected' : '' }}>Resources</option>

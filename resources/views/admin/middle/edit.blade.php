@@ -48,7 +48,7 @@
                                         <option value="about" {{ old('page', $middle->page) == 'about' ? 'selected' : '' }}>About</option>
                                         <option value="testimonial" {{ old('page', $middle->page) == 'testimonial' ? 'selected' : '' }}>Testimonial</option>
                                         <option value="team" {{ old('page', $middle->page) == 'team' ? 'selected' : '' }}>Team</option>
-                                        <option value="industry" {{ old('page', $middle->page) == 'industry' ? 'selected' : '' }}>Industry</option>
+                                        <option value="industries" {{ old('page', $middle->page) == 'industries' ? 'selected' : '' }}>Industries</option>
                                     </select>
                                     @error('page')
                                         <div class="invalid-feedback">{{ $message }}</div>

@@ -187,9 +187,13 @@ Route::put('/update/{id}', [AdminMiddleController::class, 'update'])->name('upda
         // Partner routes
         Route::prefix('partner')->name('partner.')->group(function () {
             Route::get('/', [FrontController::class, 'partnerIndex'])->name('index');
-            Route::get('/index', [FrontController::class, 'partnerIndex'])->name('index.alt');
-            Route::post('/store', [FrontController::class, 'partnerStore'])->name('store');
-            Route::post('/', [FrontController::class, 'partnerStore'])->name('store.alt');
+            Route::get('/create', [FrontController::class, 'partnerCreate'])->name('create');
+            Route::post('/', [FrontController::class, 'partnerStore'])->name('store');
+            Route::get('/{id}/edit', [FrontController::class, 'partnerEdit'])->name('edit');
+            Route::put('/{id}', [FrontController::class, 'partnerUpdate'])->name('update');
+            Route::delete('/{id}', [FrontController::class, 'partnerDestroy'])->name('destroy');
+            Route::post('/settings', [FrontController::class, 'partnerUpdateSettings'])->name('update.settings');
+            // Route::match(['put', 'get'], '/settings', [FrontController::class, 'partnerUpdateSettings'])->name('title');
         });
     });
 });

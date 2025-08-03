@@ -47,7 +47,7 @@
                                         <option value="about" {{ old('page') == 'about' ? 'selected' : '' }}>About</option>
                                         <option value="testimonial" {{ old('page') == 'testimonial' ? 'selected' : '' }}>Testimonial</option>
                                         <option value="team" {{ old('page') == 'team' ? 'selected' : '' }}>Team</option>
-                                        <option value="industry" {{ old('page') == 'industry' ? 'selected' : '' }}>Industry</option>
+                                        <option value="industries" {{ old('page') == 'industry' ? 'selected' : '' }}>Industry</option>
                                     </select>
                                     @error('page')
                                         <div class="invalid-feedback">{{ $message }}</div>

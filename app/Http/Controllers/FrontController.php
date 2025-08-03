@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
 use App\Models\Industry;
+use App\Models\PartnerHeading;
 use App\Models\Service;
 use App\Models\Jumbotron;
 use App\Models\About;
@@ -16,6 +17,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 // use App\Http\Controllers\ColorHelper;
 use App\Helpers\ColorHelper;
+
 class FrontController extends Controller
 {
     public function industry()
@@ -42,7 +44,7 @@ class FrontController extends Controller
 
     public function middleIndex()
     {
-        $middles= []; // Assuming you want to fetch some data for the middle section
+        $middles = []; // Assuming you want to fetch some data for the middle section
         return view('admin.middle.index', compact('middles'));
     }
     public function industryEdit($id, Request $request)
@@ -77,7 +79,7 @@ class FrontController extends Controller
     public function serviceAdd(Request $request)
     {
         if (request()->isMethod('post')) {
-           
+
             $serviceData = new Service();
             if ($request->hasFile('icon')) {
                 $path = $request->file('icon')->store('service_icons', 'public');
@@ -86,7 +88,7 @@ class FrontController extends Controller
             $serviceData->title = request('title');
             $serviceData->description = request('description');
             $serviceData->long_description = request('long_description');
-         
+
             $serviceData->colors = request('colors', null);
             $serviceData->points = json_encode(request('points', []));
             $serviceData->points_description = json_encode(request('points_description', []));
@@ -111,7 +113,7 @@ class FrontController extends Controller
             return redirect()->route('admin.service.index')
                 ->with('success', 'Service created successfully.');
         }
-         $colors = Color::all();
+        $colors = Color::all();
 
         return view('admin.services.add', compact('colors'));
     }
@@ -124,16 +126,16 @@ class FrontController extends Controller
                 $path = $request->file('icon')->store('service_icons', 'public');
                 $serviceData->icon = $path;
             }
-              $point_icons = [];
-    if ($request->hasFile('point_icon')) {
-        foreach ($request->file('point_icon') as $iconFile) {
-            $point_icons[] = $iconFile->store('point_icons', 'public');
-        }
-    }
+            $point_icons = [];
+            if ($request->hasFile('point_icon')) {
+                foreach ($request->file('point_icon') as $iconFile) {
+                    $point_icons[] = $iconFile->store('point_icons', 'public');
+                }
+            }
             $serviceData->title = request('title');
             $serviceData->description = request('description');
             $serviceData->long_description = request('long_description');
-            $serviceData->colors=request('colors',null);
+            $serviceData->colors = request('colors', null);
             $serviceData->points = json_encode(request('points', []));
             $serviceData->points_description = json_encode(request('points_description', []));
             $serviceData->point_icon = json_encode(request('point_icon', []));
@@ -144,7 +146,7 @@ class FrontController extends Controller
                 ->with('success', 'Service updated successfully.');
         }
 
-$colors = Color::all();
+        $colors = Color::all();
         return view('admin.services.edit', compact('serviceData', 'colors'));
     }
 
@@ -176,10 +178,19 @@ $colors = Color::all();
 
     public function partnerIndex()
     {
-        $partner = Partner::all(); // Use the correct Partners model
-        return view('admin.partner.index', compact('partner'));
+        $partner = Partner::all();
+        $partnerSettings = PartnerHeading::first(); // Use the correct Partners model
+        return view('admin.partner.index', compact('partner', 'partnerSettings'));
     }
-
+    public function partnerCreate()
+    {
+        return view('admin.partner.create');
+    }
+    public function partnerEdit($id)
+    {
+        $partner = Partner::findOrFail($id);
+        return view('admin.partner.edit', compact('partner'));
+    }
 
     public function partnerStore(Request $request)
     {
@@ -231,7 +242,26 @@ $colors = Color::all();
 
         return redirect()->back()->with('success', 'Changes saved successfully');
     }
+    public function partnerUpdateSettings(Request $request)
+    {
+        // $partnerTitle = PartnerHeading::first();
+        $title = $request->input('title');
+        $description = $request->input('description');
 
+        // Update the partner heading
+        $partnerHeading = PartnerHeading::first();
+        if (!$partnerHeading) {
+            $partnerHeading = new PartnerHeading();
+        }
+        $partnerHeading->title = $title;
+        $partnerHeading->description = $description;
+        $partnerHeading->save();
+
+        // Clear cache if necessary
+        // CacheHelper::clearCache('partner_heading');
+
+        return redirect()->back()->with('success', 'Partner settings updated successfully');
+    }
 
 
 
@@ -378,7 +408,7 @@ $colors = Color::all();
             $aboutdata->Experience = $request->input('experience');
             $aboutdata->client = $request->input('client');
             $aboutdata->save();
-             $this->aboutRender();
+            $this->aboutRender();
             return redirect()->route('admin.about.index')
                 ->with('success', 'About section updated successfully.');
         }
@@ -413,7 +443,7 @@ $colors = Color::all();
             $imagePath = $request->file('image')->store('about_images', 'public');
             $about->image = $imagePath;
         }
- $this->aboutRender();
+        $this->aboutRender();
         // Save the updated record
         $about->save();
 
@@ -429,7 +459,7 @@ $colors = Color::all();
         //     Storage::disk('public')->delete($aboutdata->image);
         // }
         $aboutdata->delete();
-         $this->aboutRender();
+        $this->aboutRender();
         return redirect()->route('admin.about.index')->with('success', 'About section deleted successfully.');
     }
     public function aboutAddPoint($id, Request $request)
@@ -483,16 +513,16 @@ $colors = Color::all();
     {
         $colors = Color::all();
         if ($request->isMethod('post')) {
-            try{
+            try {
                 $color = new Color();
                 $color->color = $request->color;
                 $color->hex_code = $request->hex_code;
-                 $hex = $request->colors;
-             $tailwindClass = ColorHelper::getClosestTailwindClass($hex);
-            $color->tailwind_class = $tailwindClass;
+                $hex = $request->colors;
+                $tailwindClass = ColorHelper::getClosestTailwindClass($hex);
+                $color->tailwind_class = $tailwindClass;
                 $color->save();
             } catch (QueryException $e) {
-                if($e->getCode() == 23000) { // Integrity constraint violation
+                if ($e->getCode() == 23000) { // Integrity constraint violation
                     return redirect()->back()->with('error', 'Color already exists.');
                 }
                 Log::error('Failed to add color: ' . $e->getMessage());
@@ -501,34 +531,36 @@ $colors = Color::all();
         }
         return view('admin.color.index', compact('colors'));
     }
-    public function colorDelete(){
+    public function colorDelete()
+    {
         $id = request('id');
         $color = Color::findOrFail($id);
         $color->delete();
         return redirect()->back()->with('success', 'Color deleted successfully.');
     }
-    
-    public function aboutRender(){
-        $about=About::all();
+
+    public function aboutRender()
+    {
+        $about = About::all();
 
         CacheHelper::putCache('front.cache.about', view('admin.template.about.about', compact('about'))->render());
-
     }
 
-    private function safe_decode($json) {
+    private function safe_decode($json)
+    {
         $decoded = json_decode($json, true);
         return is_array($decoded) ? $decoded : ['title' => '', 'description' => '', 'icon' => ''];
     }
 
-    public function aboutPoints(){
-        $about=About::first();
+    public function aboutPoints()
+    {
+        $about = About::first();
         $points = [
             1 => $this->safe_decode(old('point_1', $about->point_1 ?? '')),
             2 => $this->safe_decode(old('point_2', $about->point_2 ?? '')),
             3 => $this->safe_decode(old('point_3', $about->point_3 ?? '')),
             4 => $this->safe_decode(old('point_4', $about->point_4 ?? '')),
         ];
-        CacheHelper::putCache('front.cache.points', view('admin.template.about.point', compact('about','points'))->render());
-
+        CacheHelper::putCache('front.cache.points', view('admin.template.about.point', compact('about', 'points'))->render());
     }
 }

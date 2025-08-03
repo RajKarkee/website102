@@ -167,8 +167,9 @@
                 @endforeach
             </div>
 
+            @include('components.values');
             <!-- Industry Expertise Section -->
-            <div class="mb-16">
+            {{-- <div class="mb-16">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold mb-4 text-primary">
                         Why Industry Expertise Matters
@@ -213,7 +214,7 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Call to Action -->
             @php

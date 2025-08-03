@@ -3,10 +3,10 @@
             <div class="mb-20">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold mb-4 text-primary">
-                        Our Core Values
+                        {{ $middle->title ?? 'Our Core Values' }}
                     </h2>
                     <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-                        These principles guide everything we do and shape how we serve our clients
+                        {{ $middle->short_description ?? 'These principles guide everything we do and shape how we serve our clients.' }}
                     </p>
                 </div>
 
@@ -34,13 +34,12 @@
                         ];
                     @endphp
 
-                    @foreach ($values as $value)
+                    @foreach ($middle_points as $middle_point)
                         <div class="gradient-card p-8 text-center border-0 rounded-xl shadow-sm">
                             <div class="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mx-auto mb-6">
-                                <i data-lucide="{{ $value['icon'] }}" class="h-8 w-8 text-white"></i>
-                            </div>
-                            <h3 class="text-xl font-semibold text-foreground mb-4">{{ $value['title'] }}</h3>
-                            <p class="text-muted-foreground leading-relaxed">{{ $value['description'] }}</p>
+                                <img src="{{ Storage::url($middle_point->icon) }}" alt="{{ $middle_point->title }} icon">              </div>
+                            <h3 class="text-xl font-semibold text-foreground mb-4">{{ $middle_point->title }}</h3>
+                            <p class="text-muted-foreground leading-relaxed">{{ $middle_point->description }}</p>
                         </div>
                     @endforeach
                 </div>
