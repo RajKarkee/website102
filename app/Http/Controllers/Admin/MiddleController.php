@@ -32,6 +32,18 @@ class MiddleController extends Controller
         // If the request is GET, show the form
         return view('admin.middle.create', compact('middles'));
     }
+    public function edit($id)
+    {
+        $middle = Middle::findOrFail($id); // Fetch the middle record by ID
+        if(request()->isMethod('post')){
+            $middle->title = request()->input('title');
+            $middle->short_description = request()->input('short_description');
+            $middle->page = request()->input('page'); // Assuming 'page' is a field in the form
+            $middle->save();
+            return redirect()->route('admin.middle.index')->with('success', 'Middle updated successfully.');
+        }
+        return view('admin.middle.edit', compact('middle'));
+    }
     public function addPoint(Request $request, $id)
     {
         // Get middle section with its points using query builder
