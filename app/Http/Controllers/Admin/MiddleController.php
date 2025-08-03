@@ -51,13 +51,14 @@ class MiddleController extends Controller
 
         if ($request->isMethod('post')) {
             // Validate the request
-            $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'required|string',
-                'icon' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048'
-            ]);
+            // $request->validate([
+            //     'title' => 'required|string|max:255',
+            //     'description' => 'required|string',
+            //     'icon' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048'
+            // ]);
 
             // Handle file upload
+            $iconPath = null;
             if ($request->hasFile('icon')) {
                 $iconPath = $request->file('icon')->store('middle_points', 'public');
             }
@@ -67,7 +68,7 @@ class MiddleController extends Controller
                 'middle_id' => $id,
                 'title' => $request->input('title'),
                 'description' => $request->input('description'),
-                'icon' => $iconPath ?? null,
+                'icon' => $iconPath,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);

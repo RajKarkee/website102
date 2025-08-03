@@ -90,6 +90,10 @@
                     <option value="about">About</option>
                     <option value="industries">Industry</option>
                     <option value="services.index">Services</option>
+                    <option value="team">Team</option>
+                    <option value="testimonials">Testimonials</option>
+                    <option value="resources">Resources</option>
+                    <option value="contact">Contact</option>
                     </select>
                 </div>
                 <br>
