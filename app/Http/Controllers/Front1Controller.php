@@ -62,4 +62,5 @@ class Front1Controller extends Controller
         return view('services.index', compact('serviceData'));
 
 }
+
 }

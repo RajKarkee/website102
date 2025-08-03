@@ -31,5 +31,10 @@ class AppServiceProvider extends ServiceProvider
         
         // Auto-discover admin components
         Blade::anonymousComponentNamespace('admin.components', 'admin');
+
+        view()->composer('components.partners', function ($view) {
+            $view->with('partners', \App\Models\Partner::all());
+            $view->with('partnerHeading',\App\Models\PartnerHeading::first());
+        });
     }
 }
