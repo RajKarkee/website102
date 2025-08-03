@@ -1,3 +1,4 @@
+<?php 
 namespace App\Providers;
 
 use App\Models\Middle;
@@ -15,22 +16,36 @@ class MiddleServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        View::composer(['admin.middle.edit', 'admin.middle.create'], function ($view) {
+        View::composer(['components.values'], function ($view) {
             try {
-                $middle = Middle::first();
-                $middlePoints = MiddlePoints::all();
+                $currentRoute = request()->route() ? request()->route()->getName() : null;
+                Log::info('MiddleServiceProvider called for route: ' . ($currentRoute ?? 'null'));
+                if (!$currentRoute) {
+                    return;
+                }
 
-                Log::info('MiddleServiceProvider called, middle ID: ' . ($middle ? $middle->id : 'null'));
+                $middle = Middle::where('page',$currentRoute)->first();
+            if($middle){
+                $middle_points = MiddlePoints::where('middle_id', $middle->id)->get();
+                if ($middle_points->isEmpty()) {
+                    Log::info('No middle points found for middle ID: ' . $middle->id);
+                } else {
+                    Log::info('Middle points found for middle ID: ' . $middle->id);
+                    $view->with([
+                        'middle' => $middle,
+                        'middle_points' => $middle_points, 
+                    ]);
+                }
 
-                $view->with([
-                    'middle' => $middle,
-                    'middlePoints' => $middlePoints,
-                ]);
+            }
+
             } catch (\Exception $e) {
                 Log::error('MiddleServiceProvider error: ' . $e->getMessage());
                 $view->with([
                     'middle' => null,
-                    'middlePoints' => [],
+                    'icon' => null,
+                    'title' => null,
+                    'description' => null,
                 ]);
             }
         });
