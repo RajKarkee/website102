@@ -78,6 +78,8 @@
                             </div>
 
                             <div class="col-md-4">
+
+                                <!-- Image Upload: Custom component -->
                                 @include('admin.components.image-upload', [
                                     'name' => 'logo_image',
                                     'label' => 'Logo Image',
@@ -88,6 +90,13 @@
                                     'description' => 'Upload your company logo. Supported formats: JPEG, PNG, JPG, GIF, SVG.',
                                     'placeholder' => 'Upload Company Logo'
                                 ])
+
+                                <!-- Fallback: Always show a visible file input for logo_image in case JS/component fails -->
+                                <div class="form-group mt-3">
+                                    <label for="logo_image_fallback" class="form-label">Logo Image (If above does not work)</label>
+                                    <input type="file" name="logo_image" id="logo_image_fallback" class="form-control" accept="image/*">
+                                    <small class="form-text text-muted">If you have issues with the main uploader, use this field.</small>
+                                </div>
 
                                 <div class="form-check mt-3">
                                     <input class="form-check-input" type="checkbox" id="is_active" name="is_active" checked>

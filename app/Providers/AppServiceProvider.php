@@ -36,5 +36,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('partners', \App\Models\Partner::all());
             $view->with('partnerHeading',\App\Models\PartnerHeading::first());
         });
+
+     
     }
 }

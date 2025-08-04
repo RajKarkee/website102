@@ -8,7 +8,7 @@
         <!-- Marquee Container -->
         <div class="relative">
             <div class="flex animate-marquee space-x-12 items-center">
-                @php
+                {{-- @php
                     $partners = [
                         ['name' => 'Xero', 'logo' => 'https://cdn.worldvectorlogo.com/logos/xero-2.svg'],
                         ['name' => 'MYOB', 'logo' => 'https://cdn.worldvectorlogo.com/logos/myob-1.svg'],
@@ -21,7 +21,7 @@
                         ['name' => 'Westpac', 'logo' => 'https://cdn.worldvectorlogo.com/logos/westpac-1.svg'],
                         ['name' => 'BNZ', 'logo' => 'https://cdn.worldvectorlogo.com/logos/bank-of-new-zealand-bnz.svg']
                     ];
-                @endphp
+                @endphp --}}
                 
                 <!-- First set of partners -->
                 @foreach($partners as $partner)
